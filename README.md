@@ -1,8 +1,9 @@
-= keydown
+# KeyDown
 
-Description goes here.
+KeyDown is another 'Presentation System in a single HTML page' inspired by [Slidedown](http://github.com/nakajima/slidedown),
+[HTML5 Rocks](http://studio.html5rocks.com/#Deck), with a little Presentation Zen thrown in.
 
-== Note on Patches/Pull Requests
+## Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -14,4 +15,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Davis W. Frank. See LICENSE for details.
+Copyright (c) 2010 Infews LLC. See LICENSE for details.
