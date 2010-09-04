@@ -2,19 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Slide" do
 
-  describe 'without a name' do
-    before :each do
-      @slide_text = <<SLIDE
-# A Slide
-With some text
-!NOTES
-a simple note
-SLIDE
-      @slide      = Slide.new(@slide_text)
-    end
+  shared_examples_for 'extracting slide data' do
 
     it "should set the classname to empty" do
-      @slide.classnames.should be_empty
+      @slide.classnames.should == @classnames
     end
 
     it "should extract the content" do
@@ -24,6 +15,22 @@ SLIDE
     it "should extract the notes" do
       @slide.notes.should match(/a simple note/)
     end
+
+  end
+
+  describe 'without a name' do
+    before :each do
+      @slide_text = <<SLIDE
+# A Slide
+With some text
+!NOTES
+a simple note
+SLIDE
+      @slide      = Slide.new(@slide_text)
+      @classnames = []
+    end
+
+    it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
 
@@ -45,20 +52,11 @@ With some text
 !NOTES
 a simple note
 SLIDE
-      @slide      = Slide.new(@slide_text, ['foo'])
+      @classnames = ['foo']
+      @slide      = Slide.new(@slide_text, @classnames)
     end
 
-    it "should set the classname to empty" do
-      @slide.classnames.should == ['foo']
-    end
-
-    it "should extract the content" do
-      @slide.content.should match(/^# A Slide/)
-    end
-
-    it "should extract the notes" do
-      @slide.notes.should match(/a simple note/)
-    end
+    it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
 
@@ -79,20 +77,11 @@ With some text
 !NOTES
 a simple note
 SLIDE
-      @slide      = Slide.new(@slide_text, ['foo', 'bar'])
+      @classnames = ['foo', 'bar']
+      @slide      = Slide.new(@slide_text, @classnames)
     end
 
-    it "should set the classname to empty" do
-      @slide.classnames.should == ['foo', 'bar']
-    end
-
-    it "should extract the content" do
-      @slide.content.should match(/^# A Slide/)
-    end
-
-    it "should extract the notes" do
-      @slide.notes.should match(/a simple note/)
-    end
+    it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
 
