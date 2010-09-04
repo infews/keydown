@@ -1,1 +1,3 @@
 --color
+--format html:spec/output/results.html
+--format progress

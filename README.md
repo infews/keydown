@@ -1,7 +1,7 @@
 # KeyDown
 
 KeyDown is another 'Presentation System in a single HTML page' inspired by [Slidedown](http://github.com/nakajima/slidedown),
-[HTML5 Rocks](http://studio.html5rocks.com/#Deck), with a little Presentation Zen thrown in.
+[HTML5 Rocks](http://studio.html5rocks.com/#Deck), with a little [Presentation Zen](http://amzn.to/8X55H2) thrown in.
 
 ## Note on Patches/Pull Requests
  
