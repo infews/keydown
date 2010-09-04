@@ -18,80 +18,82 @@ describe "Slide" do
 
   end
 
+  shared_examples_for "when generating HTML" do
+    describe "when generating HTML" do
+
+      before :each do
+        @doc = Nokogiri(@slide.to_html)
+      end
+
+      it "should assign the classname(s) to the section" do
+        @doc.css(@section_selector).should_not be_nil
+      end
+
+      it "should convert the content via Markdown" do
+        @doc.css('section h1').text.should == 'A Slide'
+      end
+
+      it "should highlight any code fragments"
+    end
+
+  end
+
   describe 'without a name' do
     before :each do
-      @slide_text = <<SLIDE
+      @slide_text       = <<-SLIDE
 # A Slide
 With some text
+
 !NOTES
 a simple note
-SLIDE
-      @slide      = Slide.new(@slide_text)
-      @classnames = []
+      SLIDE
+
+      @slide            = Slide.new(@slide_text)
+      @classnames       = []
+      @section_selector =  "section"
     end
 
     it_should_behave_like "extracting slide data"
-
-    describe "when generating HTML" do
-
-      it "should assign the classname(s) to the section"
-
-      it "should convert the content via Markdown"
-
-      it "should highlight any code fragments"
-
-    end
-
+    it_should_behave_like "when generating HTML"
   end
 
   describe "with a single name" do
     before :each do
-      @slide_text = <<SLIDE
+      @slide_text = <<-SLIDE
 # A Slide
 With some text
+
 !NOTES
 a simple note
-SLIDE
+      SLIDE
+
       @classnames = ['foo']
       @slide      = Slide.new(@slide_text, @classnames)
+      @section_selector = "section.#{@classnames.join(' ')}"
     end
 
     it_should_behave_like "extracting slide data"
-
-    describe "when generating HTML" do
-
-      it "should assign the classname(s) to the section"
-
-      it "should convert the content via Markdown"
-
-      it "should highlight any code fragments"
-
-    end
+    it_should_behave_like "when generating HTML"
   end
 
   describe "with multiple names" do
     before :each do
-      @slide_text = <<SLIDE
+      @slide_text = <<-SLIDE
 # A Slide
 With some text
+
 !NOTES
 a simple note
-SLIDE
+      SLIDE
+
       @classnames = ['foo', 'bar']
       @slide      = Slide.new(@slide_text, @classnames)
+      @section_selector = "section.#{@classnames.join(' ')}"
     end
 
     it_should_behave_like "extracting slide data"
+    it_should_behave_like "when generating HTML"
 
-    describe "when generating HTML" do
-
-      it "should assign the classname(s) to the section"
-
-      it "should convert the content via Markdown"
-
-      it "should highlight any code fragments"
-
-    end
   end
 
 end
