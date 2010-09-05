@@ -22,7 +22,8 @@ describe "Slide" do
     describe "when generating HTML" do
 
       before :each do
-        @doc = Nokogiri(@slide.to_html)
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
       end
 
       it "should assign the classname(s) to the section" do
@@ -41,6 +42,7 @@ describe "Slide" do
   describe 'without a name' do
     before :each do
       @slide_text       = <<-SLIDE
+
 # A Slide
 With some text
 
@@ -49,8 +51,8 @@ a simple note
       SLIDE
 
       @slide            = Slide.new(@slide_text)
-      @classnames       = []
-      @section_selector =  "section"
+      @classnames       = ''
+      @section_selector = "section"
     end
 
     it_should_behave_like "extracting slide data"
@@ -60,6 +62,7 @@ a simple note
   describe "with a single name" do
     before :each do
       @slide_text = <<-SLIDE
+
 # A Slide
 With some text
 
@@ -67,9 +70,9 @@ With some text
 a simple note
       SLIDE
 
-      @classnames = ['foo']
+      @classnames = 'foo'
       @slide      = Slide.new(@slide_text, @classnames)
-      @section_selector = "section.#{@classnames.join(' ')}"
+      @section_selector = "section.#{@classnames}"
     end
 
     it_should_behave_like "extracting slide data"
@@ -79,6 +82,7 @@ a simple note
   describe "with multiple names" do
     before :each do
       @slide_text = <<-SLIDE
+
 # A Slide
 With some text
 
@@ -86,9 +90,9 @@ With some text
 a simple note
       SLIDE
 
-      @classnames = ['foo', 'bar']
+      @classnames = 'foo bar'
       @slide      = Slide.new(@slide_text, @classnames)
-      @section_selector = "section.#{@classnames.join(' ')}"
+      @section_selector = "section.#{@classnames}"
     end
 
     it_should_behave_like "extracting slide data"

@@ -4,7 +4,7 @@ class Slide
   attr_reader :content
   attr_reader :notes
 
-  def initialize(text, classnames = [])
+  def initialize(text, classnames = '')
     @text = text
     @classnames = classnames
     @notes = ''
@@ -27,7 +27,6 @@ class Slide
     require 'erb'
     require 'rdiscount'
 
-    css_classnames = classnames.join(' ')
     html_content = RDiscount.new(@content).to_html
 
     template = File.new(File.join('templates', 'rocks', 'slide.rhtml'))
