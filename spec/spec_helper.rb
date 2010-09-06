@@ -7,6 +7,7 @@ require 'spec/autorun'
 require 'pp'
 
 require 'nokogiri'
+require 'tmpdir'
 
 Spec::Runner.configure do |config|
   

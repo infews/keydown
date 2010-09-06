@@ -4,7 +4,7 @@ describe "SlideDeck" do
 
   describe "with a title" do
     before :each do
-      @slides_text = <<-SLIDE
+      @slides_text     = <<-SLIDE
 # Kermit the Frog Says...
 
 !SLIDE
@@ -28,7 +28,9 @@ and this
 # The Letter Q
 
       SLIDE
-      @deck        = SlideDeck.new(@slides_text)
+
+      template_dir     = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      @deck            = SlideDeck.new(template_dir, @slides_text)
     end
 
     describe "when extracting slides" do
@@ -45,7 +47,7 @@ and this
     describe "when generating HTML" do
       before :each do
         @html = @deck.to_html
-        @doc = Nokogiri(@html)
+        @doc  = Nokogiri(@html)
       end
 
       it "should set the document's title" do

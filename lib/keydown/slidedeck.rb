@@ -2,10 +2,11 @@ class SlideDeck
   attr_reader :title
   attr_reader :slides
 
-  def initialize(text)
+  def initialize(template_dir, text)
     @title = ''
     @slides = []
     @text = text
+    @template_dir = template_dir
 
     extract_title
     extract_classnames!
@@ -14,8 +15,7 @@ class SlideDeck
 
   def to_html
     require 'erb'
-    template = File.new(File.join('templates', 'rocks', 'index.rhtml'))
-
+    template = File.new(File.join(@template_dir, 'index.rhtml'))
     ERB.new(template.read).result(binding)
   end
 
@@ -39,7 +39,7 @@ class SlideDeck
     slides_text = @text.split(/!SLIDE/).reject{|s| s.empty?}
     slides_text[1..-1].each_with_index do |slide_text, i|
       slide_text.gsub(/\A(\n+)/,'').chomp!
-      @slides << Slide.new(slide_text, @classnames[i].split(' '))
+      @slides << Slide.new(@template_dir, slide_text, @classnames[i])
     end
   end
 
