@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "Slide" do
+describe Keydown::Slide do
 
   shared_examples_for 'extracting slide data' do
 
@@ -39,7 +39,7 @@ describe "Slide" do
 
   end
 
-  describe 'without a name' do
+  describe 'without a presentation title' do
     before :each do
       @slide_text       = <<-SLIDE
 
@@ -50,10 +50,11 @@ With some text
 a simple note
       SLIDE
 
-      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
-      @slide            = Slide.new(template_dir, @slide_text)
       @classnames       = ''
+      template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      @slide            = Keydown::Slide.new(template_dir, @slide_text)
       @section_selector = "section"
+      @template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
     end
 
     it_should_behave_like "extracting slide data"
@@ -71,9 +72,9 @@ With some text
 a simple note
       SLIDE
 
-      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @classnames       = 'foo'
-      @slide            = Slide.new(template_dir, @slide_text, @classnames)
+      template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
       @section_selector = "section.#{@classnames}"
     end
 
@@ -92,9 +93,9 @@ With some text
 a simple note
       SLIDE
 
-      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @classnames       = 'foo bar'
-      @slide            = Slide.new(template_dir, @slide_text, @classnames)
+      template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
       @section_selector = "section.#{@classnames}"
     end
 

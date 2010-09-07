@@ -1,4 +1,4 @@
-class Slide
+class Keydown::Slide
 
   attr_reader :classnames
   attr_reader :content
@@ -14,6 +14,18 @@ class Slide
     extract_content
   end
 
+  def to_html
+    require 'erb'
+    require 'rdiscount'
+
+    html_content = RDiscount.new(@content).to_html
+    template = File.new(File.join(@template_dir, 'slide.rhtml'))
+
+    ERB.new(template.read).result(binding)
+  end
+
+  private
+
   def extract_content
     @content = @text.gsub(/^!NOTES\s*(.*\n)$/m, '')
   end
@@ -22,16 +34,6 @@ class Slide
     match_data = @text.match(/^!NOTES\s*(.*\n)$/m)
 
     @notes = match_data[1] if match_data
-  end
-
-  def to_html
-    require 'erb'
-    require 'rdiscount'
-
-    html_content = RDiscount.new(@content).to_html
-
-    template = File.new(File.join(@template_dir, 'slide.rhtml'))
-    ERB.new(template.read).result(binding)
   end
 
 end

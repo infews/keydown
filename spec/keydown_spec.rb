@@ -35,10 +35,18 @@ describe Keydown do
       end
 
       describe "should have one slide that" do
+        before :each do
+          @slide = @doc.css('div.slide section')[2]
+        end
 
-        it "should have the correct css class(es)"
+        it "should have the correct css class(es)" do
+          @slide['class'].should match /foo/
+          @slide['class'].should match /bar/
+        end
 
-        it "should have the correct content"
+        it "should have the correct content" do
+          @slide.css('h1').text.should match /The Letter Q/
+        end
 
       end
     end

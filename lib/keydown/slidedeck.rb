@@ -1,12 +1,12 @@
-class SlideDeck
+class Keydown::SlideDeck
   attr_reader :title
   attr_reader :slides
 
   def initialize(template_dir, text)
+    @template_dir = template_dir
     @title = ''
     @slides = []
     @text = text
-    @template_dir = template_dir
 
     extract_title
     extract_classnames!
@@ -39,7 +39,7 @@ class SlideDeck
     slides_text = @text.split(/!SLIDE/).reject{|s| s.empty?}
     slides_text[1..-1].each_with_index do |slide_text, i|
       slide_text.gsub(/\A(\n+)/,'').chomp!
-      @slides << Slide.new(@template_dir, slide_text, @classnames[i])
+      @slides << Keydown::Slide.new(@template_dir, slide_text, @classnames[i])
     end
   end
 

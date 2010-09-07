@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "SlideDeck" do
+describe Keydown::SlideDeck do
 
   describe "with a title" do
     before :each do
@@ -29,8 +29,8 @@ and this
 
       SLIDE
 
-      template_dir     = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
-      @deck            = SlideDeck.new(template_dir, @slides_text)
+      template_dir     =       template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      @deck            = Keydown::SlideDeck.new(template_dir, @slides_text)
     end
 
     describe "when extracting slides" do
@@ -46,8 +46,8 @@ and this
 
     describe "when generating HTML" do
       before :each do
-        @html = @deck.to_html
-        @doc  = Nokogiri(@html)
+        @html    = @deck.to_html
+        @doc     = Nokogiri(@html)
       end
 
       it "should set the document's title" do
