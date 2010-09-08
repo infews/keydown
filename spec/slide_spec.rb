@@ -33,13 +33,11 @@ describe Keydown::Slide do
       it "should convert the content via Markdown" do
         @doc.css('section h1').text.should == 'A Slide'
       end
-
-      it "should highlight any code fragments"
     end
 
   end
 
-  describe 'without a presentation title' do
+  describe 'without a CSS classname' do
     before :each do
       @slide_text       = <<-SLIDE
 
@@ -51,17 +49,16 @@ a simple note
       SLIDE
 
       @classnames       = ''
-      template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text)
       @section_selector = "section"
-      @template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
     end
 
     it_should_behave_like "extracting slide data"
     it_should_behave_like "when generating HTML"
   end
 
-  describe "with a single name" do
+  describe "with a single CSS classname" do
     before :each do
       @slide_text       = <<-SLIDE
 
@@ -73,7 +70,7 @@ a simple note
       SLIDE
 
       @classnames       = 'foo'
-      template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
       @section_selector = "section.#{@classnames}"
     end
@@ -82,7 +79,7 @@ a simple note
     it_should_behave_like "when generating HTML"
   end
 
-  describe "with multiple names" do
+  describe "with multiple CSS classnames" do
     before :each do
       @slide_text       = <<-SLIDE
 
@@ -94,7 +91,7 @@ a simple note
       SLIDE
 
       @classnames       = 'foo bar'
-      template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
       @section_selector = "section.#{@classnames}"
     end
@@ -103,4 +100,37 @@ a simple note
     it_should_behave_like "when generating HTML"
   end
 
+  describe "with code to higlight" do
+
+    describe "using the Slidedown syntax" do
+      before :each do
+        @slide_text       = <<-SLIDE
+
+# A Slide
+With some text
+
+@@@ ruby
+  def a_method(options)
+    puts "I can has #{options}"
+  end
+@@@
+!NOTES
+a simple note
+
+        SLIDE
+
+        @classnames       = ''
+        template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+        @slide            = Keydown::Slide.new(template_dir, @slide_text)
+        @section_selector = "section"
+      end
+
+      it_should_behave_like "extracting slide data"
+      it_should_behave_like "when generating HTML"
+
+#    it "should colorize the code fragments" do
+#      @doc.css('.code').length.should == 2
+#    end
+    end
+  end
 end

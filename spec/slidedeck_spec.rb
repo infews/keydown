@@ -29,11 +29,11 @@ and this
 
       SLIDE
 
-      template_dir     =       template_dir = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir     = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @deck            = Keydown::SlideDeck.new(template_dir, @slides_text)
     end
 
-    describe "when extracting slides" do
+    describe "when building slides" do
 
       it "should find the document's title" do
         @deck.title.should == "Kermit the Frog Says..."
@@ -58,9 +58,13 @@ and this
         @doc.css('div.slide').length.should == 3
       end
 
-      it "should set the CSS classnames of each slide"
+      it "should set the CSS classnames of each slide" do
+        slides = @doc.css('div.slide section')
 
+        slides[0]['class'].should == nil
+        slides[1]['class'].should == 'foo'
+        slides[2]['class'].should == 'foo bar'
+      end
     end
   end
-
 end

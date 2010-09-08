@@ -1,8 +1,6 @@
 class Keydown < Thor
   include Thor::Actions
 
-  attr_reader :template_dir
-
   desc "slides [FILE]", "Convert a Keydown FILE into an HTML presentation"
   def slides(file)
     keydown_text = File.new(file).read

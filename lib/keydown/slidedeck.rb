@@ -2,15 +2,16 @@ class Keydown::SlideDeck
   attr_reader :title
   attr_reader :slides
 
+
   def initialize(template_dir, text)
     @template_dir = template_dir
     @title = ''
     @slides = []
     @text = text
 
-    extract_title
+    set_title
     extract_classnames!
-    extract_slides
+    build_slides
   end
 
   def to_html
@@ -21,7 +22,7 @@ class Keydown::SlideDeck
 
   private
 
-  def extract_title
+  def set_title
     match_data = @text.match(/\A\s*#\s*(.*)$/)
 
     @title = match_data[1] if match_data
@@ -29,13 +30,13 @@ class Keydown::SlideDeck
 
   def extract_classnames!
     @classnames = []
-    @text.gsub!(/^!SLIDE\s*([\w\s\-]*)\n/m) do |names|
-      @classnames << names.to_s.chomp.gsub('!SLIDE', '')
+    @text.gsub!(/^!SLIDE\s*([\w\s\-]*)\n/m) do
+      @classnames << $1.chomp
       "!SLIDE\n"
     end
   end
 
-  def extract_slides
+  def build_slides
     slides_text = @text.split(/!SLIDE/).reject{|s| s.empty?}
     slides_text[1..-1].each_with_index do |slide_text, i|
       slide_text.gsub(/\A(\n+)/,'').chomp!
