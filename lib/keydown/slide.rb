@@ -39,9 +39,9 @@ class Keydown::Slide
   end
 
   def extract_code!
-    @content.gsub!(/^@@@ ?(.+?)\r?\n(.+?)\r?\n@@@\r?$/m) do
-      id           = Digest::SHA1.hexdigest($2)
-      @codemap[id] = {:lang => $1, :code => $2}
+    @content.gsub!(/^(```|@@@) ?(.+?)\r?\n(.+?)\r?\n(```|@@@)\r?$/m) do
+      id           = Digest::SHA1.hexdigest($3)
+      @codemap[id] = {:lang => $2, :code => $3}
       id
     end
   end
