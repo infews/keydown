@@ -111,7 +111,7 @@ With some text
 
 @@@ ruby
   def a_method(options)
-    puts "I can has #{options}"
+    puts "I can has options " + options
   end
 @@@
 !NOTES
@@ -128,9 +128,16 @@ a simple note
       it_should_behave_like "extracting slide data"
       it_should_behave_like "when generating HTML"
 
-#    it "should colorize the code fragments" do
-#      @doc.css('.code').length.should == 2
-#    end
+      describe "when Pygmentizing any code in the HTML" do
+        before :each do
+          @html = @slide.to_html
+          @doc  = Nokogiri(@html)
+        end
+
+        it "should colorize the code fragments" do
+          @doc.css('.highlight').length.should == 1
+        end
+      end
     end
   end
 end
