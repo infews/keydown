@@ -25,6 +25,12 @@ describe Keydown::Slide do
     it "should convert the content via Markdown" do
       @doc.css('section h1').text.should == 'A Slide'
     end
+
+    it "should not include the notes in the HTML" do
+      @doc.css('section p').each do |node|
+        node.text.should_not match(/!NOTES/)
+      end
+    end
   end
 
   shared_examples_for "Pygmentizing code fragments" do
@@ -58,6 +64,7 @@ a simple note
         @doc              = Nokogiri(@html)
         @section_selector = "section"
       end
+
       it_should_behave_like "when generating HTML"
     end
   end

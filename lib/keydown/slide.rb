@@ -9,7 +9,7 @@ class Keydown::Slide
 
   def initialize(template_dir, text, classnames = '')
     @template_dir = template_dir
-    @text         = text
+    @content      = text
     @classnames   = classnames
     @notes        = ''
     @codemap      = {}
@@ -33,9 +33,10 @@ class Keydown::Slide
   private
 
   def extract_notes!
-    match_data = @text.match(/^!NOTES\s*(.*\n)$/m)
-
-    @notes = match_data[1] if match_data
+    @content.gsub!(/^!NOTE\s*(.*\n)$/m) do
+      @notes = $1.chomp
+      ''
+    end
   end
 
   def extract_code!
@@ -47,7 +48,7 @@ class Keydown::Slide
   end
 
   def extract_content!
-    @content = @text.gsub(/^!NOTES\s*(.*\n)$/m, '')
+    @content.gsub!(/^!NOTE(S)?\s*(.*\n)$/m, '')
   end
 
   def pygmentize_code!

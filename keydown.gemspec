@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Davis W. Frank"]
-  s.date = %q{2010-09-07}
+  s.date = %q{2010-09-08}
   s.default_executable = %q{keydown}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{Another HTML5 presentation generator}
   s.email = %q{dwfrank+github@infe.ws}
   s.executables = ["keydown"]
   s.extra_rdoc_files = [
@@ -27,11 +27,14 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/keydown",
+     "keydown.gemspec",
      "lib/keydown.rb",
      "lib/keydown/keydown.rb",
      "lib/keydown/slide.rb",
      "lib/keydown/slidedeck.rb",
+     "spec/fixtures/with_code.md",
      "spec/fixtures/with_title.md",
+     "spec/fixtures/without_title.md",
      "spec/keydown_spec.rb",
      "spec/slide_spec.rb",
      "spec/slidedeck_spec.rb",
@@ -47,7 +50,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Another HTML5 presentation generator}
   s.test_files = [
     "spec/keydown_spec.rb",
      "spec/slide_spec.rb",

@@ -10,6 +10,7 @@ I think this should be ignored
 
 !SLIDE foo
 
+# Is Brought to You by
 @@@ ruby
   def a_method(options)
     { :foo => 'bar }

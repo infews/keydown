@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "keydown"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Another HTML5 presentation generator}
+    gem.description = %Q{Another HTML5 presentation generator}
     gem.email = "dwfrank+github@infe.ws"
     gem.homepage = "http://github.com/infews/keydown"
     gem.authors = ["Davis W. Frank"]
