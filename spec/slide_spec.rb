@@ -18,22 +18,18 @@ describe Keydown::Slide do
   end
 
   shared_examples_for "when generating HTML" do
-    describe "when generating HTML" do
-      it "should assign the classname(s) to the section" do
-        @doc.css(@section_selector).should_not be_nil
-      end
+    it "should assign the classname(s) to the section" do
+      @doc.css(@section_selector).should_not be_nil
+    end
 
-      it "should convert the content via Markdown" do
-        @doc.css('section h1').text.should == 'A Slide'
-      end
+    it "should convert the content via Markdown" do
+      @doc.css('section h1').text.should == 'A Slide'
     end
   end
 
   shared_examples_for "Pygmentizing code fragments" do
-    describe "when Pygmentizing any code in the HTML" do
-      it "should colorize the code fragments" do
-        @doc.css('.highlight').length.should == 1
-      end
+    it "should colorize the code fragments" do
+      @doc.css('.highlight').length.should == 1
     end
   end
 
@@ -52,14 +48,18 @@ a simple note
       @classnames       = ''
       template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text)
-
-      @html             = @slide.to_html
-      @doc              = Nokogiri(@html)
-      @section_selector = "section"
     end
 
     it_should_behave_like "extracting slide data"
-    it_should_behave_like "when generating HTML"
+
+    describe "when generating HTML" do
+      before :each do
+        @html             = @slide.to_html
+        @doc              = Nokogiri(@html)
+        @section_selector = "section"
+      end
+      it_should_behave_like "when generating HTML"
+    end
   end
 
   describe "with a single CSS classname" do
@@ -76,14 +76,18 @@ a simple note
       @classnames       = 'foo'
       template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
-
-      @html             = @slide.to_html
-      @doc              = Nokogiri(@html)
-      @section_selector = "section.#{@classnames}"
     end
 
     it_should_behave_like "extracting slide data"
-    it_should_behave_like "when generating HTML"
+
+    describe "when generating HTML" do
+      before :each do
+        @html             = @slide.to_html
+        @doc              = Nokogiri(@html)
+        @section_selector = "section.#{@classnames}"
+      end
+      it_should_behave_like "when generating HTML"
+    end
   end
 
   describe "with multiple CSS classnames" do
@@ -101,13 +105,18 @@ a simple note
       template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
 
-      @html             = @slide.to_html
-      @doc              = Nokogiri(@html)
-      @section_selector = "section.#{@classnames}"
     end
 
     it_should_behave_like "extracting slide data"
-    it_should_behave_like "when generating HTML"
+
+    describe "when generating HTML" do
+      before :each do
+        @html             = @slide.to_html
+        @doc              = Nokogiri(@html)
+        @section_selector = "section.#{@classnames}"
+      end
+      it_should_behave_like "when generating HTML"
+    end
   end
 
   describe "with code to higlight" do
@@ -132,15 +141,19 @@ a simple note
         @classnames       = ''
         template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
         @slide            = Keydown::Slide.new(template_dir, @slide_text)
-
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @section_selector = "section"
       end
 
       it_should_behave_like "extracting slide data"
-      it_should_behave_like "when generating HTML"
-      it_should_behave_like "Pygmentizing code fragments"
+
+      describe "when generating HTML" do
+        before :each do
+          @html             = @slide.to_html
+          @doc              = Nokogiri(@html)
+          @section_selector = "section"
+        end
+        it_should_behave_like "when generating HTML"
+        it_should_behave_like "Pygmentizing code fragments"
+      end
     end
 
     describe "using the Github markup syntax" do
@@ -163,15 +176,20 @@ a simple note
         @classnames       = ''
         template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
         @slide            = Keydown::Slide.new(template_dir, @slide_text)
-
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @section_selector = "section"
       end
 
       it_should_behave_like "extracting slide data"
-      it_should_behave_like "when generating HTML"
-      it_should_behave_like "Pygmentizing code fragments"
+
+      describe "when generating HTML" do
+        before :each do
+          @html             = @slide.to_html
+          @doc              = Nokogiri(@html)
+          @section_selector = "section"
+        end
+
+        it_should_behave_like "when generating HTML"
+        it_should_behave_like "Pygmentizing code fragments"
+      end
     end
   end
 end
