@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
      "spec/fixtures/with_code.md",
      "spec/fixtures/with_title.md",
      "spec/fixtures/without_title.md",
-     "spec/keydown_spec.rb",
+     "spec/slides_spec.rb",
      "spec/slide_spec.rb",
      "spec/slidedeck_spec.rb",
      "spec/spec.opts",
@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Another HTML5 presentation generator}
   s.test_files = [
-    "spec/keydown_spec.rb",
+    "spec/slides_spec.rb",
      "spec/slide_spec.rb",
      "spec/slidedeck_spec.rb",
      "spec/spec_helper.rb"
