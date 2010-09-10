@@ -10,5 +10,4 @@ require 'nokogiri'
 require 'tmpdir'
 
 Spec::Runner.configure do |config|
-  
 end

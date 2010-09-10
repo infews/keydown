@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Keydown::Slide do
 
@@ -39,7 +39,6 @@ describe Keydown::Slide do
     end
   end
 
-
   describe 'without a CSS classname' do
     before :each do
       @slide_text       = <<-SLIDE
@@ -52,7 +51,7 @@ a simple note
       SLIDE
 
       @classnames       = ''
-      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text)
     end
 
@@ -81,7 +80,7 @@ a simple note
       SLIDE
 
       @classnames       = 'foo'
-      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
     end
 
@@ -109,7 +108,7 @@ a simple note
       SLIDE
 
       @classnames       = 'foo bar'
-      template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
       @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
 
     end
@@ -146,7 +145,7 @@ a simple note
         SLIDE
 
         @classnames       = ''
-        template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+        template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
         @slide            = Keydown::Slide.new(template_dir, @slide_text)
       end
 
@@ -181,7 +180,7 @@ a simple note
         SLIDE
 
         @classnames       = ''
-        template_dir      = File.join(File.dirname(__FILE__), '..', 'templates', 'rocks')
+        template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
         @slide            = Keydown::Slide.new(template_dir, @slide_text)
       end
 
