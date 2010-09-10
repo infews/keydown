@@ -18,7 +18,7 @@ describe Keydown do
 
     it "should generate a directory for the presentation" do
       Dir.chdir "#{@tmp_dir}" do
-        File.exist?("sample").should be_true
+        File.directory?('sample').should be_true
       end
     end
 
@@ -30,9 +30,9 @@ describe Keydown do
 
     it "should create the support directories for the presentation" do
       Dir.chdir "#{@tmp_dir}/sample" do
-        File.exist?("css").should be_true
-        File.exist?("images").should be_true
-        File.exist?("js").should be_true
+        File.directory?("css").should be_true
+        File.directory?("images").should be_true
+        File.directory?("js").should be_true
       end
     end
   end
