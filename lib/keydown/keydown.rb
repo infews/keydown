@@ -1,7 +1,19 @@
 class Keydown < Thor
   include Thor::Actions
 
-  desc "slides [FILE]", "Convert a Keydown FILE into an HTML presentation"
+  attr_reader :presentation_name
+
+  def self.source_root
+    File.join(File.dirname(__FILE__), '../..')
+  end
+
+  desc "generate NAME", "Make a directory & sample files for presentation NAME"
+  def generate(name)
+    @presentation_name = name
+    directory "templates/generate", name
+  end
+
+  desc "slides FILE", "Convert a Keydown FILE into an HTML presentation"
   def slides(file)
     keydown_text = File.new(file).read
 
@@ -9,9 +21,8 @@ class Keydown < Thor
 
     presentation = file.gsub('md', 'html')
 
-    create_file presentation, :verbose => false do
+    create_file presentation do
       SlideDeck.new(template_dir, keydown_text).to_html
     end
-
   end
 end

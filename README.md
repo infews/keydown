@@ -111,9 +111,15 @@ All JavaScript files in the `js` directory will be placed inline in your present
 
 ## Requirements
 
-   * Pygments (for syntax highlighting)
+### For Use
+
+   * [Pygments]() is required for code syntax highlighting
    * Other dependent gems will be installed
-   * Nokogiri is required to run the tests
+
+### For Development
+
+   * RSpec
+   * Nokogiri
 
 ## Note on Patches/Pull Requests
  
