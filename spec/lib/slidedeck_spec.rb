@@ -1,6 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Keydown::SlideDeck do
+  before :each do
+    class Keydown
+      def self.template_dir
+        File.join(Keydown.source_root, 'templates', 'rocks')
+      end
+    end
+  end
 
   describe "with a title" do
     before :each do
@@ -29,8 +36,7 @@ and this
 
       SLIDE
 
-      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-      @deck             = Keydown::SlideDeck.new(template_dir, @slides_text)
+      @deck             = Keydown::SlideDeck.new(@slides_text)
     end
 
     describe "when building slides" do

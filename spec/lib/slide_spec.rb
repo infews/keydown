@@ -1,6 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Keydown::Slide do
+  before :each do
+    class Keydown
+      def self.template_dir
+        File.join(Keydown.source_root, 'templates', 'rocks')
+      end
+    end
+  end
 
   shared_examples_for 'extracting slide data' do
 
@@ -51,8 +58,7 @@ a simple note
       SLIDE
 
       @classnames       = ''
-      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-      @slide            = Keydown::Slide.new(template_dir, @slide_text)
+      @slide            = Keydown::Slide.new(@slide_text)
     end
 
     it_should_behave_like "extracting slide data"
@@ -80,8 +86,7 @@ a simple note
       SLIDE
 
       @classnames       = 'foo'
-      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-      @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
+      @slide            = Keydown::Slide.new(@slide_text, @classnames)
     end
 
     it_should_behave_like "extracting slide data"
@@ -108,8 +113,7 @@ a simple note
       SLIDE
 
       @classnames       = 'foo bar'
-      template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-      @slide            = Keydown::Slide.new(template_dir, @slide_text, @classnames)
+      @slide            = Keydown::Slide.new(@slide_text, @classnames)
 
     end
 
@@ -146,7 +150,7 @@ a simple note
 
         @classnames       = ''
         template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-        @slide            = Keydown::Slide.new(template_dir, @slide_text)
+        @slide            = Keydown::Slide.new(@slide_text)
       end
 
       it_should_behave_like "extracting slide data"
@@ -180,8 +184,7 @@ a simple note
         SLIDE
 
         @classnames       = ''
-        template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-        @slide            = Keydown::Slide.new(template_dir, @slide_text)
+        @slide            = Keydown::Slide.new(@slide_text)
       end
 
       it_should_behave_like "extracting slide data"

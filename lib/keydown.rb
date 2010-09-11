@@ -8,6 +8,11 @@ class Keydown < Thor
   def self.source_root
     @@source_root
   end
+
+  def self.template_dir
+    @@template_dir
+  end
+
 end
 
 Dir["#{File.dirname(__FILE__)}/keydown/**/*.rb"].each do |file|

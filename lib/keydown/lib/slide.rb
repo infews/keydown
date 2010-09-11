@@ -7,8 +7,7 @@ class Keydown::Slide
   attr_reader :content
   attr_reader :notes
 
-  def initialize(template_dir, text, classnames = '')
-    @template_dir = template_dir
+  def initialize(text, classnames = '')
     @content      = text
     @classnames   = classnames
     @notes        = ''
@@ -25,7 +24,7 @@ class Keydown::Slide
 
     pygmentize_code!
     html_content = RDiscount.new(@content).to_html
-    template     = File.new(File.join(@template_dir, 'slide.rhtml'))
+    template     = File.new(File.join(Keydown.template_dir, 'slide.rhtml'))
 
     ERB.new(template.read).result(binding)
   end
