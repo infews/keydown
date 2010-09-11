@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Davis W. Frank"]
-  s.date = %q{2010-09-09}
+  s.date = %q{2010-09-11}
   s.default_executable = %q{keydown}
   s.description = %q{Another HTML5 presentation generator}
   s.email = %q{dwfrank+github@infe.ws}
@@ -29,22 +29,27 @@ Gem::Specification.new do |s|
      "bin/keydown",
      "keydown.gemspec",
      "lib/keydown.rb",
-     "lib/keydown/keydown.rb",
-     "lib/keydown/slide.rb",
-     "lib/keydown/slidedeck.rb",
+     "lib/keydown/lib/slide.rb",
+     "lib/keydown/lib/slidedeck.rb",
+     "lib/keydown/tasks/generate.rb",
+     "lib/keydown/tasks/slides.rb",
+     "spec/fixtures/custom.css",
+     "spec/fixtures/custom.js",
      "spec/fixtures/with_code.md",
      "spec/fixtures/with_title.md",
      "spec/fixtures/without_title.md",
-     "spec/slides_spec.rb",
-     "spec/slide_spec.rb",
-     "spec/slidedeck_spec.rb",
+     "spec/lib/slide_spec.rb",
+     "spec/lib/slidedeck_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
+     "spec/tasks/generate_spec.rb",
+     "spec/tasks/slides_spec.rb",
      "tasks/doc.rb",
      "tasks/jeweler.rb",
      "tasks/spec.rb",
      "templates/generate/%presentation_name%.md.tt",
      "templates/generate/css/%presentation_name%.css",
+     "templates/generate/css/rocks.css",
      "templates/generate/images/.empty_directory",
      "templates/generate/js/%presentation_name%.js",
      "templates/rocks/index.rhtml",
@@ -56,10 +61,11 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Another HTML5 presentation generator}
   s.test_files = [
-    "spec/slides_spec.rb",
-     "spec/slide_spec.rb",
-     "spec/slidedeck_spec.rb",
-     "spec/spec_helper.rb"
+    "spec/lib/slide_spec.rb",
+     "spec/lib/slidedeck_spec.rb",
+     "spec/spec_helper.rb",
+     "spec/tasks/generate_spec.rb",
+     "spec/tasks/slides_spec.rb"
   ]
 
   if s.respond_to? :specification_version then

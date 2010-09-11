@@ -3,9 +3,9 @@ class Keydown::SlideDeck
   attr_reader :slides
 
   def initialize(text)
-    @title = ''
+    @title  = ''
     @slides = []
-    @text = text
+    @text   = text
 
     set_title
     extract_classnames!
@@ -16,9 +16,9 @@ class Keydown::SlideDeck
     require 'erb'
 
     css_files = Dir.glob('css/*.css') - ['css/rocks.css']
-    js_files = Dir.glob('js/*.js')
+    js_files  = Dir.glob('js/*.js')
 
-    template = File.new(File.join(Keydown.template_dir, 'index.rhtml'))
+    template  = File.new(File.join(Keydown.template_dir, 'index.rhtml'))
     ERB.new(template.read).result(binding)
   end
 
@@ -39,9 +39,9 @@ class Keydown::SlideDeck
   end
 
   def build_slides
-    slides_text = @text.split(/!SLIDE/).reject{|s| s.empty?}
+    slides_text = @text.split(/!SLIDE/).reject { |s| s.empty? }
     slides_text[1..-1].each_with_index do |slide_text, i|
-      slide_text.gsub(/\A(\n+)/,'').chomp!
+      slide_text.gsub(/\A(\n+)/, '').chomp!
       @slides << Keydown::Slide.new(slide_text, @classnames[i])
     end
   end
