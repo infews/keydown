@@ -60,7 +60,6 @@ describe Keydown, "`slides`" do
         @thor.invoke Keydown, "generate", "test"
 
         Dir.chdir "test" do
-
           system "cp #{Keydown.source_root}/spec/fixtures/with_title.md #{@tmp_dir}/test/with_title.md"
           system "cp #{Keydown.source_root}/spec/fixtures/custom.css #{@tmp_dir}/test/css/custom.css"
 
@@ -84,9 +83,13 @@ describe Keydown, "`slides`" do
       @doc.css('div.slide').length.should == 3
     end
 
-    xit "should include any custom CSS file from the css directory" do
-      @doc.css('style[title=test\.css]').length.should == 1
-      @doc.css('style[title=custom\.css]').length.should == 1
+    it "should include the HTML5 Rocks CSS only once" do
+      @doc.css('link[@href="css/rocks.css"]').length.should == 1
+    end
+
+    it "should include any custom CSS file from the css directory" do
+      @doc.css('link[@href="css/test.css"]').length.should == 1
+      @doc.css('link[@href="css/custom.css"]').length.should == 1
     end
 
   end
