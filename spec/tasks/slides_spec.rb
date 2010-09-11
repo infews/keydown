@@ -54,7 +54,7 @@ describe Keydown, "`slides`" do
     end
   end
 
-  describe "with custom CSS" do
+  describe "with custom CSS & JS" do
     before(:each) do
       Dir.chdir @tmp_dir do
         @thor.invoke Keydown, "generate", "test"
@@ -62,6 +62,7 @@ describe Keydown, "`slides`" do
         Dir.chdir "test" do
           system "cp #{Keydown.source_root}/spec/fixtures/with_title.md #{@tmp_dir}/test/with_title.md"
           system "cp #{Keydown.source_root}/spec/fixtures/custom.css #{@tmp_dir}/test/css/custom.css"
+          system "cp #{Keydown.source_root}/spec/fixtures/custom.js #{@tmp_dir}/test/js/custom.js"
 
           @thor.invoke Keydown, "slides", "with_title.md"
 
@@ -90,6 +91,11 @@ describe Keydown, "`slides`" do
     it "should include any custom CSS file from the css directory" do
       @doc.css('link[@href="css/test.css"]').length.should == 1
       @doc.css('link[@href="css/custom.css"]').length.should == 1
+    end
+
+    it "should include any custom JavaScript files from the js directory" do
+      @doc.css('script[@src="js/test.js"]').length.should == 1
+      @doc.css('script[@src="js/custom.js"]').length.should == 1
     end
 
   end

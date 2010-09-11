@@ -103,11 +103,11 @@ For ERb:
 
 ### Custom CSS
 
-All css files in the `css` directory will be placed inline in your presentation HTML file.
+All css files in the `css` directory will be linked into your presentation HTML file.
 
 ### Custom JavaScript.
 
-All JavaScript files in the `js` directory will be placed inline in your presentation HTML file.
+All JavaScript files in the `js` directory will be linked in your presentation HTML file.
 
 ## Requirements
 

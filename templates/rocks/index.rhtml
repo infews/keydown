@@ -451,7 +451,11 @@
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
     </script>
 		<script>CFInstall.check({ mode: "overlay" });</script>
-    <![endif]--> 
-    
+    <![endif]-->
+
+    <% js_files.each do |js_file| %>
+    <script src="<%= js_file %>" type="text/javascript"></script>
+    <% end %>
+
   </body> 
 </html>
