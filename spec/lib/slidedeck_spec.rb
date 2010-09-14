@@ -65,11 +65,11 @@ and this
       end
 
       it "should set the CSS classnames of each slide" do
-        slides = @doc.css('div.slide section')
+        slides = @doc.css('div.slide')
 
-        slides[0]['class'].should == nil
-        slides[1]['class'].should == 'foo'
-        slides[2]['class'].should == 'foo bar'
+        slides[0]['class'].should == 'slide'
+        slides[1]['class'].should == 'slide foo'
+        slides[2]['class'].should == 'slide foo bar'
       end
     end
   end

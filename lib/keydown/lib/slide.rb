@@ -9,7 +9,8 @@ class Keydown::Slide
 
   def initialize(text, classnames = '')
     @content      = text
-    @classnames   = classnames
+    @classnames   = 'slide'
+    @classnames   += ' ' + classnames unless classnames.empty?
     @notes        = ''
     @codemap      = {}
 
@@ -23,6 +24,7 @@ class Keydown::Slide
     require 'rdiscount'
 
     pygmentize_code!
+
     html_content = RDiscount.new(@content).to_html
     template     = File.new(File.join(Keydown.template_dir, 'slide.rhtml'))
 

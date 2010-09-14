@@ -26,7 +26,7 @@ describe Keydown::Slide do
 
   shared_examples_for "when generating HTML" do
     it "should assign the classname(s) to the section" do
-      @doc.css(@section_selector).should_not be_nil
+      @doc.css(@slide_selector).should_not be_nil
     end
 
     it "should convert the content via Markdown" do
@@ -57,7 +57,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = ''
+      @classnames       = 'slide'
       @slide            = Keydown::Slide.new(@slide_text)
     end
 
@@ -67,7 +67,7 @@ a simple note
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @section_selector = "section"
+        @slide_selector   = "div"
       end
 
       it_should_behave_like "when generating HTML"
@@ -85,8 +85,8 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'foo'
-      @slide            = Keydown::Slide.new(@slide_text, @classnames)
+      @classnames       = 'slide foo'
+      @slide            = Keydown::Slide.new(@slide_text, 'foo')
     end
 
     it_should_behave_like "extracting slide data"
@@ -95,7 +95,7 @@ a simple note
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @section_selector = "section.#{@classnames}"
+        @slide_selector   = "div.#{@classnames}"
       end
       it_should_behave_like "when generating HTML"
     end
@@ -112,8 +112,8 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'foo bar'
-      @slide            = Keydown::Slide.new(@slide_text, @classnames)
+      @classnames       = 'slide foo bar'
+      @slide            = Keydown::Slide.new(@slide_text, 'foo bar')
 
     end
 
@@ -123,7 +123,7 @@ a simple note
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @section_selector = "section.#{@classnames}"
+        @slide_selector   = "div.#{@classnames}"
       end
       it_should_behave_like "when generating HTML"
     end
@@ -148,7 +148,7 @@ a simple note
 
         SLIDE
 
-        @classnames       = ''
+        @classnames       = 'slide'
         template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
         @slide            = Keydown::Slide.new(@slide_text)
       end
@@ -159,7 +159,7 @@ a simple note
         before :each do
           @html             = @slide.to_html
           @doc              = Nokogiri(@html)
-          @section_selector = "section"
+          @slide_selector   = "div"
         end
         it_should_behave_like "when generating HTML"
         it_should_behave_like "Pygmentizing code fragments"
@@ -183,7 +183,7 @@ a simple note
 
         SLIDE
 
-        @classnames       = ''
+        @classnames       = 'slide'
         @slide            = Keydown::Slide.new(@slide_text)
       end
 
@@ -193,7 +193,7 @@ a simple note
         before :each do
           @html             = @slide.to_html
           @doc              = Nokogiri(@html)
-          @section_selector = "section"
+          @slide_selector   = "div"
         end
 
         it_should_behave_like "when generating HTML"
@@ -201,4 +201,39 @@ a simple note
       end
     end
   end
+
+#  describe "with an image for a full-bleed background" do
+#    before(:each) do
+#      @slide_text       = <<-SLIDE
+#
+## A Slide
+#With some text
+#
+#^^^ images/my_background.png
+#
+#!NOTES
+#a simple note
+#
+#      SLIDE
+#
+#      @classnames       = 'slide full-background my_background'
+#      @slide            = Keydown::Slide.new(@slide_text, 'full-background my_background')
+#    end
+#
+#    it_should_behave_like "extracting slide data"
+#
+#    describe "when generating HTML" do
+#      before :each do
+#        @html             = @slide.to_html
+#        @doc              = Nokogiri(@html)
+#        @slide_selector   = "div"
+#      end
+#
+#      it_should_behave_like "when generating HTML"
+#
+#      it "should remove any declaration of a background image" do
+#        @doc.css(@slide_selector).text.should_not match(/\^\^\^\s+images\/my_background\.png/)
+#      end
+#    end
+#  end
 end
