@@ -6,6 +6,7 @@ class Keydown::Slide
   attr_reader :classnames
   attr_reader :content
   attr_reader :notes
+  attr_reader :background_image
 
   def initialize(text, classnames = '')
     @content      = text
@@ -17,6 +18,7 @@ class Keydown::Slide
     extract_notes!
     extract_content!
     extract_code!
+    extract_background_image!
   end
 
   def to_html
@@ -40,6 +42,10 @@ class Keydown::Slide
     end
   end
 
+  def extract_content!
+    @content.gsub!(/^!NOTE(S)?\s*(.*\n)$/m, '')
+  end
+
   def extract_code!
     @content.gsub!(/^(```|@@@) ?(.+?)\r?\n(.+?)\r?\n(```|@@@)\r?$/m) do
       id           = Digest::SHA1.hexdigest($3)
@@ -48,8 +54,13 @@ class Keydown::Slide
     end
   end
 
-  def extract_content!
-    @content.gsub!(/^!NOTE(S)?\s*(.*\n)$/m, '')
+  def extract_background_image!
+    images = []
+    @content.gsub!(/^(\}\}\}) ?(.+?)\r?\n$/m) do
+      images << $2
+      ''
+    end
+    @background_image = images.first
   end
 
   def pygmentize_code!

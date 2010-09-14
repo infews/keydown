@@ -202,38 +202,39 @@ a simple note
     end
   end
 
-#  describe "with an image for a full-bleed background" do
-#    before(:each) do
-#      @slide_text       = <<-SLIDE
-#
-## A Slide
-#With some text
-#
-#^^^ images/my_background.png
-#
-#!NOTES
-#a simple note
-#
-#      SLIDE
-#
-#      @classnames       = 'slide full-background my_background'
-#      @slide            = Keydown::Slide.new(@slide_text, 'full-background my_background')
-#    end
-#
-#    it_should_behave_like "extracting slide data"
-#
-#    describe "when generating HTML" do
-#      before :each do
-#        @html             = @slide.to_html
-#        @doc              = Nokogiri(@html)
-#        @slide_selector   = "div"
-#      end
-#
-#      it_should_behave_like "when generating HTML"
-#
-#      it "should remove any declaration of a background image" do
-#        @doc.css(@slide_selector).text.should_not match(/\^\^\^\s+images\/my_background\.png/)
-#      end
-#    end
-#  end
+  describe "with an image for a full-bleed background" do
+    before(:each) do
+      @slide_text       = <<-SLIDE
+
+# A Slide
+With some text
+
+}}} images/my_background.png
+
+!NOTES
+a simple note
+
+      SLIDE
+
+      @classnames       = 'slide full-background my_background'
+      @slide            = Keydown::Slide.new(@slide_text, 'full-background my_background')
+    end
+
+    it_should_behave_like "extracting slide data"
+
+    describe "when generating HTML" do
+      before :each do
+        @html             = @slide.to_html
+        @doc              = Nokogiri(@html)
+        @slide_selector   = "div"
+      end
+
+      it_should_behave_like "when generating HTML"
+
+      it "should remove any declaration of a background image" do
+        puts @doc.css(@slide_selector)[0].content
+        @doc.css(@slide_selector)[0].content.should_not match(/\}\}\}\s+images\/my_background\.png/)
+      end
+    end
+  end
 end
