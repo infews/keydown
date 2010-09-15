@@ -33,8 +33,14 @@
     <title><%= title %></title>
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono" rel="stylesheet" type="text/css" /> 
 
+    <!--->
+      Original HTML5 Rocks CSS extracted for readability
+    <!--->
     <link href="css/rocks.css" rel="stylesheet" type="text/css" />
 
+    <!--->
+      Keydown provided CSS & your custom CSS
+    <!--->
     <% css_files.each do |css_file| %>
     <link href="<%= css_file %>" rel="stylesheet" type="text/css" />
     <% end %>
@@ -440,6 +446,9 @@
 		<script>CFInstall.check({ mode: "overlay" });</script>
     <![endif]-->
 
+    <!-->
+      Keydown puts your custom JS here
+    <!-->
     <% js_files.each do |js_file| %>
     <script src="<%= js_file %>" type="text/javascript"></script>
     <% end %>
