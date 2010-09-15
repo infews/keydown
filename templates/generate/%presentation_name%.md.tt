@@ -10,13 +10,18 @@
 
 # Some sample code
 
-''' ruby
+``` ruby
 def method
   puts "Hello, World"
 end
-
-'''
+```
 
 !NOTES
 
  * a note
+
+!SLIDE
+
+# With a Background Image
+
+}}} images/test.png

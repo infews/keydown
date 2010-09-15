@@ -128,4 +128,31 @@ describe Keydown, "`slides`" do
     end
   end
 
+  describe "for a presentation that has background images" do
+    before(:each) do
+      Dir.chdir @tmp_dir do
+        @thor.invoke Keydown, "generate", "test"
+
+        Dir.chdir "test" do
+          system "cp #{Keydown.source_root}/spec/fixtures/with_backgrounds.md #{@tmp_dir}/test/with_backgrounds.md"
+
+          @thor.invoke Keydown, "slides", "with_backgrounds.md"
+
+          @file = File.new('with_backgrounds.html')
+          @doc  = Nokogiri(@file)
+        end
+      end
+    end
+
+    it_should_behave_like "generating a presentation file"
+
+    it "should add the keydown.css file (which has the backgrounds) to the css directory" do
+      File.exist?("#{@tmp_dir}/test/css/keydown.css").should be_true
+    end
+
+    it "should add the keydown.css file to the HTML file" do
+      @doc.css('link[@href="css/keydown.css"]').length.should == 1
+    end
+
+  end
 end

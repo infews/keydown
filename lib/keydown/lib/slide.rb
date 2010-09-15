@@ -3,22 +3,26 @@ require 'albino'
 
 class Keydown::Slide
 
-  attr_reader :classnames
   attr_reader :content
   attr_reader :notes
   attr_reader :background_image
 
   def initialize(text, classnames = '')
     @content      = text
-    @classnames   = 'slide'
-    @classnames   += ' ' + classnames unless classnames.empty?
+    @classnames   = ['slide']
+    classnames.split(' ').inject(@classnames) { |css_classnames, name| css_classnames << name; css_classnames }
     @notes        = ''
     @codemap      = {}
+    @background_image = {}
 
     extract_notes!
     extract_content!
     extract_code!
     extract_background_image!
+  end
+
+  def classnames
+    @classnames.join(' ')
   end
 
   def to_html
@@ -55,12 +59,18 @@ class Keydown::Slide
   end
 
   def extract_background_image!
-    images = []
-    @content.gsub!(/^(\}\}\}) ?(.+?)\r?\n$/m) do
+    images            = []
+    @content.gsub!(/^(\}\}\}) ?(.+?)(\r?\n)?$/m) do
       images << $2
       ''
     end
-    @background_image = images.first
+
+    return unless images.first
+
+    image_classname   = images.first.match(/([\w-]+)\.?[\w]+$/)[1]
+    @classnames << 'full-background'
+    @classnames << image_classname
+    @background_image = {:classname => image_classname, :path => images.first}
   end
 
   def pygmentize_code!

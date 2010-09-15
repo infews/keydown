@@ -11,7 +11,7 @@ describe Keydown::SlideDeck do
 
   describe "with a title" do
     before :each do
-      @slides_text      = <<-SLIDE
+      @slides_text      = <<-SLIDES
 # Kermit the Frog Says...
 
 !SLIDE
@@ -34,7 +34,7 @@ and this
 
 # The Letter Q
 
-      SLIDE
+      SLIDES
 
       @deck             = Keydown::SlideDeck.new(@slides_text)
     end
@@ -72,5 +72,47 @@ and this
         slides[2]['class'].should == 'slide foo bar'
       end
     end
+  end
+
+  describe "with a background image" do
+    before :each do
+      @slides_text      = <<-SLIDES
+# Kermit the Frog Says...
+
+!SLIDE
+
+# This Presentation
+
+}}} images/bkg.png
+
+!SLIDE foo
+
+# Is Brought to You By
+
+!NOTE
+
+and this
+     SLIDES
+
+      @deck             = Keydown::SlideDeck.new(@slides_text)
+    end
+
+    describe "when generating HTML" do
+      before(:each) do
+        @html    = @deck.to_html
+        @doc     = Nokogiri(@html)
+        @slide_with_background = @doc.css('div.slide')[0]
+      end
+
+      it "should add the full-bleed background CSS classname to any slide that specifies a background" do
+        @slide_with_background['class'].split(' ').should include('full-background')
+      end
+
+      it "should add a custom classname to a slide that specifies a background" do
+        @slide_with_background['class'].split(' ').should include('bkg')
+      end
+    end
+
+
   end
 end

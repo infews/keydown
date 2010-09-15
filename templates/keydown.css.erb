@@ -1,0 +1,11 @@
+.slide.full-background {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+<% backgrounds.each do |background| %>
+.slide.<%= background[:classname] %> {
+  background-image: url(../<%= background[:path]%>);
+}
+<% end %>

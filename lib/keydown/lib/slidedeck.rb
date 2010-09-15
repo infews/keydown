@@ -46,5 +46,4 @@ class Keydown::SlideDeck
     end
   end
 
-
 end

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Davis W. Frank"]
-  s.date = %q{2010-09-11}
+  s.date = %q{2010-09-14}
   s.default_executable = %q{keydown}
   s.description = %q{Another HTML5 presentation generator}
   s.email = %q{dwfrank+github@infe.ws}
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
      "lib/keydown/tasks/slides.rb",
      "spec/fixtures/custom.css",
      "spec/fixtures/custom.js",
+     "spec/fixtures/with_backgrounds.md",
      "spec/fixtures/with_code.md",
      "spec/fixtures/with_title.md",
      "spec/fixtures/without_title.md",
@@ -52,6 +53,7 @@ Gem::Specification.new do |s|
      "templates/generate/css/rocks.css",
      "templates/generate/images/.empty_directory",
      "templates/generate/js/%presentation_name%.js",
+     "templates/keydown.css.erb",
      "templates/rocks/index.rhtml",
      "templates/rocks/slide.rhtml"
   ]

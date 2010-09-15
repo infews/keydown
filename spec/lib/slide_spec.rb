@@ -11,11 +11,11 @@ describe Keydown::Slide do
 
   shared_examples_for 'extracting slide data' do
 
-    it "should set the classname to empty" do
+    it "should set the CSS classnames" do
       @slide.classnames.should == @classnames
     end
 
-    it "should extract the content" do
+    it "should extract the slide content" do
       @slide.content.should match(/^# A Slide/)
     end
 
@@ -129,6 +129,38 @@ a simple note
     end
   end
 
+  describe "without a note" do
+    before :each do
+      @slide_text       = <<-SLIDE
+
+# A Slide
+With some text
+      SLIDE
+
+      @classnames       = 'slide'
+      @slide            = Keydown::Slide.new(@slide_text)
+    end
+
+    it "should set the CSS classnames" do
+      @slide.classnames.should == @classnames
+    end
+
+    it "should extract the slide content" do
+      @slide.content.should match(/^# A Slide/)
+      @slide.content.should match(/With some text/)
+    end
+
+    describe "when generating HTML" do
+      before :each do
+        @html             = @slide.to_html
+        @doc              = Nokogiri(@html)
+        @slide_selector   = "div"
+      end
+
+      it_should_behave_like "when generating HTML"
+    end
+  end
+
   describe "with code to higlight" do
 
     describe "using the Slidedown syntax" do
@@ -210,17 +242,21 @@ a simple note
 With some text
 
 }}} images/my_background.png
-
-!NOTES
-a simple note
-
       SLIDE
 
       @classnames       = 'slide full-background my_background'
-      @slide            = Keydown::Slide.new(@slide_text, 'full-background my_background')
+      @slide            = Keydown::Slide.new(@slide_text.chomp)
     end
 
-    it_should_behave_like "extracting slide data"
+
+    it "should set the CSS classnames" do
+      @slide.classnames.should == @classnames
+    end
+
+    it "should extract the slide content" do
+      @slide.content.should match(/^# A Slide/)
+      @slide.content.should match(/With some text/)
+    end
 
     describe "when generating HTML" do
       before :each do
@@ -232,8 +268,11 @@ a simple note
       it_should_behave_like "when generating HTML"
 
       it "should remove any declaration of a background image" do
-        puts @doc.css(@slide_selector)[0].content
         @doc.css(@slide_selector)[0].content.should_not match(/\}\}\}\s+images\/my_background\.png/)
+      end
+
+      it "should save off the background image info for use when generating the HTML" do
+        @slide.background_image.should == {:classname => 'my_background', :path => 'images/my_background.png'}
       end
     end
   end
