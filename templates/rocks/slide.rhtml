@@ -1,5 +1,5 @@
-<div class="<%= classnames %>">
-  <section>
+<div class="<%= container_classnames %>">
+  <section<%= " class=\"#{classnames}\"" unless classnames.empty? %>>
     <%= html_content %>
   </section>
 </div>

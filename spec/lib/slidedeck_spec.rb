@@ -65,11 +65,11 @@ and this
       end
 
       it "should set the CSS classnames of each slide" do
-        slides = @doc.css('div.slide')
+        slides = @doc.css('div.slide section')
 
-        slides[0]['class'].should == 'slide'
-        slides[1]['class'].should == 'slide foo'
-        slides[2]['class'].should == 'slide foo bar'
+        slides[0]['class'].should == nil
+        slides[1]['class'].should == 'foo'
+        slides[2]['class'].should == 'foo bar'
       end
     end
   end
@@ -83,7 +83,7 @@ and this
 
 # This Presentation
 
-}}} images/bkg.png
+}}} images/my_background.png
 
 !SLIDE foo
 
@@ -109,7 +109,7 @@ and this
       end
 
       it "should add a custom classname to a slide that specifies a background" do
-        @slide_with_background['class'].split(' ').should include('bkg')
+        @slide_with_background['class'].split(' ').should include('my_background')
       end
     end
 

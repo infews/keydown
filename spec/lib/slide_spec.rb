@@ -57,7 +57,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'slide'
+      @classnames       = ''
       @slide            = Keydown::Slide.new(@slide_text)
     end
 
@@ -67,7 +67,7 @@ a simple note
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @slide_selector   = "div"
+        @slide_selector   = "section"
       end
 
       it_should_behave_like "when generating HTML"
@@ -85,7 +85,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'slide foo'
+      @classnames       = 'foo'
       @slide            = Keydown::Slide.new(@slide_text, 'foo')
     end
 
@@ -95,7 +95,7 @@ a simple note
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @slide_selector   = "div.#{@classnames}"
+        @slide_selector   = "section.#{@classnames}"
       end
       it_should_behave_like "when generating HTML"
     end
@@ -112,7 +112,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'slide foo bar'
+      @classnames       = 'foo bar'
       @slide            = Keydown::Slide.new(@slide_text, 'foo bar')
 
     end
@@ -123,7 +123,7 @@ a simple note
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @slide_selector   = "div.#{@classnames}"
+        @slide_selector   = "section.#{@classnames}"
       end
       it_should_behave_like "when generating HTML"
     end
@@ -137,7 +137,7 @@ a simple note
 With some text
       SLIDE
 
-      @classnames       = 'slide'
+      @classnames       = ''
       @slide            = Keydown::Slide.new(@slide_text)
     end
 
@@ -154,7 +154,7 @@ With some text
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @slide_selector   = "div"
+        @slide_selector   = "section"
       end
 
       it_should_behave_like "when generating HTML"
@@ -180,7 +180,7 @@ a simple note
 
         SLIDE
 
-        @classnames       = 'slide'
+        @classnames       = ''
         template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
         @slide            = Keydown::Slide.new(@slide_text)
       end
@@ -191,7 +191,7 @@ a simple note
         before :each do
           @html             = @slide.to_html
           @doc              = Nokogiri(@html)
-          @slide_selector   = "div"
+          @slide_selector   = "section"
         end
         it_should_behave_like "when generating HTML"
         it_should_behave_like "Pygmentizing code fragments"
@@ -215,7 +215,7 @@ a simple note
 
         SLIDE
 
-        @classnames       = 'slide'
+        @classnames       = ''
         @slide            = Keydown::Slide.new(@slide_text)
       end
 
@@ -225,7 +225,7 @@ a simple note
         before :each do
           @html             = @slide.to_html
           @doc              = Nokogiri(@html)
-          @slide_selector   = "div"
+          @slide_selector   = "section"
         end
 
         it_should_behave_like "when generating HTML"
@@ -244,7 +244,7 @@ With some text
 }}} images/my_background.png
       SLIDE
 
-      @classnames       = 'slide full-background my_background'
+      @classnames       = ''
       @slide            = Keydown::Slide.new(@slide_text.chomp)
     end
 
@@ -262,7 +262,8 @@ With some text
       before :each do
         @html             = @slide.to_html
         @doc              = Nokogiri(@html)
-        @slide_selector   = "div"
+        @slide_selector   = "section"
+        @slide_container = @doc.css('div.slide')[0]
       end
 
       it_should_behave_like "when generating HTML"
@@ -274,6 +275,15 @@ With some text
       it "should save off the background image info for use when generating the HTML" do
         @slide.background_image.should == {:classname => 'my_background', :path => 'images/my_background.png'}
       end
+
+      it "should add the full-background class to the containing div" do
+        @slide_container['class'].split(' ').should include('full-background')
+      end
+
+      it "should add the background image class to the containing div" do
+        @slide_container['class'].split(' ').should include('my_background')
+      end
+
     end
   end
 end

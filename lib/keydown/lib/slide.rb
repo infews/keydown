@@ -8,12 +8,16 @@ class Keydown::Slide
   attr_reader :background_image
 
   def initialize(text, classnames = '')
-    @content      = text
-    @classnames   = ['slide']
-    classnames.split(' ').inject(@classnames) { |css_classnames, name| css_classnames << name; css_classnames }
-    @notes        = ''
-    @codemap      = {}
+    @content          = text
+    @notes            = ''
+    @codemap          = {}
     @background_image = {}
+
+    @classnames       = []
+    classnames.split(' ').inject(@classnames) do |css_classnames, name|
+      css_classnames << name
+      css_classnames
+    end
 
     extract_notes!
     extract_content!
@@ -23,6 +27,19 @@ class Keydown::Slide
 
   def classnames
     @classnames.join(' ')
+  end
+
+  def container_classnames
+    @names ||= begin
+      names = ['slide']
+
+      unless @background_image.empty?
+        names << 'full-background'
+        names << @background_image[:classname]
+      end
+
+      names.join(' ')
+    end
   end
 
   def to_html
@@ -68,8 +85,6 @@ class Keydown::Slide
     return unless images.first
 
     image_classname   = images.first.match(/([\w-]+)\.?[\w]+$/)[1]
-    @classnames << 'full-background'
-    @classnames << image_classname
     @background_image = {:classname => image_classname, :path => images.first}
   end
 
