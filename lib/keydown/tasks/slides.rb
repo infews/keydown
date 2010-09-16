@@ -17,22 +17,16 @@ class Keydown < Thor
       slide.background_image unless slide.background_image.empty?
     end.compact
 
-    generate_css_for_backgrounds(backgrounds) unless backgrounds.empty?
+    css_template  = File.new(File.join(Keydown.template_dir, '..', 'keydown.css.erb'))
+    create_file 'css/keydown.css' do
+      ERB.new(css_template.read).result(binding)
+    end
 
     presentation   = file.gsub('md', 'html')
 
     say "Creating KeyDown presentation from #{file}", :yellow
     create_file presentation do
       slide_deck.to_html
-    end
-  end
-
-  no_tasks do
-    def generate_css_for_backgrounds(backgrounds)
-      css_template  = File.new(File.join(Keydown.template_dir, '..', 'keydown.css.erb'))
-      create_file 'css/keydown.css' do
-        ERB.new(css_template.read).result(binding)
-      end
     end
   end
 end

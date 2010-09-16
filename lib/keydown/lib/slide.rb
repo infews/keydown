@@ -95,6 +95,7 @@ class Keydown::Slide
       if code.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
         code.gsub!(/^(  |\t)/m, '')
       end
+
       @content.gsub!(id, Albino.new(code, lang).colorize)
     end
   end
