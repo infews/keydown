@@ -13,11 +13,15 @@ describe Keydown, "`slides`" do
     end
 
     it "should generate the correct number of slides" do
-      @doc.css('div.slide').length.should == 3
+      @doc.css('div.slide').length.should == 4
     end
 
     it "should include the HTML5 Rocks CSS only once" do
       @doc.css('link[@href="css/rocks.css"]').length.should == 1
+    end
+
+    it "should include the HTML5 Rocks JavaScript only once" do
+      @doc.css('script[@src="js/rocks.js"]').length.should == 1
     end
 
   end
@@ -68,7 +72,7 @@ describe Keydown, "`slides`" do
 
       describe "should have one slide that" do
         before :each do
-          @slide = @doc.css('section')[2]
+          @slide = @doc.css('section')[3]
         end
 
         it "should have the correct css class(es)" do

@@ -61,15 +61,16 @@ and this
       end
 
       it "should generate the correct number of slides" do
-        @doc.css('div.slide').length.should == 3
+        @doc.css('div.slide').length.should == 4
       end
 
       it "should set the CSS classnames of each slide" do
         slides = @doc.css('div.slide section')
 
-        slides[0]['class'].should == nil
-        slides[1]['class'].should == 'foo'
-        slides[2]['class'].should == 'foo bar'
+        slides[0]['class'].should == 'middle' # config/start slide
+        slides[1]['class'].should == nil
+        slides[2]['class'].should == 'foo'
+        slides[3]['class'].should == 'foo bar'
       end
     end
   end
@@ -101,7 +102,7 @@ and this
       before(:each) do
         @html    = @deck.to_html
         @doc     = Nokogiri(@html)
-        @slide_with_background = @doc.css('div.slide')[0]
+        @slide_with_background = @doc.css('div.slide')[1]
       end
 
       it "should add the full-bleed background CSS classname to any slide that specifies a background" do

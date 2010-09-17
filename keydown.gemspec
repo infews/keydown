@@ -53,6 +53,7 @@ Gem::Specification.new do |s|
      "templates/generate/css/rocks.css",
      "templates/generate/images/.empty_directory",
      "templates/generate/js/%presentation_name%.js",
+     "templates/generate/js/rocks.js",
      "templates/keydown.css.erb",
      "templates/rocks/index.rhtml",
      "templates/rocks/slide.rhtml"

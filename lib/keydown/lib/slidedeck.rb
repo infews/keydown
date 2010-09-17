@@ -16,7 +16,7 @@ class Keydown::SlideDeck
     require 'erb'
 
     css_files = Dir.glob('css/*.css') - ['css/rocks.css']
-    js_files  = Dir.glob('js/*.js')
+    js_files  = Dir.glob('js/*.js') - ['js/rocks.js']
 
     template  = File.new(File.join(Keydown.template_dir, 'index.rhtml'))
     ERB.new(template.read).result(binding)
