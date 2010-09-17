@@ -40,5 +40,9 @@ describe Keydown do
       File.exist?("#{@tmp_dir}/sample/css/rocks.css").should be_true
     end
 
+    it "should copy the HTML5 Rocks default JS file" do
+      File.exist?("#{@tmp_dir}/sample/js/rocks.js").should be_true
+    end
+
   end
 end

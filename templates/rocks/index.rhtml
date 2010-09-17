@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright 2010 Google Inc.
+  Original Project, HTML5 Rocks 'Slides Template' Copyright 2010 Google Inc.
  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -18,6 +18,9 @@
   Modifications: Ernest Delgado (ernestd@google.com)
                  Alex Russell (slightlyoff@chromium.org)
                  Brad Neuberg
+
+  Keydown (http://infews.github.com/keydown), Copyright 2010 Infews LLC
+
 -->
 <html manifest="cache.manifest">
 <head>
@@ -50,11 +53,13 @@
 <div class="presentation">
   <div id="presentation-counter"></div>
   <div class="slides">
+    <!--
+      First slide has Title, Instrucsions & options. Remove (or display:none) this slide if you like
+    -->
     <div class="slide">
       <section class="middle">
         <h1><%= title %></h1>
-        <p>Made with <a href="http://infews.github.com/keydown"><b>Keydown</b></a><span class="key"><b>&darr;</b></span></p>
-        <p>Press <span class="key"><b>&rarr;</b></span> to advance</p>
+        <p>Press <span class="key"><b>&rarr;</b></span>, scroll, or swipe to advance</p>
         <h3>
           Options
         </h3>
@@ -84,15 +89,14 @@
             </label>
           </li>
         </ul>
+        <p>Made with <a href="http://infews.github.com/keydown"><b>Keydown</b></a></p>
       </section>
     </div>
     <% slides.each do |slide| %>
       <%= slide.to_html %>
     <% end %>
   </div>
-  <!-- slides -->
 </div>
-<!-- presentation -->
 
 <!--
   Original HTML5 Rocks JavaScript extracted for readability
