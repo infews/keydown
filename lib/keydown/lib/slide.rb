@@ -23,6 +23,7 @@ class Keydown::Slide
     extract_content!
     extract_code!
     extract_background_image!
+    pygmentize_code!
   end
 
   def classnames
@@ -45,8 +46,6 @@ class Keydown::Slide
   def to_html
     require 'erb'
     require 'rdiscount'
-
-    pygmentize_code!
 
     html_content = RDiscount.new(@content).to_html
     template     = File.new(File.join(Keydown.template_dir, 'slide.rhtml'))
