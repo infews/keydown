@@ -43,6 +43,18 @@ class Keydown::Slide
     end
   end
 
+  def background_attribution_classnames
+    names = ['attribution']
+
+    names << if background_image[:attribution_text]
+      background_image[:service]
+    else
+      'hidden'
+    end
+
+    names.join(' ')
+  end
+
   def to_html
     require 'erb'
     require 'rdiscount'
@@ -83,8 +95,17 @@ class Keydown::Slide
 
     return unless images.first
 
-    image_classname   = images.first.match(/([\w-]+)\.?[\w]+$/)[1]
-    @background_image = {:classname => image_classname, :path => images.first}
+    split_line        = images.first.split('::')
+    image_path        = split_line[0]
+
+    @background_image = {:classname        => image_path.match(/([\w-]+)\.?[\w]+$/)[1],
+                         :path             => image_path}
+
+    unless split_line[1].nil? || split_line[1].empty?
+      @background_image.merge!({:attribution_text          => split_line[1],
+                                :service                   => split_line[2],
+                                :attribution_link          => split_line[3]})
+    end
   end
 
   def pygmentize_code!

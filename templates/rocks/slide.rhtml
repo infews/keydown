@@ -2,4 +2,9 @@
   <section<%= " class=\"#{classnames}\"" unless classnames.empty? %>>
     <%= html_content %>
   </section>
+  <div class="<%= background_attribution_classnames %>">
+    <a href="<%= background_image[:attribution_link] %>">
+      <%= background_image[:attribution_text] %>
+    </a>
+  </div>
 </div>

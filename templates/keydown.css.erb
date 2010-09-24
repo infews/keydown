@@ -60,6 +60,12 @@ pre .vg { color: #008080 } /* Name.Variable.Global */
 pre .vi { color: #008080 } /* Name.Variable.Instance */
 pre .il { color: #009999 } /* Literal.Number.Integer.Long */
 
+/* To show bullests in unordered lists */
+section.bulleted ul {
+  padding-left: 30px;
+}
+
+
 /* Full slide backgrounds */
 .slide.full-background {
   -webkit-background-size: cover;
@@ -69,10 +75,23 @@ pre .il { color: #009999 } /* Literal.Number.Integer.Long */
 }
 <% backgrounds.each do |background| %>
 .<%= background[:classname] %> {
-  background-image: url(../<%= background[:path]%>);
+  background-image: url(../<%= background[:path] %>);
 }
 <% end %>
 
-section.bulleted ul {
-  padding-left: 30px;
+.attribution {
+  border: 1px solid black;
+  border-radius: 8px;
 }
+
+.attribution.flickr {
+  /*background-image: url(../images/flickr.jpg)*/
+  padding-left: 30px;
+  position: fixed;
+  bottom: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
