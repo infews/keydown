@@ -1,6 +1,21 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Keydown::SlideDeck do
+
+  shared_examples_for "finding slides" do
+    describe "when building slides" do
+
+      it "should find the document's title" do
+        @deck.title.should == "Kermit the Frog Says..."
+      end
+
+      it "should find all the slides in the markdown" do
+        @deck.slides.length.should == 3
+      end
+    end
+  end
+
+
   before :each do
     class Keydown
       def self.template_dir
@@ -39,16 +54,7 @@ and this
       @deck             = Keydown::SlideDeck.new(@slides_text)
     end
 
-    describe "when building slides" do
-
-      it "should find the document's title" do
-        @deck.title.should == "Kermit the Frog Says..."
-      end
-
-      it "should find all the slides in the markdown" do
-        @deck.slides.length.should == 3
-      end
-    end
+    it_should_behave_like "finding slides"
 
     describe "when generating HTML" do
       before :each do
@@ -93,10 +99,16 @@ and this
 !NOTE
 
 and this
+
+!SLIDE foo bar
+
+# The Letter Q
      SLIDES
 
       @deck             = Keydown::SlideDeck.new(@slides_text)
     end
+
+    it_should_behave_like "finding slides"
 
     describe "when generating HTML" do
       before(:each) do
