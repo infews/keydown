@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{keydown}
-  s.version = "0.1.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Davis W. Frank"]
-  s.date = %q{2010-10-04}
+  s.date = %q{2010-10-05}
   s.default_executable = %q{keydown}
   s.description = %q{Another HTML5 presentation generator}
   s.email = %q{dwfrank+github@infe.ws}
