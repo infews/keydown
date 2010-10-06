@@ -21,3 +21,4 @@ pkg
 ## PROJECT::SPECIFIC
 .idea/
 spec/output
+.rvmrc
