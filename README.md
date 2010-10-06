@@ -104,7 +104,7 @@ Keydown supports slides with full screen background images, including attributio
 
 This slide will have `sunset.jpg` as a full-bleed background image. It's aspect ratio will be preserved.
 
-If you wish to have attribution text, an icon (currently Flickr and Creative Commons are supported), and link the text, separate the text with `::` like this:
+If you wish to have attribution text, an icon (currently Flickr and Creative Commons graphics are supported via `flickr` and `cc` respectively), and link the text, separate the text with `::` like this:
 
 
     !SLIDE
