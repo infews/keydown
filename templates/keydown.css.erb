@@ -1,3 +1,46 @@
+/* To show bullests in unordered lists */
+section.bulleted ul {
+  padding-left: 30px;
+}
+
+/* Full slide backgrounds */
+.slide.full-background {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+<% backgrounds.each do |background| %>
+.<%= background[:classname] %> {
+  background-image: url(../<%= background[:path] %>);
+}
+<% end %>
+
+.attribution {
+  font-size: 24px;
+  position: fixed;
+  bottom: 8px;
+  left: 40px;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+}
+
+.attribution.flickr {
+  background: url(../images/flickr.png) left top no-repeat;
+  padding-left: 60px;
+}
+
+.attribution.cc {
+  background: url(../images/cc.large.png) left top no-repeat;
+  padding-left: 36px;
+}
+
+/* Happy generic hiding class */
+.hidden {
+  display: none;
+}
+
 /* - Pygments sytles for code fragments - */
 pre { background: none; }
 pre .c { color: #999988; font-style: italic } /* Comment */
@@ -59,47 +102,3 @@ pre .vc { color: #008080 } /* Name.Variable.Class */
 pre .vg { color: #008080 } /* Name.Variable.Global */
 pre .vi { color: #008080 } /* Name.Variable.Instance */
 pre .il { color: #009999 } /* Literal.Number.Integer.Long */
-
-/* To show bullests in unordered lists */
-section.bulleted ul {
-  padding-left: 30px;
-}
-
-
-/* Full slide backgrounds */
-.slide.full-background {
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position: center;
-}
-<% backgrounds.each do |background| %>
-.<%= background[:classname] %> {
-  background-image: url(../<%= background[:path] %>);
-}
-<% end %>
-
-.attribution {
-  font-size: 24px;
-  position: fixed;
-  bottom: 8px;
-  left: 40px;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
-}
-
-.attribution.flickr {
-  background: url(../images/flickr.png) left top no-repeat;
-  padding-left: 60px;
-}
-
-.attribution.cc {
-  background: url(../images/cc.large.png) left top no-repeat;
-  padding-left: 36px;
-}
-
-.hidden {
-  display: none;
-}
-

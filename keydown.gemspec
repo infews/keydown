@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Davis W. Frank"]
-  s.date = %q{2010-10-05}
+  s.date = %q{2010-11-09}
   s.default_executable = %q{keydown}
   s.description = %q{Another HTML5 presentation generator}
   s.email = %q{dwfrank+github@infe.ws}
@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
      "templates/generate/%presentation_name%.md.tt",
      "templates/generate/css/%presentation_name%.css",
      "templates/generate/css/rocks.css",
-     "templates/generate/images/.empty_directory",
+     "templates/generate/images/cc.large.png",
      "templates/generate/images/flickr.png",
      "templates/generate/js/%presentation_name%.js",
      "templates/generate/js/rocks.js",

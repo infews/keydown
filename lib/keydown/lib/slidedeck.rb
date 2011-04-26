@@ -15,7 +15,10 @@ class Keydown::SlideDeck
   def to_html
     require 'erb'
 
-    css_files = Dir.glob('css/*.css') - ['css/rocks.css']
+    css_files = ['css/keydown.css']
+    css_files += Dir.glob('css/*.css')
+    css_files.uniq!
+    css_files -= ['css/rocks.css']
     js_files  = Dir.glob('js/*.js') - ['js/rocks.js']
 
     template  = File.new(File.join(Keydown.template_dir, 'index.rhtml'))
