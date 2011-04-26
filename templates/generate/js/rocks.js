@@ -227,12 +227,7 @@
       return new Slide(el, idx);
     });
 
-    var h = window.location.hash;
-    try {
-      this.current = parseInt(h.split('#slide')[1], 10);
-    } catch (e) { /* squeltch */
-    }
-    this.current = isNaN(this.current) ? 1 : this.current;
+    this.init();
     var _t = this;
     doc.addEventListener('keydown',
                         function(e) {
@@ -256,7 +251,12 @@
                         }, false);
     window.addEventListener('popstate',
                            function(e) {
-                             _t.go(e.state);
+                             if (e.state === null) {
+                               _t.init();
+                             } else {
+                               _t.current = e.state;
+                             }
+                             _t.go();
                            }, false);
     this._update();
   };
@@ -280,6 +280,14 @@
     },
 
     current: 0,
+    init: function() {
+      var h = window.location.hash;
+      try {
+        this.current = parseInt(h.split('#slide')[1], 10);
+      } catch (e) { /* squeltch */
+      }
+      this.current = current = isNaN(this.current) ? 1 : this.current;
+    },
     next: function() {
       if (!this._slides[this.current - 1].buildNext()) {
         this.current = Math.min(this.current + 1, this._slides.length);
@@ -290,11 +298,7 @@
       this.current = Math.max(this.current - 1, 1);
       this._update();
     },
-    go: function(num) {
-      if (history.pushState && this.current != num) {
-        history.replaceState(this.current, 'Slide ' + this.current, '#slide' + this.current);
-      }
-      this.current = num;
+    go: function() {
       this._update(true);
     },
 
