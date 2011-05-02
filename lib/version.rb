@@ -1,3 +1,3 @@
-module .
-  VERSION = "0.0.1"
+module Keydown
+  VERSION = "0.7.0"
 end
