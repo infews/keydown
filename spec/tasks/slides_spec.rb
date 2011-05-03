@@ -31,7 +31,7 @@ describe Keydown, "`slides`" do
     FileUtils.rm_r @tmp_dir if File.exists?(@tmp_dir)
     FileUtils.mkdir_p @tmp_dir
 
-    @thor    = Thor.new
+    @thor = Thor.new
   end
 
   describe "when file cannot be found" do
@@ -61,10 +61,12 @@ describe Keydown, "`slides`" do
 
     describe "should generate an html file that" do
       before(:each) do
-        Dir.chdir @tmp_dir do
-          @thor.invoke Keydown::Tasks, "slides", "with_title.md"
-          @file = File.new('with_title.html')
-          @doc  = Nokogiri(@file)
+        capture_output do
+          Dir.chdir @tmp_dir do
+            @thor.invoke Keydown::Tasks, "slides", "with_title.md"
+            @file = File.new('with_title.html')
+            @doc = Nokogiri(@file)
+          end
         end
       end
 
@@ -88,10 +90,12 @@ describe Keydown, "`slides`" do
 
     describe "should add an .md extention if one isn't specified" do
       before(:each) do
-        Dir.chdir @tmp_dir do
-          @thor.invoke Keydown::Tasks, "slides", "with_title"
-          @file = File.new('with_title.html')
-          @doc  = Nokogiri(@file)
+        capture_output do
+          Dir.chdir @tmp_dir do
+            @thor.invoke Keydown::Tasks, "slides", "with_title"
+            @file = File.new('with_title.html')
+            @doc = Nokogiri(@file)
+          end
         end
       end
 
@@ -102,6 +106,8 @@ describe Keydown, "`slides`" do
 
   describe "with directory tree with custom CSS & JS" do
     before(:each) do
+      capture_output do
+
       Dir.chdir @tmp_dir do
         @thor.invoke Keydown::Tasks, "generate", "test"
 
@@ -113,8 +119,9 @@ describe Keydown, "`slides`" do
           @thor.invoke Keydown::Tasks, "slides", "with_title.md"
 
           @file = File.new('with_title.html')
-          @doc  = Nokogiri(@file)
+          @doc = Nokogiri(@file)
         end
+      end
       end
     end
 
@@ -133,16 +140,19 @@ describe Keydown, "`slides`" do
 
   describe "for a presentation that has background images" do
     before(:each) do
-      Dir.chdir @tmp_dir do
-        @thor.invoke Keydown::Tasks, "generate", "test"
+      capture_output do
 
-        Dir.chdir "test" do
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_backgrounds.md #{@tmp_dir}/test/with_backgrounds.md"
+        Dir.chdir @tmp_dir do
+          @thor.invoke Keydown::Tasks, "generate", "test"
 
-          @thor.invoke Keydown::Tasks, "slides", "with_backgrounds.md"
+          Dir.chdir "test" do
+            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_backgrounds.md #{@tmp_dir}/test/with_backgrounds.md"
 
-          @file = File.new('with_backgrounds.html')
-          @doc  = Nokogiri(@file)
+            @thor.invoke Keydown::Tasks, "slides", "with_backgrounds.md"
+
+            @file = File.new('with_backgrounds.html')
+            @doc = Nokogiri(@file)
+          end
         end
       end
     end

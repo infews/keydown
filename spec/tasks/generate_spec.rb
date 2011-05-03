@@ -6,13 +6,15 @@ describe Keydown do
     FileUtils.rm_r @tmp_dir if File.exists?(@tmp_dir)
     FileUtils.mkdir_p @tmp_dir
 
-    @thor    = Thor.new
+    @thor = Thor.new
   end
 
   describe "generate command" do
     before :each do
-      Dir.chdir @tmp_dir do
-        @thor.invoke Keydown::Tasks, "generate", "sample"
+      capture_output do
+        Dir.chdir @tmp_dir do
+          @thor.invoke Keydown::Tasks, "generate", "sample"
+        end
       end
     end
 
