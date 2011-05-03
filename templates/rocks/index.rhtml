@@ -61,15 +61,17 @@
     <div class="slide">
       <section class="middle">
         <h1><%= title %></h1>
+
         <p>
           Press <span class="key"><b>&rarr;</b></span>, scroll, or swipe to advance
         </p>
+
         <h3>
           Options
         </h3>
         <ul>
           <li>
-            <input type="checkbox" id="toggle-size" />
+            <input type="checkbox" id="toggle-size"/>
             <label for="toggle-size">
               <span>Grow</span>
             </label>
@@ -96,6 +98,11 @@
         <p>
           Made with <a href="http://infews.github.com/keydown"><b>Keydown</b></a>
         </p>
+        <p>
+          <a href="http://www.w3.org/html/logo/">
+            <img src="http://www.w3.org/html/logo/badge/html5-badge-h-css3-graphics-semantics.png" width="197" height="64" alt="HTML5 Powered with CSS3 / Styling, Graphics, 3D &amp; Effects, and Semantics" title="HTML5 Powered with CSS3 / Styling, Graphics, 3D &amp; Effects, and Semantics">
+          </a>
+        </p>
       </section>
     </div>
     <% slides.each do |slide| %>
@@ -118,7 +125,7 @@
   Keydown puts your custom JS here
 -->
 <% js_files.each do |js_file| %>
-<script src="<%= js_file %>" type="text/javascript"></script>
+  <script src="<%= js_file %>" type="text/javascript"></script>
 <% end %>
 
 </body>
