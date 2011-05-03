@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'thor', '>= 0.14.0'
   s.add_dependency 'rdiscount', '>= 1.6.8'
-  s.add_dependency 'albino', '>= 1.6.8'
+  s.add_dependency 'albino'
 
   s.add_development_dependency "rspec", ">= 2.5.0"
   s.add_development_dependency "fuubar"
