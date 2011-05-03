@@ -3,5 +3,5 @@
 require 'rubygems'
 require 'keydown'
 
-Keydown.start
+Keydown::Tasks.start
 
