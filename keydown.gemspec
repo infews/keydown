@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec", ">= 2.5.0"
   s.add_development_dependency "fuubar"
+  s.add_development_dependency "nokogiri"
   s.add_development_dependency "gem-release"
 
   s.files         = `git ls-files`.split("\n")

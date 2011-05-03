@@ -61,7 +61,7 @@ module Keydown
       require 'rdiscount'
 
       html_content = RDiscount.new(@content).to_html
-      template = File.new(File.join(Keydown.template_dir, 'slide.rhtml'))
+      template = File.new(File.join(Tasks.template_dir, 'slide.rhtml'))
 
       ERB.new(template.read).result(binding)
     end

@@ -1,5 +1,5 @@
 module Keydown
-  class Task < Thor
+  class Tasks < Thor
     attr_reader :presentation_name
 
     desc "generate NAME", "Make a directory & sample files for presentation NAME"

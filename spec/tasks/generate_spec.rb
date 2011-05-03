@@ -12,7 +12,7 @@ describe Keydown do
   describe "generate command" do
     before :each do
       Dir.chdir @tmp_dir do
-        @thor.invoke Keydown, "generate", "sample"
+        @thor.invoke Keydown::Tasks, "generate", "sample"
       end
     end
 

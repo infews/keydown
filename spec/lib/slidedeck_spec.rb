@@ -17,16 +17,18 @@ describe Keydown::SlideDeck do
 
 
   before :each do
-    class Keydown
-      def self.template_dir
-        File.join(Keydown.source_root, 'templates', 'rocks')
+    module Keydown
+      class Tasks
+        def self.template_dir
+          File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+        end
       end
     end
   end
 
   describe "with a title" do
     before :each do
-      @slides_text      = <<-SLIDES
+      @slides_text = <<-SLIDES
 # Kermit the Frog Says...
 
 !SLIDE
@@ -51,15 +53,15 @@ and this
 
       SLIDES
 
-      @deck             = Keydown::SlideDeck.new(@slides_text)
+      @deck = Keydown::SlideDeck.new(@slides_text)
     end
 
     it_should_behave_like "finding slides"
 
     describe "when generating HTML" do
       before :each do
-        @html    = @deck.to_html
-        @doc     = Nokogiri(@html)
+        @html = @deck.to_html
+        @doc = Nokogiri(@html)
       end
 
       it "should set the document's title" do
@@ -83,7 +85,7 @@ and this
 
   describe "with a background image" do
     before :each do
-      @slides_text      = <<-SLIDES
+      @slides_text = <<-SLIDES
 # Kermit the Frog Says...
 
 !SLIDE
@@ -103,17 +105,17 @@ and this
 !SLIDE foo bar
 
 # The Letter Q
-     SLIDES
+      SLIDES
 
-      @deck             = Keydown::SlideDeck.new(@slides_text)
+      @deck = Keydown::SlideDeck.new(@slides_text)
     end
 
     it_should_behave_like "finding slides"
 
     describe "when generating HTML" do
       before(:each) do
-        @html    = @deck.to_html
-        @doc     = Nokogiri(@html)
+        @html = @deck.to_html
+        @doc = Nokogiri(@html)
         @slide_with_background = @doc.css('div.slide')[1]
       end
 

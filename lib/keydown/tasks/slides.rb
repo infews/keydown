@@ -1,5 +1,5 @@
 module Keydown
-  class Task < Thor
+  class Tasks < Thor
 
     desc "slides FILE", "Convert a Keydown FILE into an HTML presentation"
 
@@ -12,7 +12,7 @@ module Keydown
         return
       end
 
-      @@template_dir = File.join(Keydown.source_root, 'templates', 'rocks')
+      @@template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
 
       say "Creating Keydown presentation from #{file}", :yellow
 
@@ -21,7 +21,7 @@ module Keydown
         slide.background_image unless slide.background_image.empty?
       end.compact
 
-      css_template = File.new(File.join(Keydown.template_dir, '..', 'keydown.css.erb'))
+      css_template = File.new(File.join(Tasks.template_dir, '..', 'keydown.css.erb'))
       create_file 'css/keydown.css', :force => true do
         ERB.new(css_template.read).result(binding)
       end

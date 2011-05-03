@@ -21,7 +21,7 @@ This will make:
 
 ### Write your presentation in Markdown
 
-Edit `my_presentation.md` and write your presentation as if it were HTML (because it will be):
+Edit `my_presentation.md` and write your presentation as if it were going to be HTML (because it will be):
 
     !SLIDE
     
@@ -180,4 +180,4 @@ Thanks to:
 
 ## Copyright
 
-Copyright (c) 2010 Infews LLC. See LICENSE for details.
+Copyright &copy;  Infews LLC. See LICENSE for details.

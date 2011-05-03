@@ -2,9 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Keydown::Slide do
   before :each do
-    class Keydown
-      def self.template_dir
-        File.join(Keydown.source_root, 'templates', 'rocks')
+    module Keydown
+      class Tasks
+        def self.template_dir
+          File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+        end
       end
     end
   end
@@ -53,7 +55,7 @@ describe Keydown::Slide do
 
   describe 'without a CSS classname' do
     before :each do
-      @slide_text       = <<-SLIDE
+      @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -62,17 +64,17 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = ''
-      @slide            = Keydown::Slide.new(@slide_text)
+      @classnames = ''
+      @slide = Keydown::Slide.new(@slide_text)
     end
 
     it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
       before :each do
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @slide_selector   = "section"
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section"
       end
 
       it_should_behave_like "generating HTML"
@@ -81,7 +83,7 @@ a simple note
 
   describe "with a single CSS classname" do
     before :each do
-      @slide_text       = <<-SLIDE
+      @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -90,17 +92,17 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'foo'
-      @slide            = Keydown::Slide.new(@slide_text, 'foo')
+      @classnames = 'foo'
+      @slide = Keydown::Slide.new(@slide_text, 'foo')
     end
 
     it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
       before :each do
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @slide_selector   = "section.#{@classnames}"
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section.#{@classnames}"
       end
 
       it_should_behave_like "generating HTML"
@@ -109,7 +111,7 @@ a simple note
 
   describe "with multiple CSS classnames" do
     before :each do
-      @slide_text       = <<-SLIDE
+      @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -118,8 +120,8 @@ With some text
 a simple note
       SLIDE
 
-      @classnames       = 'foo bar'
-      @slide            = Keydown::Slide.new(@slide_text, 'foo bar')
+      @classnames = 'foo bar'
+      @slide = Keydown::Slide.new(@slide_text, 'foo bar')
 
     end
 
@@ -127,9 +129,9 @@ a simple note
 
     describe "generating HTML" do
       before :each do
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @slide_selector   = "section.#{@classnames}"
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section.#{@classnames}"
       end
       it_should_behave_like "generating HTML"
     end
@@ -137,14 +139,14 @@ a simple note
 
   describe "without a note" do
     before :each do
-      @slide_text       = <<-SLIDE
+      @slide_text = <<-SLIDE
 
 # A Slide
 With some text
       SLIDE
 
-      @classnames       = ''
-      @slide            = Keydown::Slide.new(@slide_text)
+      @classnames = ''
+      @slide = Keydown::Slide.new(@slide_text)
     end
 
     it "should set the CSS classnames" do
@@ -158,9 +160,9 @@ With some text
 
     describe "when generating HTML" do
       before :each do
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @slide_selector   = "section"
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section"
       end
 
       it_should_behave_like "generating HTML"
@@ -171,7 +173,7 @@ With some text
 
     describe "using the Slidedown syntax" do
       before :each do
-        @slide_text       = <<-SLIDE
+        @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -186,18 +188,18 @@ a simple note
 
         SLIDE
 
-        @classnames       = ''
-        template_dir      = File.join(Keydown.source_root, 'templates', 'rocks')
-        @slide            = Keydown::Slide.new(@slide_text)
+        @classnames = ''
+        template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+        @slide = Keydown::Slide.new(@slide_text)
       end
 
       it_should_behave_like "extracting slide data"
 
       describe "when generating HTML" do
         before :each do
-          @html             = @slide.to_html
-          @doc              = Nokogiri(@html)
-          @slide_selector   = "section"
+          @html = @slide.to_html
+          @doc = Nokogiri(@html)
+          @slide_selector = "section"
         end
 
         it_should_behave_like "generating HTML"
@@ -208,7 +210,7 @@ a simple note
 
     describe "using the Github markup syntax" do
       before :each do
-        @slide_text       = <<-SLIDE
+        @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -223,17 +225,17 @@ a simple note
 
         SLIDE
 
-        @classnames       = ''
-        @slide            = Keydown::Slide.new(@slide_text)
+        @classnames = ''
+        @slide = Keydown::Slide.new(@slide_text)
       end
 
       it_should_behave_like "extracting slide data"
 
       describe "when generating HTML" do
         before :each do
-          @html             = @slide.to_html
-          @doc              = Nokogiri(@html)
-          @slide_selector   = "section"
+          @html = @slide.to_html
+          @doc = Nokogiri(@html)
+          @slide_selector = "section"
         end
 
         it_should_behave_like "generating HTML"
@@ -244,7 +246,7 @@ a simple note
 
   describe "with an image for a full-bleed background" do
     before(:each) do
-      @slide_text       = <<-SLIDE
+      @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -256,17 +258,17 @@ a simple note
 
       SLIDE
 
-      @classnames       = ''
-      @slide            = Keydown::Slide.new(@slide_text.chomp)
+      @classnames = ''
+      @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 
     it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
       before :each do
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @slide_selector   = "section"
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section"
         @slide_container = @doc.css('div.slide')[0]
       end
 
@@ -293,7 +295,7 @@ a simple note
 
   describe "with an image for a full-bleed background with a Flickr attribution" do
     before(:each) do
-      @slide_text       = <<-SLIDE
+      @slide_text = <<-SLIDE
 
 # A Slide
 With some text
@@ -305,17 +307,17 @@ a simple note
 
       SLIDE
 
-      @classnames       = ''
-      @slide            = Keydown::Slide.new(@slide_text.chomp)
+      @classnames = ''
+      @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 
     it_should_behave_like "extracting slide data"
 
     describe "when generating HTML" do
       before :each do
-        @html             = @slide.to_html
-        @doc              = Nokogiri(@html)
-        @slide_selector   = "section"
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section"
         @slide_container = @doc.css('div.slide')[0]
       end
 
