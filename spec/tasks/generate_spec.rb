@@ -26,7 +26,7 @@ describe Keydown do
 
     it "should generate a sample Markdown file" do
       Dir.chdir "#{@tmp_dir}/sample" do
-        File.exist?("sample.md").should be_true
+        File.exist?("slides.md").should be_true
       end
     end
 
