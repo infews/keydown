@@ -1,5 +1,4 @@
 require 'digest/sha1'
-require 'albino'
 
 module Keydown
   class Slide
@@ -24,7 +23,7 @@ module Keydown
       extract_content!
       extract_code!
       extract_background_image!
-      pygmentize_code!
+      highlight_code!
     end
 
     def classnames
@@ -109,15 +108,19 @@ module Keydown
       end
     end
 
-    def pygmentize_code!
-      @codemap.each do |id, spec|
-        lang = spec[:lang]
-        code = spec[:code]
+    require "coderay"
+
+    def highlight_code!
+      @codemap.each do |id, code_block|
+        lang = code_block[:lang]
+        code = code_block[:code]
         if code.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
           code.gsub!(/^(  |\t)/m, '')
         end
 
-        @content.gsub!(id, Albino.new(code, lang).colorize)
+        tokens = CodeRay.scan code, lang.to_sym
+
+        @content.gsub!(id, %Q{<div class="highlight">#{tokens.html}</div>})
       end
     end
 

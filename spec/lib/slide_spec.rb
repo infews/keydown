@@ -47,7 +47,7 @@ describe Keydown::Slide do
     end
   end
 
-  shared_examples_for "Pygmentizing code fragments" do
+  shared_examples_for "syntax highlighting" do
     it "should colorize the code fragments" do
       @doc.css('.highlight').length.should == 1
     end
@@ -204,7 +204,7 @@ a simple note
 
         it_should_behave_like "generating HTML"
 
-        it_should_behave_like "Pygmentizing code fragments"
+        it_should_behave_like "syntax highlighting"
       end
     end
 
@@ -239,7 +239,7 @@ a simple note
         end
 
         it_should_behave_like "generating HTML"
-        it_should_behave_like "Pygmentizing code fragments"
+        it_should_behave_like "syntax highlighting"
       end
     end
   end
