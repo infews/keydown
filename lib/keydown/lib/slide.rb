@@ -120,7 +120,7 @@ module Keydown
 
         tokens = CodeRay.scan code, lang.to_sym
 
-        @content.gsub!(id, %Q{<div class="highlight">#{tokens.html}</div>})
+        @content.gsub!(id, tokens.html.div)
       end
     end
 

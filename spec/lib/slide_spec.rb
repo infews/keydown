@@ -49,7 +49,7 @@ describe Keydown::Slide do
 
   shared_examples_for "syntax highlighting" do
     it "should colorize the code fragments" do
-      @doc.css('.highlight').length.should == 1
+      @doc.css('.CodeRay').length.should == 1
     end
   end
 
