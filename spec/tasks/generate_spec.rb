@@ -13,7 +13,7 @@ describe Keydown do
     before :each do
       capture_output do
         Dir.chdir @tmp_dir do
-          @thor.invoke Keydown::Tasks, "generate", "sample"
+          @thor.invoke Keydown::Tasks, "generate", ["sample"]
         end
       end
     end
