@@ -115,7 +115,7 @@ If you wish to have attribution text, an icon (currently Flickr and Creative Com
 
 ### Syntax Highlighting
 
-Code syntax highlighting is done via [Pygments](), which must be installed locally to work. All Pygments lexers are supported.
+Code syntax highlighting is done via [Pygments](http://pygments.org), which must be installed locally to work. All Pygments lexers are supported.
 
 Mark your code by block escaping via `@@@` or ` ``` `
 
@@ -154,7 +154,7 @@ All JavaScript files in the `js` directory will be linked in your presentation H
 ### For Use
 
    * Ruby and Rubygems
-   * [Pygments]() is required for code syntax highlighting
+   * [Pygments](http://pygments.org) is required for code syntax highlighting
    * Other dependent gems will be installed
 
 ### For Development
@@ -175,7 +175,7 @@ All JavaScript files in the `js` directory will be linked in your presentation H
 Thanks to:
 
 * HTML5 Rocks guys for a great presentation template
-* [@nakajima](http://twitter.com/nakajima) & [Slidedown]() for some parsing
+* [@nakajima](http://twitter.com/nakajima) & [Slidedown](http://github.com/nakajima/slidedown) for some parsing
 * The various Github guys for Albino, Gollum, etc.
 
 ## Copyright
