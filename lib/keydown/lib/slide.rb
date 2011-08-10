@@ -114,7 +114,7 @@ module Keydown
       @codemap.each do |id, code_block|
         lang = code_block[:lang]
         code = code_block[:code]
-        if code.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
+        if code.lines.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
           code.gsub!(/^(  |\t)/m, '')
         end
 
