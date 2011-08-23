@@ -342,6 +342,10 @@
         case 39: // right arrow
         case 32: // space
           this.next(); break;
+        case 33: // pageup
+          this.prev(); break;
+        case 34: // pagedown
+          this.next(); break;
         case 50: // 2
           this.showNotes(); break;
         case 51: // 3
