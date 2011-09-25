@@ -5,7 +5,7 @@ describe Keydown::Slide do
     module Keydown
       class Tasks
         def self.template_dir
-          File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+          File.join(Keydown::Tasks.source_root, 'templates', 'deck.js')
         end
       end
     end

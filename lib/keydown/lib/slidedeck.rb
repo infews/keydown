@@ -20,8 +20,7 @@ module Keydown
       css_files = ['css/keydown.css']
       css_files += Dir.glob('css/*.css')
       css_files.uniq!
-      css_files -= ['css/rocks.css']
-      js_files = Dir.glob('js/*.js') - ['js/rocks.js']
+      js_files = Dir.glob('js/*.js')
 
       template = File.new(File.join(Tasks.template_dir, 'index.rhtml'))
       ERB.new(template.read).result(binding)

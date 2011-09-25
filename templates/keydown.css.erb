@@ -1,8 +1,3 @@
-/* To show bullests in unordered lists */
-section.bulleted ul {
-  padding-left: 30px;
-}
-
 /* Full slide backgrounds */
 .slide.full-background {
   -webkit-background-size: cover;
@@ -11,11 +6,12 @@ section.bulleted ul {
   background-position: center;
 }
 <% backgrounds.each do |background| %>
-.<%= background[:classname] %> {
+.slide.full-background.<%= background[:classname] %> {
   background-image: url(../<%= background[:path] %>);
 }
 <% end %>
 
+/* image attribution with service logos */
 .attribution {
   font-size: 24px;
   position: fixed;

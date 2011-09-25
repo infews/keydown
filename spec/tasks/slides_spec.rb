@@ -13,30 +13,25 @@ describe Keydown, "`slides`" do
     end
 
     it "should generate the correct number of slides" do
-      @doc.css('div.slide').length.should == 4
-    end
-
-    it "should include the HTML5 Rocks CSS only once" do
-      @doc.css('link[@href="css/rocks.css"]').length.should == 1
-    end
-
-    it "should include the HTML5 Rocks JavaScript only once" do
-      @doc.css('script[@src="js/rocks.js"]').length.should == 1
+      @doc.css('div.slide').length.should == 3
     end
 
   end
 
+  let :tmp_dir do
+    "#{Dir.tmpdir}/keydown_test"
+  end
+  
   before :each do
-    @tmp_dir = "#{Dir.tmpdir}/keydown_test"
-    FileUtils.rm_r @tmp_dir if File.exists?(@tmp_dir)
-    FileUtils.mkdir_p @tmp_dir
+    FileUtils.rm_r tmp_dir if File.exists?(tmp_dir)
+    FileUtils.mkdir_p tmp_dir
 
     @thor = Thor.new
   end
 
   describe "when file cannot be found" do
     before(:each) do
-      Dir.chdir @tmp_dir do
+      Dir.chdir tmp_dir do
         @std_out = capture_output do
           @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
         end
@@ -48,7 +43,7 @@ describe Keydown, "`slides`" do
     end
 
     it "should not write out a file" do
-      Dir.glob("#{@tmp_dir}/*.html").should be_empty
+      Dir.glob("#{tmp_dir}/*.html").should be_empty
     end
 
   end
@@ -56,13 +51,13 @@ describe Keydown, "`slides`" do
   describe "with defaults" do
 
     before :each do
-      system "cp -r spec/fixtures/with_title.md #{@tmp_dir}"
+      system "cp -r spec/fixtures/with_title.md #{tmp_dir}"
     end
 
     describe "should generate an html file that" do
       before(:each) do
         capture_output do
-          Dir.chdir @tmp_dir do
+          Dir.chdir tmp_dir do
             @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
             @file = File.new('with_title.html')
             @doc = Nokogiri(@file)
@@ -74,7 +69,7 @@ describe Keydown, "`slides`" do
 
       describe "should have one slide that" do
         before :each do
-          @slide = @doc.css('section')[3]
+          @slide = @doc.css('section')[2]
         end
 
         it "should have the correct css class(es)" do
@@ -91,7 +86,7 @@ describe Keydown, "`slides`" do
     describe "should add an .md extention if one isn't specified" do
       before(:each) do
         capture_output do
-          Dir.chdir @tmp_dir do
+          Dir.chdir tmp_dir do
             @thor.invoke Keydown::Tasks, ["slides", "with_title"]
             @file = File.new('with_title.html')
             @doc = Nokogiri(@file)
@@ -108,13 +103,13 @@ describe Keydown, "`slides`" do
     before(:each) do
       capture_output do
 
-      Dir.chdir @tmp_dir do
+      Dir.chdir tmp_dir do
         @thor.invoke Keydown::Tasks, ["generate", "test"]
 
         Dir.chdir "test" do
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_title.md #{@tmp_dir}/test/with_title.md"
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.css #{@tmp_dir}/test/css/custom.css"
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.js #{@tmp_dir}/test/js/custom.js"
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_title.md #{tmp_dir}/test/with_title.md"
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.css #{tmp_dir}/test/css/custom.css"
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.js #{tmp_dir}/test/js/custom.js"
 
           @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
 
@@ -142,11 +137,11 @@ describe Keydown, "`slides`" do
     before(:each) do
       capture_output do
 
-        Dir.chdir @tmp_dir do
+        Dir.chdir tmp_dir do
           @thor.invoke Keydown::Tasks, ["generate", "test"]
 
           Dir.chdir "test" do
-            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_backgrounds.md #{@tmp_dir}/test/with_backgrounds.md"
+            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_backgrounds.md #{tmp_dir}/test/with_backgrounds.md"
 
             @thor.invoke Keydown::Tasks, ["slides", "with_backgrounds.md"]
 
@@ -160,7 +155,7 @@ describe Keydown, "`slides`" do
     it_should_behave_like "generating a presentation file"
 
     it "should add the keydown.css file (which has the backgrounds) to the css directory" do
-      File.exist?("#{@tmp_dir}/test/css/keydown.css").should be_true
+      File.exist?("#{tmp_dir}/test/css/keydown.css").should be_true
     end
 
     it "should add the keydown.css file to the HTML file" do

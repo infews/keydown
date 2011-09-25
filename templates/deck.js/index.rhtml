@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <!--
+    deck.js's core css.
+  -->
+  <link rel="stylesheet" href="deck/core/deck.core.css" type="text/css">
+
+  <!--
+    Keydown puts it's CSS & your custom CSS here
+  -->
+  <% css_files.each do |css_file| %>
+      <link href="<%= css_file %>" rel="stylesheet" type="text/css"/>
+  <% end %>
+
+  <!--
+    deck.js extension CSS files go here.
+  -->
+
+  <!--
+    Modernizr provided for legacy browsers.
+  -->
+  <script src="deck/modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<% slides.each do |slide| %>
+  <%= slide.to_html %>
+<% end %>
+
+<!-- Other extension HTML snippets go here, at the bottom of the deck container. -->
+
+<!--
+  jQuery & deck.js
+-->
+<script src="deck/jquery.1.6.4.min.js"></script>
+<script src="deck/core/deck.core.js"></script>
+
+<!--
+  deck.js extension JS files here
+-->
+
+<!--
+  Keydown puts your custom JS here
+-->
+<% js_files.each do |js_file| %>
+  <script src="<%= js_file %>" type="text/javascript"></script>
+<% end %>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+    $(function() {
+        $.deck('.slide');
+    });
+</script>
+</body>
+</html>
