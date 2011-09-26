@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "fuubar"
   s.add_development_dependency "nokogiri"
   s.add_development_dependency "gem-release"
+  s.add_development_dependency "rake"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
