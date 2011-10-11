@@ -13,10 +13,10 @@ module Keydown
     def self.template_dir
       @@template_dir
     end
-
   end
 end
 
-Dir["#{File.dirname(__FILE__)}/keydown/**/*.rb"].each do |file|
-  require file
+lib_files = File.join(File.dirname(__FILE__), 'keydown', '**', '*.rb')
+Dir[lib_files].each do |file|
+  require file[0..-4]
 end
