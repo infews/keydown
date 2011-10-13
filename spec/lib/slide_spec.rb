@@ -269,7 +269,7 @@ a simple note
         @html = @slide.to_html
         @doc = Nokogiri(@html)
         @slide_selector = "section"
-        @slide_container = @doc.css('div.slide')[0]
+        @slide_container = @doc.css('section.slide')[0]
       end
 
       it_should_behave_like "generating HTML"
@@ -318,7 +318,7 @@ a simple note
         @html = @slide.to_html
         @doc = Nokogiri(@html)
         @slide_selector = "section"
-        @slide_container = @doc.css('div.slide')[0]
+        @slide_container = @doc.css('section.slide')[0]
       end
 
       it_should_behave_like "generating HTML"

@@ -1,0 +1,37 @@
+!!! 5
+%html
+%head
+  %title= title
+  %meta{ :charset => "utf-8" }
+  %meta{ :name => "viewport", :content => "width=1024, user-scalable=no" }
+
+  / deck.js's core css.
+  = stylesheet "deck/core/deck.core.css"
+
+  / Keydown puts its CSS & your custom CSS here
+  - css_files.each do |css_file|
+    = stylesheet css_file
+
+  / deck.js extension CSS files go here.
+
+  / Modernizr provided for legacy browsers.
+  = script "deck/modernizr.custom.js"
+
+%body.deck-container
+
+  - slides.each do |slide|
+    = slide.to_html
+
+  / jQuery & deck.js
+  = script "deck/jquery.1.6.4.min.js"
+  = script "deck/core/deck.core.js"
+
+  / deck.js extension JS files here
+
+  / Keydown puts your custom JS here
+  - js_files.each do |js_file|
+    = script js_file
+
+  / Initialize the deck.
+  %script{:type => "text/javascript"}
+    $(function() { $.deck('.slide'); });

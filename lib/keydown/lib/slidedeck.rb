@@ -1,5 +1,11 @@
+require 'ostruct'
+
 module Keydown
   class SlideDeck
+
+    class Context < OpenStruct
+      include HtmlHelpers
+    end
 
     attr_reader :title
     attr_reader :slides
@@ -15,15 +21,20 @@ module Keydown
     end
 
     def to_html
-      require 'erb'
+      require 'tilt'
 
       css_files = ['css/keydown.css']
       css_files += Dir.glob('css/*.css')
       css_files.uniq!
-      js_files = Dir.glob('js/*.js')
+      js_files = Dir.glob('js/**/*.js') || []
 
-      template = File.new(File.join(Tasks.template_dir, 'index.rhtml'))
-      ERB.new(template.read).result(binding)
+      context = Context.new(:title     => @title,
+                           :css_files => css_files,
+                           :js_files  => js_files,
+                           :slides    => @slides)
+
+      template = Tilt.new(File.join(Tasks.template_dir, 'index.html.haml'))
+      template.render(context)
     end
 
     private

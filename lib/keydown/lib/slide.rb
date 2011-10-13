@@ -45,24 +45,23 @@ module Keydown
 
     def background_attribution_classnames
       names = ['attribution']
-
-      names << if background_image[:attribution_text]
-        background_image[:service]
-               else
-                 'hidden'
-               end
-
+      names << (background_image[:attribution_text] ? background_image[:service] : 'hidden')
       names.join(' ')
     end
 
     def to_html
-      require 'erb'
+      require 'tilt'
       require 'rdiscount'
 
-      html_content = RDiscount.new(@content).to_html
-      template = File.new(File.join(Tasks.template_dir, 'slide.rhtml'))
+      markdown = RDiscount.new(@content)
+      context = OpenStruct.new(:html_content => markdown.to_html,
+                               :container_classnames => container_classnames,
+                               :classnames => classnames,
+                               :background_attribution_classnames => background_attribution_classnames,
+                               :background_image => background_image)
 
-      ERB.new(template.read).result(binding)
+      slide = Tilt.new(File.join(Tasks.template_dir, 'slide.html.haml'))
+      slide.render(context)
     end
 
     private
@@ -123,6 +122,5 @@ module Keydown
         @content.gsub!(id, tokens.html.div)
       end
     end
-
   end
 end

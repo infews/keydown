@@ -13,7 +13,7 @@ describe Keydown, "`slides`" do
     end
 
     it "should generate the correct number of slides" do
-      @doc.css('div.slide').length.should == 3
+      @doc.css('section.slide').length.should == 3
     end
 
   end
@@ -21,7 +21,7 @@ describe Keydown, "`slides`" do
   let :tmp_dir do
     "#{Dir.tmpdir}/keydown_test"
   end
-  
+
   before :each do
     FileUtils.rm_r tmp_dir if File.exists?(tmp_dir)
     FileUtils.mkdir_p tmp_dir
@@ -69,16 +69,16 @@ describe Keydown, "`slides`" do
 
       describe "should have one slide that" do
         before :each do
-          @slide = @doc.css('section')[2]
+          @third_slide = @doc.css('section')[2].css('div')[0]
         end
 
         it "should have the correct css class(es)" do
-          @slide['class'].should match /foo/
-          @slide['class'].should match /bar/
+          @third_slide['class'].should match /foo/
+          @third_slide['class'].should match /bar/
         end
 
         it "should have the correct content" do
-          @slide.css('h1').text.should match /The Letter Q/
+          @third_slide.css('h1').text.should match /The Letter Q/
         end
       end
     end
@@ -103,20 +103,20 @@ describe Keydown, "`slides`" do
     before(:each) do
       capture_output do
 
-      Dir.chdir tmp_dir do
-        @thor.invoke Keydown::Tasks, ["generate", "test"]
+        Dir.chdir tmp_dir do
+          @thor.invoke Keydown::Tasks, ["generate", "test"]
+         puts Dir.pwd
+          Dir.chdir "test" do
+            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_title.md #{tmp_dir}/test/with_title.md"
+            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.css #{tmp_dir}/test/css/custom.css"
+            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.js #{tmp_dir}/test/js/custom.js"
 
-        Dir.chdir "test" do
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_title.md #{tmp_dir}/test/with_title.md"
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.css #{tmp_dir}/test/css/custom.css"
-          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.js #{tmp_dir}/test/js/custom.js"
+            @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
 
-          @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
-
-          @file = File.new('with_title.html')
-          @doc = Nokogiri(@file)
+            @file = File.new('with_title.html')
+            @doc = Nokogiri(@file)
+          end
         end
-      end
       end
     end
 

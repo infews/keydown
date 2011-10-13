@@ -12,11 +12,14 @@ Gem::Specification.new do |s|
   s.summary     = %q{Yet another "Slides in HTML" generator}
   s.description = %q{Bastard child of Slidedown, HTML5 Rocks, and organic fair trade Bolivian coffee}
 
-  s.add_dependency 'thor', '>= 0.14.0'
+  s.add_dependency 'thor'
+  s.add_dependency 'tilt'
+  s.add_dependency 'haml'
+  s.add_dependency 'sass'
   s.add_dependency 'rdiscount', '>= 1.6.8'
   s.add_dependency 'coderay', '~> 0.9.8'
 
-  s.add_development_dependency "rspec", ">= 2.5.0"
+  s.add_development_dependency "rspec"
   s.add_development_dependency "fuubar"
   s.add_development_dependency "nokogiri"
   s.add_development_dependency "gem-release"
