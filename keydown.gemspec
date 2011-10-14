@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "version"
+$:.push File.expand_path('lib', __FILE__)
+require './lib/version.rb'
 
 Gem::Specification.new do |s|
   s.name        = "keydown"
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["dwfrank@infe.ws"]
   s.homepage    = "http://rubygems.org/gems/keydown"
   s.summary     = %q{Yet another "Slides in HTML" generator}
-  s.description = %q{Bastard child of Slidedown, HTML5 Rocks, and organic fair trade Bolivian coffee}
+  s.description = %q{Bastard child of Slidedown, deck.js and organic fair trade Bolivian coffee}
 
   s.add_dependency 'thor'
   s.add_dependency 'tilt'
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rdiscount', '>= 1.6.8'
   s.add_dependency 'coderay', '~> 0.9.8'
 
+  s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
   s.add_development_dependency "fuubar"
   s.add_development_dependency "nokogiri"

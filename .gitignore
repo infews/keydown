@@ -3,3 +3,5 @@
 pkg/*
 *.gem
 .bundle
+Gemfile.lock
+binstubs/*
