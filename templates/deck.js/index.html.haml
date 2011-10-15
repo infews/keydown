@@ -8,14 +8,16 @@
   / deck.js's core css.
   = stylesheet "deck/core/deck.core.css"
 
+  / deck.js extension CSS files go here.
+  - extensions_css_files.each do |css_file|
+    = stylesheet css_file
+
   / Keydown puts its CSS & your custom CSS here
   - css_files.each do |css_file|
     = stylesheet css_file
 
-  / deck.js extension CSS files go here.
-
   / Modernizr provided for legacy browsers.
-  = script "deck/modernizr.custom.js"
+  = script "deck.js/support/modernizr.custom.js"
 
 %body.deck-container
 
@@ -23,10 +25,12 @@
     = slide.to_html
 
   / jQuery & deck.js
-  = script "deck/jquery.1.6.4.min.js"
-  = script "deck/core/deck.core.js"
+  = script "deck.js/support/jquery.1.6.4.min.js"
+  = script "deck.js/core/deck.core.js"
 
   / deck.js extension JS files here
+  - extensions_js_files.each do |js_file|
+    = script js_file
 
   / Keydown puts your custom JS here
   - js_files.each do |js_file|

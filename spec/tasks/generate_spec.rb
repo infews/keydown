@@ -43,19 +43,19 @@ describe Keydown do
     end
 
     it "should copy the deck.js core CSS file" do
-      File.exist?("#{tmp_dir}/sample/deck/core/deck.core.css").should be_true
+      File.exist?("#{tmp_dir}/sample/deck.js/core/deck.core.css").should be_true
     end
     
     it "should copy the deck.js core JS file" do
-      File.exist?("#{tmp_dir}/sample/deck/core/deck.core.js").should be_true
+      File.exist?("#{tmp_dir}/sample/deck.js/core/deck.core.js").should be_true
     end
 
     it "should copy jQuery.js" do
-      File.exist?("#{tmp_dir}/sample/deck/jquery.1.6.4.min.js").should be_true
+      File.exist?("#{tmp_dir}/sample/deck.js/support/jquery.1.6.4.min.js").should be_true
     end
 
     it "should copy the Modernizr file" do
-      File.exist?("#{tmp_dir}/sample/deck/modernizr.custom.js").should be_true
+      File.exist?("#{tmp_dir}/sample/deck.js/support/modernizr.custom.js").should be_true
     end
   end
 end

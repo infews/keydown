@@ -24,12 +24,19 @@ module Keydown
       css_files = ['css/keydown.css']
       css_files += Dir.glob('css/*.css')
       css_files.uniq!
-      js_files = Dir.glob('js/**/*.js') || []
 
-      context = Context.new(:title     => @title,
-                           :css_files => css_files,
-                           :js_files  => js_files,
-                           :slides    => @slides)
+      extension_dirs = Dir.glob('deck.js/extensions/*').select {|f| File.directory? f}
+      extension_css = extension_dirs.inject([]) do |files, dir|
+        files += Dir.glob("#{dir}/*.css")
+        files
+      end
+
+      context = Context.new(:title => @title,
+                            :css_files => css_files,
+                            :js_files => Dir.glob('js/**/*.js') || [],
+                            :slides => @slides,
+                            :extensions_js_files => Dir.glob('deck.js/extensions/**/*.js') || [],
+                            :extensions_css_files => extension_css)
 
       template = Tilt.new(File.join(Tasks.template_dir, 'index.html.haml'))
       template.render(context)

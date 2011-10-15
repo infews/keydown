@@ -22,16 +22,26 @@ describe Keydown, "`slides`" do
     "#{Dir.tmpdir}/keydown_test"
   end
 
+  let :project_dir do
+    "#{tmp_dir}/test"
+  end
+
   before :each do
     FileUtils.rm_r tmp_dir if File.exists?(tmp_dir)
     FileUtils.mkdir_p tmp_dir
 
     @thor = Thor.new
+
+    Dir.chdir tmp_dir do
+      capture_output do
+        @thor.invoke Keydown::Tasks, ["generate", "test"]
+      end
+    end
   end
 
   describe "when file cannot be found" do
     before(:each) do
-      Dir.chdir tmp_dir do
+      Dir.chdir project_dir do
         @std_out = capture_output do
           @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
         end
@@ -51,13 +61,13 @@ describe Keydown, "`slides`" do
   describe "with defaults" do
 
     before :each do
-      system "cp -r spec/fixtures/with_title.md #{tmp_dir}"
+      system "cp -r spec/fixtures/with_title.md #{project_dir}"
     end
 
     describe "should generate an html file that" do
       before(:each) do
         capture_output do
-          Dir.chdir tmp_dir do
+          Dir.chdir project_dir do
             @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
             @file = File.new('with_title.html')
             @doc = Nokogiri(@file)
@@ -80,13 +90,50 @@ describe Keydown, "`slides`" do
         it "should have the correct content" do
           @third_slide.css('h1').text.should match /The Letter Q/
         end
+
+        it "should have the deck.js files" do
+          scripts = @doc.css('script').collect { |tag| tag['src'] }
+          scripts.should include('deck.js/support/modernizr.custom.js')
+          scripts.should include('deck.js/support/jquery.1.6.4.min.js')
+          scripts.should include('deck.js/core/deck.core.js')
+        end
+
+        it "should have all of the extension js files" do
+          scripts = @doc.css('script').collect { |tag| tag['src'] }
+          scripts.should include('deck.js/extensions/codemirror/deck.codemirror.js')
+          scripts.should include('deck.js/extensions/goto/deck.goto.js')
+          scripts.should include('deck.js/extensions/hash/deck.hash.js')
+          scripts.should include('deck.js/extensions/menu/deck.menu.js')
+          scripts.should include('deck.js/extensions/navigation/deck.navigation.js')
+          scripts.should include('deck.js/extensions/scale/deck.scale.js')
+          scripts.should include('deck.js/extensions/status/deck.status.js')
+        end
+        
+        it "should have all of the extension top-level css files" do
+          stylesheets = @doc.css('link').collect {|tag| tag['href']}
+          
+          stylesheets.should include('deck.js/extensions/codemirror/deck.codemirror.css')
+          stylesheets.should include('deck.js/extensions/goto/deck.goto.css')
+          stylesheets.should include('deck.js/extensions/hash/deck.hash.css')
+          stylesheets.should include('deck.js/extensions/menu/deck.menu.css')
+          stylesheets.should include('deck.js/extensions/navigation/deck.navigation.css')
+          stylesheets.should include('deck.js/extensions/scale/deck.scale.css')
+          stylesheets.should include('deck.js/extensions/status/deck.status.css')
+        end
+
+        it "should not include any of the extension sub-directory css files" do
+          stylesheets = @doc.css('link').collect {|tag| tag['href']}
+
+          stylesheets.should_not include('deck.js/extensions/codemirror/themes/cobalt.css')
+        end
+
       end
     end
 
     describe "should add an .md extention if one isn't specified" do
       before(:each) do
         capture_output do
-          Dir.chdir tmp_dir do
+          Dir.chdir project_dir do
             @thor.invoke Keydown::Tasks, ["slides", "with_title"]
             @file = File.new('with_title.html')
             @doc = Nokogiri(@file)
@@ -103,19 +150,15 @@ describe Keydown, "`slides`" do
     before(:each) do
       capture_output do
 
-        Dir.chdir tmp_dir do
-          @thor.invoke Keydown::Tasks, ["generate", "test"]
-         puts Dir.pwd
-          Dir.chdir "test" do
-            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_title.md #{tmp_dir}/test/with_title.md"
-            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.css #{tmp_dir}/test/css/custom.css"
-            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.js #{tmp_dir}/test/js/custom.js"
+        Dir.chdir project_dir do
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_title.md #{project_dir}/with_title.md"
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.css #{project_dir}/css/custom.css"
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/custom.js #{project_dir}/js/custom.js"
 
-            @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
+          @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
 
-            @file = File.new('with_title.html')
-            @doc = Nokogiri(@file)
-          end
+          @file = File.new('with_title.html')
+          @doc = Nokogiri(@file)
         end
       end
     end
@@ -136,18 +179,13 @@ describe Keydown, "`slides`" do
   describe "for a presentation that has background images" do
     before(:each) do
       capture_output do
+        Dir.chdir project_dir do
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_backgrounds.md #{tmp_dir}/test/with_backgrounds.md"
 
-        Dir.chdir tmp_dir do
-          @thor.invoke Keydown::Tasks, ["generate", "test"]
+          @thor.invoke Keydown::Tasks, ["slides", "with_backgrounds.md"]
 
-          Dir.chdir "test" do
-            system "cp #{Keydown::Tasks.source_root}/spec/fixtures/with_backgrounds.md #{tmp_dir}/test/with_backgrounds.md"
-
-            @thor.invoke Keydown::Tasks, ["slides", "with_backgrounds.md"]
-
-            @file = File.new('with_backgrounds.html')
-            @doc = Nokogiri(@file)
-          end
+          @file = File.new('with_backgrounds.html')
+          @doc = Nokogiri(@file)
         end
       end
     end
@@ -161,6 +199,5 @@ describe Keydown, "`slides`" do
     it "should add the keydown.css file to the HTML file" do
       @doc.css('link[@href="css/keydown.css"]').length.should == 1
     end
-
   end
 end
