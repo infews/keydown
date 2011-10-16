@@ -57,5 +57,15 @@ describe Keydown do
       extensions.length.should > 1
       extensions.should include("#{project_dir}/deck.js/extensions/codemirror")
     end
+
+    it "should copy default theme files for deck.js" do
+      File.exist?("#{project_dir}/css/horizontal-slide.css").should be_true
+      File.exist?("#{project_dir}/css/swiss.css").should be_true
+    end
+
+    it "should copy default them files for codemirror.js" do
+      File.exist?("#{project_dir}/css/default.css").should be_true
+    end
+
   end
 end

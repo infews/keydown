@@ -169,13 +169,17 @@ describe Keydown, "`slides`" do
     it_should_behave_like "generating a presentation file"
 
     it "should include any custom CSS file from the css directory" do
-      @doc.css('link[@href="css/test.css"]').length.should == 1
-      @doc.css('link[@href="css/custom.css"]').length.should == 1
+      stylesheets = @doc.css('link').collect {|tag| tag['href']}
+
+      stylesheets.should include('css/test.css')
+      stylesheets.should include('css/custom.css')
     end
 
     it "should include any custom JavaScript files from the js directory" do
-      @doc.css('script[@src="js/test.js"]').length.should == 1
-      @doc.css('script[@src="js/custom.js"]').length.should == 1
+      scripts = @doc.css('script').collect { |tag| tag['src'] }
+
+      scripts.should include('js/test.js')
+      scripts.should include('js/custom.js')
     end
   end
 
