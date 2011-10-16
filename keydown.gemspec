@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml'
   s.add_dependency 'sass'
   s.add_dependency 'rdiscount', '>= 1.6.8'
-  s.add_dependency 'coderay', '~> 0.9.8'
 
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"

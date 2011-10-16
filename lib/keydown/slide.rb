@@ -109,15 +109,16 @@ module Keydown
 
     def highlight_code!
       @codemap.each do |id, code_block|
-        lang = code_block[:lang]
+        language = code_block[:lang]
         code = code_block[:code]
         if code.lines.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
           code.gsub!(/^(  |\t)/m, '')
         end
 
-        tokens = CodeRay.scan code, lang.to_sym
+        context = OpenStruct.new :language => language, :code => code
+        template = Tilt.new(File.join(Tasks.template_dir, 'code.html.haml'))
 
-        @content.gsub!(id, tokens.html.div)
+        @content.gsub!(id, template.render(context))
       end
     end
   end

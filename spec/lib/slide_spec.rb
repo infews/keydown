@@ -48,8 +48,12 @@ describe Keydown::Slide do
   end
 
   shared_examples_for "syntax highlighting" do
-    it "should colorize the code fragments" do
-      @doc.css('.CodeRay').length.should == 1
+    it "setup the code segments for highlighting" do
+      @doc.css('textarea').length.should == 1
+
+      code_block = @doc.css('textarea')[0]
+      code_block['class'].should == 'code'
+      code_block['mode'].should == 'ruby'
     end
   end
 
