@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html></html>
+<head>
+  <title>sample</title>
+  <meta charset='utf-8' />
+  <meta content='width=1024, user-scalable=no' name='viewport' />
+  <!-- deck.js's core css -->
+  <link href="deck/core/deck.core.css" rel="stylesheet" type="text/css"/>
+  <!-- deck.js extension CSS files -->
+  <link href="deck.js/extensions/codemirror/deck.codemirror.css" rel="stylesheet" type="text/css"/>
+  <link href="deck.js/extensions/goto/deck.goto.css" rel="stylesheet" type="text/css"/>
+  <link href="deck.js/extensions/hash/deck.hash.css" rel="stylesheet" type="text/css"/>
+  <link href="deck.js/extensions/menu/deck.menu.css" rel="stylesheet" type="text/css"/>
+  <link href="deck.js/extensions/navigation/deck.navigation.css" rel="stylesheet" type="text/css"/>
+  <link href="deck.js/extensions/scale/deck.scale.css" rel="stylesheet" type="text/css"/>
+  <link href="deck.js/extensions/status/deck.status.css" rel="stylesheet" type="text/css"/>
+  <!-- all css in the css dir: Keydown CSS, your custom CSS, and themes from deck.js -->
+  <link href="css/keydown.css" rel="stylesheet" type="text/css"/>
+  <link href="css/sample.css" rel="stylesheet" type="text/css"/>
+  <link href="css/syntax_highlighting.css" rel="stylesheet" type="text/css"/>
+  <!-- Modernizr (provided for legacy browsers) -->
+  <script src="deck.js/support/modernizr.custom.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class='deck-container'>
+    <section class='slide'>
+      <div class=''>
+        <h1>A Title Slide</h1>
+        
+        <h2>me@example.com</h2>
+      </div>
+      <div class='attribution hidden'>
+        <a target='_blank'>
+          
+        </a>
+      </div>
+    </section>
+    <section class='slide'>
+      <div class=''>
+        <h1>Some sample code</h1>
+        
+        <div class="CodeRay">
+          <div class="code"><pre><span class="r">def</span> <span class="fu">method</span>
+          puts <span class="s"><span class="dl">&quot;</span><span class="k">Hello, World</span><span class="dl">&quot;</span></span>
+        <span class="r">end</span></pre></div>
+        </div>
+      </div>
+      <div class='attribution hidden'>
+        <a target='_blank'>
+          
+        </a>
+      </div>
+    </section>
+    <section class='slide full-background test'>
+      <div class=''>
+        <h1>With a Background Image</h1>
+      </div>
+      <div class='attribution hidden'>
+        <a target='_blank'>
+          
+        </a>
+      </div>
+    </section>
+  </div>
+  <!-- jQuery & deck.js -->
+  <script src="deck.js/support/jquery.1.6.4.min.js" type="text/javascript"></script>
+  <script src="deck.js/core/deck.core.js" type="text/javascript"></script>
+  <!-- deck.js extension JS files -->
+  <script src="deck.js/extensions/codemirror/deck.codemirror.js" type="text/javascript"></script>
+  <script src="deck.js/extensions/goto/deck.goto.js" type="text/javascript"></script>
+  <script src="deck.js/extensions/hash/deck.hash.js" type="text/javascript"></script>
+  <script src="deck.js/extensions/menu/deck.menu.js" type="text/javascript"></script>
+  <script src="deck.js/extensions/navigation/deck.navigation.js" type="text/javascript"></script>
+  <script src="deck.js/extensions/scale/deck.scale.js" type="text/javascript"></script>
+  <script src="deck.js/extensions/status/deck.status.js" type="text/javascript"></script>
+  <!-- your custom JS here, including call to initialize deck.js-codemirror -->
+  <script src="js/sample.js" type="text/javascript"></script>
+  <!-- Initialize the deck. -->
+  <script type='text/javascript'>
+    $(function() { $.deck('.slide'); });
+  </script>
+</body>

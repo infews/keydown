@@ -100,6 +100,7 @@ describe Keydown, "`slides`" do
 
         it "should have all of the extension js files" do
           scripts = @doc.css('script').collect { |tag| tag['src'] }
+          scripts.should include('deck.js/extensions/codemirror/codemirror.js')
           scripts.should include('deck.js/extensions/codemirror/deck.codemirror.js')
           scripts.should include('deck.js/extensions/goto/deck.goto.js')
           scripts.should include('deck.js/extensions/hash/deck.hash.js')

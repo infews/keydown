@@ -5,34 +5,34 @@
   %meta{ :charset => "utf-8" }
   %meta{ :name => "viewport", :content => "width=1024, user-scalable=no" }
 
-  / deck.js's core css.
+  / deck.js's core css
   = stylesheet "deck/core/deck.core.css"
 
-  / deck.js extension CSS files go here.
+  / deck.js extension CSS files
   - extensions_css_files.each do |css_file|
     = stylesheet css_file
 
-  / Keydown puts its CSS & your custom CSS here
+  / all css in the css dir: Keydown CSS, your custom CSS, and themes from deck.js
   - css_files.each do |css_file|
     = stylesheet css_file
 
-  / Modernizr provided for legacy browsers.
+  / Modernizr (provided for legacy browsers)
   = script "deck.js/support/modernizr.custom.js"
 
-%body.deck-container
-
-  - slides.each do |slide|
-    = slide.to_html
+%body
+  .deck-container
+    - slides.each do |slide|
+      = slide.to_html
 
   / jQuery & deck.js
   = script "deck.js/support/jquery.1.6.4.min.js"
   = script "deck.js/core/deck.core.js"
 
-  / deck.js extension JS files here
+  / deck.js extension JS files
   - extensions_js_files.each do |js_file|
     = script js_file
 
-  / Keydown puts your custom JS here
+  / your custom JS here, including call to initialize deck.js-codemirror
   - js_files.each do |js_file|
     = script js_file
 
