@@ -1,5 +1,5 @@
 /*!
-Deck JS - deck.core - v1.0
+Deck JS - deck.core
 Copyright (c) 2011 Caleb Troughton
 Dual licensed under the MIT license and GPL license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
@@ -441,8 +441,12 @@ that use the API provided by core.
 		newFrames = $[deck]('getSlide', to).find('iframe');
 		
 		oldFrames.each(function() {
-			var $this = $(this);
-			$this.data('deck-src', $this.attr('src')).attr('src', '');
+	    	var $this = $(this),
+	    	curSrc = $this.attr('src');
+            
+            if(curSrc) {
+            	$this.data('deck-src', curSrc).attr('src', '');
+            }
 		});
 		
 		newFrames.each(function() {
