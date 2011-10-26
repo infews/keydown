@@ -3,7 +3,10 @@
 KeyDown is another 'Presentation System in a single HTML page' inspired by [Showoff](http://github.com/drnic/showoff), [Slidedown](http://github.com/nakajima/slidedown),
 [HTML5 Rocks](http://studio.html5rocks.com/#Deck), with a little [Presentation Zen](http://amzn.to/8X55H2) thrown in.
 
+It uses the excellent [deck.js](http://imakewebthings.github.com/deck.js) and its extensions for the presentation.
+
 ## Usage
+    $ gem install keydown
 
 ### Generate a Template
 
@@ -15,8 +18,10 @@ This will make:
 
     | - my_presentation/
       | - css/               - Keydown CSS and a file for you to customize
+      | - deck.js/
       | - images/            - Some Keydown images, but also for you
       | - js/                - Keydown JavaScript, and a file for you to customize
+      | 
       | - my_presentation.md
 
 ### Write your presentation in Markdown
@@ -67,23 +72,13 @@ Give your presentation! Open `my_presentation.html` in a browser and talk away:
 
 ### Presentation Title
 
-An optional first `H1` before a `!SLIDE` is treated as the presentation title. It will be on the configuration page and set as the HTML `<title>`.
+An optional first `H1` before a `!SLIDE` is treated as the presentation title in the HTML `<title>`.
 	
-### Configuration Page & Navigation
-
-The first page of a Keydown presentation is a configuration page that shows the presentation title, how to navigate the presentation, and some visual effect options.
-
 ### Slide classes
 
 Any text that follows `!SLIDE` will be added to the slide as CSS classes. 
 
     !SLIDE dark
-
-There are some built-in classes you can use:
-
-* `middle` will center all the elements on the slide
-* `bulleted` - by default, lists to not have bullets; use this class to add them back
-* `dark` - by default, slides are light with dark fonts; this swaps a slide
 
 You can define your own CSS classes (see below).
 
@@ -115,7 +110,7 @@ If you wish to have attribution text, an icon (currently Flickr and Creative Com
 
 ### Syntax Highlighting
 
-Code syntax highlighting is done via [Pygments](http://pygments.org), which must be installed locally to work. All Pygments lexers are supported.
+Code syntax highlighting is done via [CodeMirror](http://codemirror.net).
 
 Mark your code by block escaping via `@@@` or ` ``` `
 
@@ -149,18 +144,23 @@ All css files in the `css` directory will be linked into your presentation HTML 
 
 All JavaScript files in the `js` directory will be linked in your presentation HTML file.
 
+### Deck.js Extensions
+
+Any extension CSS and JS will be loaded if copied into the project.
+
+
 ## Requirements
 
 ### For Use
 
    * Ruby and Rubygems
-   * [Pygments](http://pygments.org) is required for code syntax highlighting
    * Other dependent gems will be installed
 
 ### For Development
 
    * RSpec
    * Nokogiri
+   * Other dependent gems will be installed
 
 ## Note on Patches/Pull Requests
  
@@ -174,10 +174,11 @@ All JavaScript files in the `js` directory will be linked in your presentation H
 
 Thanks to:
 
-* HTML5 Rocks guys for a great presentation template
+* HTML5 Rocks guys for the original great presentation template
 * [@nakajima](http://twitter.com/nakajima) & [Slidedown](http://github.com/nakajima/slidedown) for some parsing
+* [Caleb](http://github.com/imakewebthings) for making deck.js & testing it with [Jasmine](http://pivotal.github.com/jasmine)
 * The various Github guys for Albino, Gollum, etc.
 
 ## Copyright
 
-Copyright &copy;  Infews LLC. See LICENSE for details.
+Copyright &copy; Infews LLC. See LICENSE for details.
