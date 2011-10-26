@@ -75,12 +75,12 @@ and this
         slides_content = @doc.css('section.slide div')
 
         first_slide = slides_content[0]
-        first_slide['class'].should == ''
+        first_slide['class'].should be_nil
 
-        second_slide = slides_content[2]
+        second_slide = slides_content[1]
         second_slide['class'].should == 'foo'
 
-        third_slide = slides_content[4]
+        third_slide = slides_content[2]
         third_slide['class'].should == 'foo bar'
       end
     end
@@ -101,6 +101,8 @@ and this
 
 # Is Brought to You By
 
+}}} images/ping.png::cprsize
+
 !NOTE
 
 and this
@@ -108,7 +110,10 @@ and this
 !SLIDE foo bar
 
 # The Letter Q
-SLIDES
+
+}}} images/poke.png::cprsize::flickr::http://flickr.com/1234
+
+      SLIDES
 
       @deck = Keydown::SlideDeck.new(@slides_text)
     end
@@ -119,18 +124,38 @@ SLIDES
       before(:each) do
         @html = @deck.to_html
         @doc = Nokogiri(@html)
-        @slide_with_background = @doc.css('section.slide')[0]
+        @first_slide = @doc.css('section.slide')[0]
+        @second_slide = @doc.css('section.slide')[1]
+        @third_slide = @doc.css('section.slide')[2]
       end
 
       it "should add the full-bleed background CSS classname to any slide that specifies a background" do
-        @slide_with_background['class'].split(' ').should include('full-background')
+        @first_slide['class'].split(' ').should include('full-background')
+        @second_slide['class'].split(' ').should include('full-background')
+        @third_slide['class'].split(' ').should include('full-background')
       end
 
       it "should add a custom classname to a slide that specifies a background" do
-        @slide_with_background['class'].split(' ').should include('my_background')
+        @first_slide['class'].split(' ').should include('my_background')
+        @second_slide['class'].split(' ').should include('ping')
+        @third_slide['class'].split(' ').should include('poke')
+      end
+
+      it "should add an attribution element only to slides that requested it" do
+        @first_slide.css('.attribution').length.should == 0
+        @second_slide.css('.attribution').length.should == 1
+        @third_slide.css('.attribution').length.should == 1
+      end
+
+      it "should add attribution content to slides that requested it" do
+        @second_slide.css('a')[0].text.should match('cprsize')
+        @third_slide.css('a')[0].text.should match('cprsize')
+      end
+
+      it "should add an attribution link if provided" do
+        @second_slide.css('a')[0]['href'].should be_nil
+        @third_slide.css('a')[0]['href'].should match(/^http:/)
       end
     end
-
-
   end
 end

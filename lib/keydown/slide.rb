@@ -25,7 +25,7 @@ module Keydown
     end
 
     def classnames
-      @classnames.join(' ')
+      @classnames.length > 0 ? { :class => @classnames.join(' ') } : {}
     end
 
     def container_classnames
@@ -42,9 +42,9 @@ module Keydown
     end
 
     def background_attribution_classnames
-      names = ['attribution']
-      names << (background_image[:attribution_text] ? background_image[:service] : 'hidden')
-      names.join(' ')
+      return [] unless background_image[:attribution_text] || background_image[:service]
+
+      ['attribution', background_image[:service]].join(' ')
     end
 
     def to_html

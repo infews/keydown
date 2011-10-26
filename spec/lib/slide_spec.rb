@@ -68,7 +68,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames = ''
+      @classnames = {}
       @slide = Keydown::Slide.new(@slide_text)
     end
 
@@ -96,7 +96,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames = 'foo'
+      @classnames = {:class => 'foo'}
       @slide = Keydown::Slide.new(@slide_text, 'foo')
     end
 
@@ -106,7 +106,7 @@ a simple note
       before :each do
         @html = @slide.to_html
         @doc = Nokogiri(@html)
-        @slide_selector = "section.#{@classnames}"
+        @slide_selector = "section.#{@classnames[:class]}"
       end
 
       it_should_behave_like "generating HTML"
@@ -124,7 +124,7 @@ With some text
 a simple note
       SLIDE
 
-      @classnames = 'foo bar'
+      @classnames = {:class => 'foo bar'}
       @slide = Keydown::Slide.new(@slide_text, 'foo bar')
 
     end
@@ -135,7 +135,7 @@ a simple note
       before :each do
         @html = @slide.to_html
         @doc = Nokogiri(@html)
-        @slide_selector = "section.#{@classnames}"
+        @slide_selector = "section.#{@classnames[:class]}"
       end
       it_should_behave_like "generating HTML"
     end
@@ -149,7 +149,7 @@ a simple note
 With some text
       SLIDE
 
-      @classnames = ''
+      @classnames = {}
       @slide = Keydown::Slide.new(@slide_text)
     end
 
@@ -192,7 +192,7 @@ a simple note
 
         SLIDE
 
-        @classnames = ''
+        @classnames = {}
         template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
         @slide = Keydown::Slide.new(@slide_text)
       end
@@ -229,7 +229,7 @@ a simple note
 
         SLIDE
 
-        @classnames = ''
+        @classnames = {}
         @slide = Keydown::Slide.new(@slide_text)
       end
 
@@ -244,11 +244,15 @@ a simple note
 
         it_should_behave_like "generating HTML"
         it_should_behave_like "syntax highlighting"
+
+        it "should not have a an attribution for the background image" do
+          @doc.css('.attribution').length.should == 0
+        end
       end
     end
   end
 
-  describe "with an image for a full-bleed background" do
+  describe "with an image for a full-bleed background without attribution" do
     before(:each) do
       @slide_text = <<-SLIDE
 
@@ -262,7 +266,7 @@ a simple note
 
       SLIDE
 
-      @classnames = ''
+      @classnames = {}
       @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 
@@ -294,6 +298,10 @@ a simple note
         @slide_container['class'].split(' ').should include('my_background')
       end
 
+      it "should not have a an attribution for the background image" do
+        @doc.css('.attribution').length.should == 0
+      end
+
     end
   end
 
@@ -311,7 +319,7 @@ a simple note
 
       SLIDE
 
-      @classnames = ''
+      @classnames = {}
       @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 
