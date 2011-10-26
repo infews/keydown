@@ -5,6 +5,8 @@ KeyDown is another 'Presentation System in a single HTML page' inspired by [Show
 
 It uses the excellent [deck.js](http://imakewebthings.github.com/deck.js) and its extensions for the presentation.
 
+[![Build Status](https://secure.travis-ci.org/infews/keydown.png)](http://travis-ci.org/infews/keydown) at [Travis](http://travis-ci.org).
+
 ## Usage
     $ gem install keydown
 
@@ -21,12 +23,11 @@ This will make:
       | - deck.js/
       | - images/            - Some Keydown images, but also for you
       | - js/                - Keydown JavaScript, and a file for you to customize
-      | 
-      | - my_presentation.md
+      | - slides.md
 
 ### Write your presentation in Markdown
 
-Edit `my_presentation.md` and write your presentation as if it were going to be HTML (because it will be):
+Edit `slides.md` and write your presentation as if it were going to be HTML (because it will be):
 
     !SLIDE
     
@@ -58,13 +59,13 @@ Edit `my_presentation.md` and write your presentation as if it were going to be 
 
 ### Generate the Deck
 
-    $ keydown slides my_presentation.md
+    $ keydown slides slides.md
 
-..will generate `my_presentation.html`
+..will generate `slides.html`
 
 ### Present
 
-Give your presentation! Open `my_presentation.html` in a browser and talk away:
+Give your presentation! Open `slides.html` in a browser and talk away:
 
   * left, right arrows to navigate through slides
 
