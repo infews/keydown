@@ -1,0 +1,6 @@
+%section{:class => container_classnames}
+  %div{:class => classnames }
+    = html_content
+  %div{:class => background_attribution_classnames}
+    %a{:href => background_image[:attribution_link], :target => "_blank"}
+      = background_image[:attribution_text]

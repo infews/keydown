@@ -12,7 +12,7 @@ module Keydown
         return
       end
 
-      @@template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+      @@template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'deck.js')
 
       say "Creating Keydown presentation from #{file}", :yellow
 

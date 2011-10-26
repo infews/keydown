@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe Keydown::SlideDeck do
 
@@ -15,12 +15,11 @@ describe Keydown::SlideDeck do
     end
   end
 
-
   before :each do
     module Keydown
       class Tasks
         def self.template_dir
-          File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+          File.join(Keydown::Tasks.source_root, 'templates', 'deck.js')
         end
       end
     end
@@ -69,16 +68,20 @@ and this
       end
 
       it "should generate the correct number of slides" do
-        @doc.css('div.slide').length.should == 4
+        @doc.css('section.slide').length.should == 3
       end
 
       it "should set the CSS classnames of each slide" do
-        slides = @doc.css('div.slide section')
+        slides_content = @doc.css('section.slide div')
 
-        slides[0]['class'].should == 'middle' # config/start slide
-        slides[1]['class'].should == nil
-        slides[2]['class'].should == 'foo'
-        slides[3]['class'].should == 'foo bar'
+        first_slide = slides_content[0]
+        first_slide['class'].should == ''
+
+        second_slide = slides_content[2]
+        second_slide['class'].should == 'foo'
+
+        third_slide = slides_content[4]
+        third_slide['class'].should == 'foo bar'
       end
     end
   end
@@ -105,7 +108,7 @@ and this
 !SLIDE foo bar
 
 # The Letter Q
-      SLIDES
+SLIDES
 
       @deck = Keydown::SlideDeck.new(@slides_text)
     end
@@ -116,7 +119,7 @@ and this
       before(:each) do
         @html = @deck.to_html
         @doc = Nokogiri(@html)
-        @slide_with_background = @doc.css('div.slide')[1]
+        @slide_with_background = @doc.css('section.slide')[0]
       end
 
       it "should add the full-bleed background CSS classname to any slide that specifies a background" do

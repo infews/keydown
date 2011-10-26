@@ -1,42 +1,46 @@
-/* To show bullests in unordered lists */
-section.bulleted ul {
-  padding-left: 30px;
+body.keydown {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-/* Full slide backgrounds */
+    /* Full slide backgrounds */
 .slide.full-background {
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    background-position: center;
 }
+
 <% backgrounds.each do |background| %>
-.<%= background[:classname] %> {
-  background-image: url(../<%= background[:path] %>);
+.slide.full-background. <%= background[:classname] %> {
+    background-image: url(../<%= background[:path] %>);
 }
+
 <% end %>
 
+    /* image attribution with service logos */
 .attribution {
-  font-size: 24px;
-  position: fixed;
-  bottom: 8px;
-  left: 40px;
-  -webkit-background-size: contain;
-  -moz-background-size: contain;
-  background-size: contain;
+    font-size: 24px;
+    position: fixed;
+    bottom: 8px;
+    left: 40px;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    background-size: contain;
 }
 
 .attribution.flickr {
-  background: url(../images/flickr.png) left top no-repeat;
-  padding-left: 60px;
+    background: url(../images/flickr.png) left top no-repeat;
+    padding-left: 60px;
 }
 
 .attribution.cc {
-  background: url(../images/cc.large.png) left top no-repeat;
-  padding-left: 36px;
+    background: url(../images/cc.large.png) left top no-repeat;
+    padding-left: 36px;
 }
 
-/* Happy generic hiding class */
+    /* Happy generic hiding class */
 .hidden {
-  display: none;
+    display: none;
 }

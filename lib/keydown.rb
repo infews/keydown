@@ -1,22 +1,9 @@
-require 'thor'
+require 'ostruct'
+require 'digest/sha1'
+require 'tilt'
 
-module Keydown
-  class Tasks < Thor
-    include Thor::Actions
-
-    @@source_root = File.join(File.dirname(__FILE__), '..')
-
-    def self.source_root
-      @@source_root
-    end
-
-    def self.template_dir
-      @@template_dir
-    end
-
-  end
-end
-
-Dir["#{File.dirname(__FILE__)}/keydown/**/*.rb"].each do |file|
-  require file
-end
+require 'version'
+require 'keydown/html_helpers'
+require 'keydown/slide'
+require 'keydown/slidedeck'
+require 'keydown/tasks'

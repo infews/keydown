@@ -1,11 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe Keydown::Slide do
   before :each do
     module Keydown
       class Tasks
         def self.template_dir
-          File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+          File.join(Keydown::Tasks.source_root, 'templates', 'deck.js')
         end
       end
     end
@@ -48,8 +48,12 @@ describe Keydown::Slide do
   end
 
   shared_examples_for "syntax highlighting" do
-    it "should colorize the code fragments" do
-      @doc.css('.CodeRay').length.should == 1
+    it "setup the code segments for highlighting" do
+      @doc.css('textarea').length.should == 1
+
+      code_block = @doc.css('textarea')[0]
+      code_block['class'].should == 'code'
+      code_block['mode'].should == 'ruby'
     end
   end
 
@@ -269,7 +273,7 @@ a simple note
         @html = @slide.to_html
         @doc = Nokogiri(@html)
         @slide_selector = "section"
-        @slide_container = @doc.css('div.slide')[0]
+        @slide_container = @doc.css('section.slide')[0]
       end
 
       it_should_behave_like "generating HTML"
@@ -318,7 +322,7 @@ a simple note
         @html = @slide.to_html
         @doc = Nokogiri(@html)
         @slide_selector = "section"
-        @slide_container = @doc.css('div.slide')[0]
+        @slide_container = @doc.css('section.slide')[0]
       end
 
       it_should_behave_like "generating HTML"

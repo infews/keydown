@@ -1,0 +1,54 @@
+!!! 5
+%html
+  %head
+    %title= title
+    %meta{ :charset => "utf-8" }
+    %meta{ :name => "viewport", :content => "width=1024, user-scalable=no" }
+
+    / deck.js's core css
+    = stylesheet "deck.js/core/deck.core.css"
+
+    / deck.js extension CSS files
+    - extensions_css_files.each do |css_file|
+      = stylesheet css_file
+
+    / all css in the css dir: Keydown CSS, your custom CSS, and themes from deck.js
+    - css_files.each do |css_file|
+      = stylesheet css_file
+
+    / Modernizr (provided for legacy browsers)
+    = script "deck.js/support/modernizr.custom.js"
+
+  %body{ :class => 'keydown' }
+    %article.deck-container
+      - slides.each do |slide|
+        = slide.to_html
+
+      / deck.js navigation extension
+      %a{ :href => '#', :class => 'deck-prev-link', :title => 'Previous' } &#8592;
+      %a{ :href => '#', :class => 'deck-next-link', :title => 'Next' } &#8594;
+
+      / deck.js hash extension
+      %a{ :href => '.', :class => 'deck-permalink', :title => 'Permalink to this slide' } #
+
+      / deck.js status extension
+      %p.deck-status
+        %span.deck-status-current
+        \/
+        %span.deck-status-total
+
+    / jQuery & deck.js
+    = script "deck.js/support/jquery.1.6.4.min.js"
+    = script "deck.js/core/deck.core.js"
+
+    / deck.js extension JS files
+    - extensions_js_files.each do |js_file|
+      = script js_file
+
+    / your custom JS here, including call to initialize deck.js-codemirror
+    - js_files.each do |js_file|
+      = script js_file
+
+    / Initialize the deck.
+    %script{:type => "text/javascript"}
+      $(function() { $.deck('.slide'); });
