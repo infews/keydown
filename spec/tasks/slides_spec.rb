@@ -203,6 +203,12 @@ describe Keydown, "`slides`" do
       File.exist?("#{tmp_dir}/test/css/keydown.css").should be_true
     end
 
+    it "should build a CSS file with the custom background images definitions" do
+      css_contents = File.read("#{tmp_dir}/test/css/keydown.css")
+
+      css_contents.should match(/\.slide\.full-background\.one/)
+    end
+
     it "should add the keydown.css file to the HTML file" do
       @doc.css('link[@href="css/keydown.css"]').length.should == 1
     end
