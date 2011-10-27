@@ -4,6 +4,7 @@ require 'tilt'
 
 require 'version'
 require 'keydown/html_helpers'
+require 'keydown/classnames'
 require 'keydown/slide'
 require 'keydown/slidedeck'
 require 'keydown/tasks'

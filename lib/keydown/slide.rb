@@ -4,6 +4,8 @@ module Keydown
     attr_reader :content
     attr_reader :notes
     attr_reader :background_image
+    attr_reader :container_classnames
+    attr_reader :content_classnames
 
     def initialize(text, classnames = '')
       @content = text
@@ -11,34 +13,21 @@ module Keydown
       @codemap = {}
       @background_image = {}
 
-      @classnames = []
-      classnames.split(' ').inject(@classnames) do |css_classnames, name|
-        css_classnames << name
-        css_classnames
-      end
+      @content_classnames = Classnames.new(classnames)
 
       extract_notes!
       extract_content!
       extract_code!
       extract_background_image!
-      highlight_code!
-    end
 
-    def classnames
-      @classnames.length > 0 ? { :class => @classnames.join(' ') } : {}
-    end
+      @container_classnames = Classnames.new('slide')
 
-    def container_classnames
-      @names ||= begin
-        names = ['slide']
-
-        unless @background_image.empty?
-          names << 'full-background'
-          names << @background_image[:classname]
-        end
-
-        names.join(' ')
+      unless @background_image.empty?
+        @container_classnames.add('full-background')
+        @container_classnames.add(@background_image[:classname])
       end
+
+      highlight_code!
     end
 
     def background_attribution_classnames
@@ -53,8 +42,8 @@ module Keydown
 
       markdown = RDiscount.new(@content)
       context = OpenStruct.new(:html_content => markdown.to_html,
-                               :container_classnames => container_classnames,
-                               :classnames => classnames,
+                               :container_classnames => container_classnames.as_hash,
+                               :classnames => @content_classnames.as_hash,
                                :background_attribution_classnames => background_attribution_classnames,
                                :background_image => background_image)
 
