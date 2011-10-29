@@ -14,7 +14,7 @@ describe Keydown::Slide do
   shared_examples_for 'extracting slide data' do
 
     it "should set the CSS classnames" do
-      @slide.content_classnames.as_hash.should == @content_classnames
+      @slide.content_classnames.to_s.should == @content_classnames
     end
 
     it "should extract the slide content" do
@@ -68,7 +68,7 @@ With some text
 a simple note
       SLIDE
 
-      @content_classnames = {}
+      @content_classnames = 'content'
       @slide = Keydown::Slide.new(@slide_text)
     end
 
@@ -96,7 +96,7 @@ With some text
 a simple note
       SLIDE
 
-      @content_classnames = {:class => 'foo'}
+      @content_classnames = ['foo', 'content'].sort.join(' ')
       @slide = Keydown::Slide.new(@slide_text, 'foo')
     end
 
@@ -106,7 +106,7 @@ a simple note
       before :each do
         @html = @slide.to_html
         @doc = Nokogiri(@html)
-        @slide_selector = "section.#{@content_classnames[:class]}"
+        @slide_selector = "section.#{@content_classnames}"
       end
 
       it_should_behave_like "generating HTML"
@@ -124,7 +124,7 @@ With some text
 a simple note
       SLIDE
 
-      @content_classnames = {:class => 'foo bar'}
+      @content_classnames = ['content', 'foo', 'bar'].sort.join(' ')
       @slide = Keydown::Slide.new(@slide_text, 'foo bar')
 
     end
@@ -135,7 +135,7 @@ a simple note
       before :each do
         @html = @slide.to_html
         @doc = Nokogiri(@html)
-        @slide_selector = "section.#{@content_classnames[:class]}"
+        @slide_selector = "section.#{@content_classnames}"
       end
       it_should_behave_like "generating HTML"
     end
@@ -149,12 +149,12 @@ a simple note
 With some text
       SLIDE
 
-      @content_classnames = {}
+      @content_classnames = 'content'
       @slide = Keydown::Slide.new(@slide_text)
     end
 
     it "should set the CSS classnames" do
-      @slide.content_classnames.as_hash.should == @content_classnames
+      @slide.content_classnames.to_s.should == @content_classnames
     end
 
     it "should extract the slide content" do
@@ -192,7 +192,7 @@ a simple note
 
         SLIDE
 
-        @content_classnames = {}
+        @content_classnames = 'content'
         template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
         @slide = Keydown::Slide.new(@slide_text)
       end
@@ -229,7 +229,7 @@ a simple note
 
         SLIDE
 
-        @content_classnames = {}
+        @content_classnames = 'content'
         @slide = Keydown::Slide.new(@slide_text)
       end
 
@@ -266,7 +266,7 @@ a simple note
 
       SLIDE
 
-      @content_classnames = {}
+      @content_classnames = 'content'
       @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 
@@ -319,7 +319,7 @@ a simple note
 
       SLIDE
 
-      @content_classnames = {}
+      @content_classnames = 'content'
       @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 

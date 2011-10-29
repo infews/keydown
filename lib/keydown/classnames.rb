@@ -11,8 +11,12 @@ module Keydown
       @names.uniq!
     end
 
-    def as_hash
-      @names.empty? ? {} : { :class => @names.join(' ') }
+    def to_hash
+      @names.empty? ? {} : { :class => self.to_s }
+    end
+
+    def to_s
+      @names.sort.join(' ')
     end
   end
 end

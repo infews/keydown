@@ -1,6 +1,8 @@
 %section{container_classnames}
+  .spacer.top
   %div{classnames}
     = html_content
   - if background_attribution_classnames.length > 2
     %div{:class => background_attribution_classnames}
       %a{:href => background_image[:attribution_link], :target => "_blank"}= background_image[:attribution_text]
+  .spacer.bottom

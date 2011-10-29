@@ -19,8 +19,8 @@
     / Modernizr (provided for legacy browsers)
     = script "deck.js/support/modernizr.custom.js"
 
-  %body{ :class => 'keydown' }
-    %article.deck-container
+  %body
+    %article{ :class => "deck-container keydown" }
       - slides.each do |slide|
         = slide.to_html
 

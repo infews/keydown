@@ -79,7 +79,7 @@ describe Keydown, "`slides`" do
 
       describe "should have one slide that" do
         before :each do
-          @third_slide = @doc.css('section')[2].css('div')[0]
+          @third_slide = @doc.css('.content')[2]
         end
 
         it "should have the correct css class(es)" do

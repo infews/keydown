@@ -1,0 +1,110 @@
+@import "compass/css3";
+
+/* Reset deck.core.css */
+.csstransforms .deck-container .slide h1 {
+  padding: 0;
+  left: auto;
+  right: auto;
+  top: auto;
+  position: relative;
+
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+// Keydown Styles
+
+// Presentation fills the window
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #d7d7d7;
+}
+
+@mixin box-vertical-center {
+  @include display-box;
+  @include box-orient(vertical);
+  @include box-align(center);
+  @include box-pack(center);
+}
+
+@mixin box-vertical-left {
+  @include display-box;
+  @include box-orient(vertical);
+  @include box-align(start);
+  @include box-pack(start);
+}
+
+article.keydown.deck-container {
+
+  @include box-vertical-center;
+
+  .slide {
+
+    @include box-vertical-center;
+
+    background-color: white;
+
+    // for full-background images slides
+    &.full-background {
+      @include background-size(cover);
+
+      <% backgrounds.each do |background| %>
+      &.<%= background[:classname] %> {
+          background-image: url(../<%= background[:path] %>);
+      }
+      <% end %>
+    }
+
+    // slide content - where the Markdown goes
+    .content {
+      @include box-vertical-center;
+
+      > * {
+        @include box-vertical-center;
+      }
+
+      // left justified slides
+      &.left {
+        @include box-vertical-left;
+
+        > * {
+          @include box-vertical-left;
+        }
+
+        .spacer {
+          .top {
+            @include box-flex(1);
+          }
+          .bottom {
+            @include box-flex(5);
+          }
+        }
+      }
+    }
+
+    // TODO: make these rems values
+    .attribution {
+
+      font-size: 24px;
+      position: fixed;
+      bottom: 8px;
+      left: 40px;
+      @include background-size(contain);
+
+      &.flickr {
+        background: url(../images/flickr.png) left top no-repeat;
+        padding-left: 60px;
+      }
+
+      &.cc {
+        background: url(../images/cc.large.png) left top no-repeat;
+        padding-left: 36px;
+       }
+    }
+  }
+}

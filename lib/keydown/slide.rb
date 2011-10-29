@@ -13,7 +13,8 @@ module Keydown
       @codemap = {}
       @background_image = {}
 
-      @content_classnames = Classnames.new(classnames)
+      @content_classnames = Classnames.new('content')
+      @content_classnames.add(classnames)
 
       extract_notes!
       extract_content!
@@ -42,8 +43,8 @@ module Keydown
 
       markdown = RDiscount.new(@content)
       context = OpenStruct.new(:html_content => markdown.to_html,
-                               :container_classnames => container_classnames.as_hash,
-                               :classnames => @content_classnames.as_hash,
+                               :container_classnames => container_classnames.to_hash,
+                               :classnames => @content_classnames.to_hash,
                                :background_attribution_classnames => background_attribution_classnames,
                                :background_image => background_image)
 
@@ -93,8 +94,6 @@ module Keydown
                                   :attribution_link => split_line[3]})
       end
     end
-
-    require "coderay"
 
     def highlight_code!
       @codemap.each do |id, code_block|

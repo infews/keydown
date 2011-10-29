@@ -1,3 +1,6 @@
+require 'sass'
+require 'compass'
+
 module Keydown
   class Tasks < Thor
 
@@ -21,9 +24,14 @@ module Keydown
         slide.background_image unless slide.background_image.empty?
       end.compact
 
-      css_template = File.new(File.join(Tasks.template_dir, '..', 'keydown.css.erb'))
+      context = OpenStruct.new({ :backgrounds => backgrounds })
+      scss_template = Tilt.new(File.join(Tasks.template_dir, '..', 'keydown.scss.erb'))
+      scss = scss_template.render(context)
+
+      compass_path = File.join(Gem.loaded_specs['compass'].full_gem_path, 'frameworks', 'compass', 'stylesheets')
+
       create_file 'css/keydown.css', :force => true do
-        ERB.new(css_template.read).result(binding)
+        Sass::Engine.new(scss, :syntax => :scss, :load_paths => [compass_path]).render
       end
 
       presentation = file.gsub('md', 'html')
