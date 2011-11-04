@@ -11,6 +11,14 @@ module Keydown
       @names.uniq!
     end
 
+    def remove(names)
+      @names -= names.split(' ')
+    end
+
+    def include?(name)
+      @names.include? name
+    end
+
     def to_hash
       @names.empty? ? {} : { :class => self.to_s }
     end

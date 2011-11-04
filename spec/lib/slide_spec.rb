@@ -14,7 +14,7 @@ describe Keydown::Slide do
   shared_examples_for 'extracting slide data' do
 
     it "should set the CSS classnames" do
-      @slide.content_classnames.to_s.should == @content_classnames
+      @slide.classnames.to_s.should == @classnames
     end
 
     it "should extract the slide content" do
@@ -68,7 +68,7 @@ With some text
 a simple note
       SLIDE
 
-      @content_classnames = 'content'
+      @classnames = 'slide'
       @slide = Keydown::Slide.new(@slide_text)
     end
 
@@ -96,7 +96,7 @@ With some text
 a simple note
       SLIDE
 
-      @content_classnames = ['foo', 'content'].sort.join(' ')
+      @classnames = ['foo', 'slide'].sort.join(' ')
       @slide = Keydown::Slide.new(@slide_text, 'foo')
     end
 
@@ -106,7 +106,7 @@ a simple note
       before :each do
         @html = @slide.to_html
         @doc = Nokogiri(@html)
-        @slide_selector = "section.#{@content_classnames}"
+        @slide_selector = "section.#{@classnames}"
       end
 
       it_should_behave_like "generating HTML"
@@ -124,7 +124,7 @@ With some text
 a simple note
       SLIDE
 
-      @content_classnames = ['content', 'foo', 'bar'].sort.join(' ')
+      @classnames = ['slide', 'foo', 'bar'].sort.join(' ')
       @slide = Keydown::Slide.new(@slide_text, 'foo bar')
 
     end
@@ -135,9 +135,43 @@ a simple note
       before :each do
         @html = @slide.to_html
         @doc = Nokogiri(@html)
-        @slide_selector = "section.#{@content_classnames}"
+        @slide_selector = "section.#{@classnames}"
       end
       it_should_behave_like "generating HTML"
+    end
+  end
+
+ describe "with the classname of 'left'" do
+    before :each do
+      @slide_text = <<-SLIDE
+
+# A Slide
+With some text
+
+!NOTES
+a simple note
+      SLIDE
+
+      @classnames = ['slide', 'left', 'foo'].sort.join(' ')
+      @slide = Keydown::Slide.new(@slide_text, 'foo left')
+
+    end
+
+    it_should_behave_like "extracting slide data"
+
+    describe "generating HTML" do
+      before :each do
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section.#{@classnames}"
+      end
+
+      it_should_behave_like "generating HTML"
+
+      it "should add the classname 'left' to the section (in order to justify the whole slide)" do
+        @doc.css('section')[0]['class'].should include('left')
+      end
+
     end
   end
 
@@ -149,12 +183,12 @@ a simple note
 With some text
       SLIDE
 
-      @content_classnames = 'content'
+      @classnames = 'slide'
       @slide = Keydown::Slide.new(@slide_text)
     end
 
     it "should set the CSS classnames" do
-      @slide.content_classnames.to_s.should == @content_classnames
+      @slide.classnames.to_s.should == @classnames
     end
 
     it "should extract the slide content" do
@@ -192,8 +226,8 @@ a simple note
 
         SLIDE
 
-        @content_classnames = 'content'
-        template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'rocks')
+        @classnames = 'slide'
+        template_dir = File.join(Keydown::Tasks.source_root, 'templates', 'deck.js')
         @slide = Keydown::Slide.new(@slide_text)
       end
 
@@ -229,7 +263,7 @@ a simple note
 
         SLIDE
 
-        @content_classnames = 'content'
+        @classnames = 'slide'
         @slide = Keydown::Slide.new(@slide_text)
       end
 
@@ -266,7 +300,7 @@ a simple note
 
       SLIDE
 
-      @content_classnames = 'content'
+      @classnames = 'full-background my_background slide'
       @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 
@@ -319,7 +353,7 @@ a simple note
 
       SLIDE
 
-      @content_classnames = 'content'
+      @classnames = 'full-background my_background slide'
       @slide = Keydown::Slide.new(@slide_text.chomp)
     end
 

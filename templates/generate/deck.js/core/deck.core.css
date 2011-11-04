@@ -182,7 +182,7 @@ html {
 .deck-container h1 {
   font-size: 4.5em;
   font-weight: bold;
-  text-align: center;
+  /*text-align: center;*/
   padding-top: 1em;
 }
 .csstransforms .deck-container h1 {

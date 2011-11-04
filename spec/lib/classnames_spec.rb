@@ -19,6 +19,43 @@ describe Keydown::Classnames do
     end
   end
 
+  describe "#remove" do
+    before do
+      @classnames = Keydown::Classnames.new
+      @classnames.add("foo")
+      @classnames.add("bar baz")
+    end
+
+    it "should remove a classname" do
+      @classnames.remove("foo")
+      @classnames.to_s.should_not match(/foo/)
+      @classnames.to_hash[:class].should_not match(/foo/)
+    end
+
+    it "should remove multiple classnames" do
+      @classnames.remove("bar baz")
+      @classnames.to_s.should_not match(/bar/)
+      @classnames.to_s.should_not match(/baz/)
+      @classnames.to_hash[:class].should_not match(/bar/)
+      @classnames.to_hash[:class].should_not match(/baz/)
+    end
+  end
+
+  describe "#include?" do
+    before do
+      @classnames = Keydown::Classnames.new
+      @classnames.add("foo")
+    end
+
+    it "should return true if the class is present" do
+      @classnames.include?('foo').should be_true
+    end
+
+    it "should return false if the class is not present" do
+      @classnames.include?('bar').should be_false
+    end
+  end
+
   describe "#to_s" do
     describe "with no classnames" do
       before do

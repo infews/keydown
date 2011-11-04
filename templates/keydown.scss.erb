@@ -1,29 +1,33 @@
 @import "compass/css3";
 
-/* Reset deck.core.css */
-.csstransforms .deck-container .slide h1 {
-  padding: 0;
-  left: auto;
-  right: auto;
-  top: auto;
-  position: relative;
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,800);
 
-  -webkit-transform: none;
-  -moz-transform: none;
-  -ms-transform: none;
-  -o-transform: none;
-  transform: none;
+/* Reset deck.core.css */
+.keydown.deck-container h1 {
+  font-weight: normal;
+  text-align: left;
+  padding-top: 0;
+}
+
+/* Reset deck.core.css */
+.csstransforms .deck-container .slide {
+
+  h1 {
+    padding: 0;
+    left: auto;
+    right: auto;
+    top: auto;
+    position: relative;
+
+    @include transform(none);
+  }
+
+  h2 {
+    border: none;
+  }
 }
 
 // Keydown Styles
-
-// Presentation fills the window
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #d7d7d7;
-}
 
 @mixin box-vertical-center {
   @include display-box;
@@ -39,9 +43,54 @@ body {
   @include box-pack(start);
 }
 
-article.keydown.deck-container {
+html {
+  font-size: 20px; // allows all fonts to be in rems from here on down
+}
+
+// Presentation fills the window
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #d7d7d7;
+}
+
+.keydown.deck-container {
 
   @include box-vertical-center;
+
+  h1 {
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: black;
+    text-align: none;
+  }
+
+  h2, h3, h4, h5, p, li {
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    font-weight: normal;
+  }
+
+  h2 {
+    font-size: 3.75rem;
+  }
+
+  h3 {
+    font-size: 3rem;
+  }               
+  
+  h4 {
+    font-size: 2.25rem;
+  }               
+  
+  p, li {
+    font-size: 2rem;
+  }
+
+  .deck-status {
+    font-size: .75rem;
+  }
 
   .slide {
 
@@ -52,12 +101,73 @@ article.keydown.deck-container {
     // for full-background images slides
     &.full-background {
       @include background-size(cover);
+      @include box-vertical-left;
 
       <% backgrounds.each do |background| %>
       &.<%= background[:classname] %> {
           background-image: url(../<%= background[:path] %>);
       }
       <% end %>
+
+      h1 {
+        display: inline;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.7);
+        font-weight: normal;
+        font-size: 3.5rem;
+        padding: 1rem;
+        color: #eee;
+      }
+
+      &.bottom-left {
+        h1 {
+          left: 0;
+          bottom: 20%;
+        }
+      }
+
+      &.top-left {
+        h1 {
+         left: 0;
+         top: 20%;
+        }
+      }
+
+      &.bottom-right {
+        h1 {
+          right: 0;
+          bottom: 20%;
+        }
+      }
+
+      &.top-right {
+        h1 {
+          right: 0;
+          top: 20%;
+        }
+      }
+    }
+
+    // left justified slides
+    &.left {
+      @include box-vertical-left;
+
+      .spacer {
+        &.top {
+          @include box-flex(1);
+        }
+        &.bottom {
+          @include box-flex(5);
+        }
+      }
+
+      .content {
+        @include box-vertical-left;
+
+        > * {
+          @include box-vertical-left;
+        }
+      }
     }
 
     // slide content - where the Markdown goes
@@ -68,33 +178,17 @@ article.keydown.deck-container {
         @include box-vertical-center;
       }
 
-      // left justified slides
-      &.left {
-        @include box-vertical-left;
-
-        > * {
-          @include box-vertical-left;
-        }
-
-        .spacer {
-          .top {
-            @include box-flex(1);
-          }
-          .bottom {
-            @include box-flex(5);
-          }
-        }
+      .CodeMirror {
+        font-size: 1rem;
       }
     }
 
-    // TODO: make these rems values
     .attribution {
-
-      font-size: 24px;
-      position: fixed;
-      bottom: 8px;
-      left: 40px;
       @include background-size(contain);
+      position: absolute;
+      bottom: 0;
+      font-size: 1.25rem;
+      font-family: "Open Sans", "Helvetica Neue", sans-serif;
 
       &.flickr {
         background: url(../images/flickr.png) left top no-repeat;
@@ -105,6 +199,10 @@ article.keydown.deck-container {
         background: url(../images/cc.large.png) left top no-repeat;
         padding-left: 36px;
        }
+       
+      a {
+       color: #c7c7c7;
+      }
     }
   }
 }

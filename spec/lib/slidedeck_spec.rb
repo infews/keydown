@@ -72,16 +72,16 @@ and this
       end
 
       it "should set the CSS classnames of each slide" do
-        slides_content = @doc.css('.content')
+        slides = @doc.css('.slide')
 
-        first_slide = slides_content[0]
-        first_slide['class'].should == 'content'
+        first_slide = slides[0]
+        first_slide['class'].should == 'slide'
 
-        second_slide = slides_content[1]
-        second_slide['class'].should == 'content foo'
+        second_slide = slides[1]
+        second_slide['class'].should == 'foo slide'
 
-        third_slide = slides_content[2]
-        third_slide['class'].should == 'bar content foo'
+        third_slide = slides[2]
+        third_slide['class'].should == 'bar foo slide'
       end
     end
   end

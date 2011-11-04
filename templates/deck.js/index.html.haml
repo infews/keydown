@@ -19,23 +19,22 @@
     / Modernizr (provided for legacy browsers)
     = script "deck.js/support/modernizr.custom.js"
 
-  %body
-    %article{ :class => "deck-container keydown" }
-      - slides.each do |slide|
-        = slide.to_html
+  %body{ :class => "deck-container keydown" }
+    - slides.each do |slide|
+      = slide.to_html
 
-      / deck.js navigation extension
-      %a{ :href => '#', :class => 'deck-prev-link', :title => 'Previous' } &#8592;
-      %a{ :href => '#', :class => 'deck-next-link', :title => 'Next' } &#8594;
+    / deck.js navigation extension
+    %a{ :href => '#', :class => 'deck-prev-link', :title => 'Previous' } &#8592;
+    %a{ :href => '#', :class => 'deck-next-link', :title => 'Next' } &#8594;
 
-      / deck.js hash extension
-      %a{ :href => '.', :class => 'deck-permalink', :title => 'Permalink to this slide' } #
+    / deck.js hash extension
+    %a{ :href => '.', :class => 'deck-permalink', :title => 'Permalink to this slide' } #
 
-      / deck.js status extension
-      %p.deck-status
-        %span.deck-status-current
-        \/
-        %span.deck-status-total
+    / deck.js status extension
+    %p.deck-status
+      %span.deck-status-current
+      \/
+      %span.deck-status-total
 
     / jQuery & deck.js
     = script "deck.js/support/jquery.1.6.4.min.js"
