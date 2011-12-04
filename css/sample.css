@@ -1,0 +1,19 @@
+/* Custom CSS for your KeyDown presentation here */
+@import url(http://fonts.googleapis.com/css?family=Permanent+Marker);
+/* Uncomment to turn off deck.js navigation */
+/*.deck-prev-link,*/
+/*.deck-next-link {*/
+    /*display: none;*/
+/*}*/
+
+/* Uncomment to turn off deck.js status */
+/*.deck-status {*/
+    /*display: none;*/
+/*}*/
+
+.slide.snazzy-slide .content h1 {
+	-webkit-transform: rotate(-27deg);
+	color: #4b0082;
+	font-style: italic;
+	font-family: "Permanent Marker", serif;
+}
