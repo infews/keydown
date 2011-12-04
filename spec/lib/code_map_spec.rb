@@ -64,19 +64,19 @@ a simple note
   end
 
   it "should find and encode a code block in @@@" do
-    code_id =@map.nodes.keys[0]
+    code_id = @map.nodes.keys[0]
     @html = Nokogiri(@map[code_id])
 
-    @html.css('textarea').length.should == 1
+    @html.css('textarea.code').length.should == 1
     @html.css('textarea').attr('mode').value.should == 'ruby'
     @html.css('textarea').text.should match(/a_method/)
   end
 
   it "should find a code block in ```" do
-    code_id =@map.nodes.keys[1]
+    code_id = @map.nodes.keys[1]
     @html = Nokogiri(@map[code_id])
 
-    @html.css('textarea').length.should == 1
+    @html.css('textarea.code').length.should == 1
     @html.css('textarea').attr('mode').value.should == 'Markdown'
     @html.css('textarea').text.should match(/I'm an H1/)
   end
@@ -88,6 +88,18 @@ a simple note
 
     it "should return a built CodeMap" do
       @map.length.should == 2
+    end
+  end
+
+  describe "#put_code_in" do
+
+    before :each do
+      converted = "<div>#{@map.put_code_in(@text)}</div>"
+      @doc = Nokogiri(converted)
+    end
+
+    it "should put the highligheted code back into the html" do
+      @doc.css('textarea.code').length.should == 2
     end
   end
 end
