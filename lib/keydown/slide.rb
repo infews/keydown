@@ -7,14 +7,14 @@ module Keydown
     attr_reader :classnames
 
     def initialize(text, classnames = '')
-      @content = text
       @notes = ''
-      @codemap = {}
       @background_image = {}
+
+      @codemap = CodeMap.build_from(text)
+      @content = @codemap.mapped_text
 
       extract_notes!
       extract_content!
-      extract_code!
       extract_background_image!
 
       @classnames = Classnames.new('slide')
@@ -24,8 +24,6 @@ module Keydown
         @classnames.add('full-background')
         @classnames.add(@background_image[:classname])
       end
-
-      highlight_code!
     end
 
     def background_attribution_classnames
@@ -45,7 +43,9 @@ module Keydown
                                :background_image => background_image)
 
       slide = Tilt.new(File.join(Tasks.template_dir, 'slide.html.haml'))
-      slide.render(context)
+      html = slide.render(context)
+
+      @codemap.put_code_in html
     end
 
     private
@@ -61,12 +61,7 @@ module Keydown
       @content.gsub!(/^!NOTE(S)?\s*(.*\n)$/m, '')
     end
 
-    def extract_code!
-      @content.gsub!(/^(```|@@@) ?(.+?)\r?\n(.+?)\r?\n(```|@@@)\r?$/m) do
-        id = Digest::SHA1.hexdigest($3)
-        @codemap[id] = {:lang => $2, :code => $3}
-        id
-      end
+    def extract_code(text)
     end
 
     def extract_background_image!
@@ -88,21 +83,6 @@ module Keydown
         @background_image.merge!({:attribution_text => split_line[1],
                                   :service => split_line[2],
                                   :attribution_link => split_line[3]})
-      end
-    end
-
-    def highlight_code!
-      @codemap.each do |id, code_block|
-        language = code_block[:lang]
-        code = code_block[:code]
-        if code.lines.all? { |line| line =~ /\A\r?\n\Z/ || line =~ /^(  |\t)/ }
-          code.gsub!(/^(  |\t)/m, '')
-        end
-
-        context = OpenStruct.new :language => language, :code => code
-        template = Tilt.new(File.join(Tasks.template_dir, 'code.html.haml'))
-
-        @content.gsub!(id, template.render(context))
       end
     end
   end
