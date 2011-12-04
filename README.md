@@ -7,6 +7,8 @@ It uses the excellent [deck.js](http://imakewebthings.github.com/deck.js) and it
 
 [![Build Status](https://secure.travis-ci.org/infews/keydown.png)](http://travis-ci.org/infews/keydown) at [Travis](http://travis-ci.org).
 
+Our Github Pages is a [Sample Presentation](http://infews.github.com/keydown)
+
 ## Usage
     $ gem install keydown
 
