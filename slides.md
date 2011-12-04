@@ -27,7 +27,7 @@ Yet another single-page HTML presentation maker
 !SLIDE left
 
 ## Markdown > Powerpoint
-## HTML, CSS, JS > Keydown
+## HTML, CSS, JS > Keynote
 
 !SLIDE left
 
