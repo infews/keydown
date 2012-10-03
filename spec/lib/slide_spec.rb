@@ -57,6 +57,41 @@ describe Keydown::Slide do
     end
   end
 
+  describe 'using GitHub flavored markdown' do
+    before :each do
+      @slide_text = <<-SLIDE
+
+# A Slide
+With some text
+https://github.com
+
+!NOTES
+a simple note
+      SLIDE
+
+      @classnames = 'slide'
+      @slide = Keydown::Slide.new(@slide_text)
+    end
+
+    it_should_behave_like "extracting slide data"
+
+    describe "when generating HTML" do
+      before :each do
+        @html = @slide.to_html
+        @doc = Nokogiri(@html)
+        @slide_selector = "section"
+      end
+
+      it "should use GitHub flavored markdown" do
+        @doc.css('a').detect{ |link|
+          link["href"] == "https://github.com" && link.inner_html == "https://github.com"
+        }.should_not be_nil
+      end
+
+      it_should_behave_like "generating HTML"
+    end
+  end
+
   describe 'without a CSS classname' do
     before :each do
       @slide_text = <<-SLIDE

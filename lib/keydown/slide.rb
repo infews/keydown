@@ -34,10 +34,10 @@ module Keydown
 
     def to_html
       require 'tilt'
-      require 'rdiscount'
+      require 'github/markdown'
 
-      markdown = RDiscount.new(@content)
-      context = OpenStruct.new(:html_content => markdown.to_html,
+      markdown = GitHub::Markdown.render_gfm(@content)
+      context = OpenStruct.new(:html_content => markdown,
                                :classnames => classnames.to_hash,
                                :background_attribution_classnames => background_attribution_classnames,
                                :background_image => background_image)
