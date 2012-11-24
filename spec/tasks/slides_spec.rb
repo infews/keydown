@@ -213,4 +213,22 @@ describe Keydown, "`slides`" do
       @doc.css('link[@href="css/keydown.css"]').length.should == 1
     end
   end
+
+ describe "for a presentation that has non US-ASCII characters" do
+     before(:each) do
+      capture_output do
+        Dir.chdir project_dir do
+          file_name = "with_non_usascii_chars.md"
+          system "cp #{Keydown::Tasks.source_root}/spec/fixtures/#{file_name} #{tmp_dir}/test/#{file_name}"
+
+          @thor.invoke Keydown::Tasks, ["slides", file_name]
+
+          @file = File.new('with_non_usascii_chars.html')
+          @doc = Nokogiri(@file)
+        end
+      end
+    end
+
+    it_should_behave_like "generating a presentation file"
+  end
 end

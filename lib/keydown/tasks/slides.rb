@@ -19,7 +19,7 @@ module Keydown
 
       say "Creating Keydown presentation from #{file}", :yellow
 
-      slide_deck = SlideDeck.new(File.new(file).read)
+      slide_deck = SlideDeck.new(File.new(file, 'rb').read)
       backgrounds = slide_deck.slides.collect do |slide|
         slide.background_image unless slide.background_image.empty?
       end.compact
