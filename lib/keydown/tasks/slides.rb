@@ -7,7 +7,6 @@ module Keydown
     desc "slides FILE", "Convert a Keydown FILE into an HTML presentation"
 
     def slides(file)
-
       file += '.md' unless file.match(/\.md$/)
 
       unless File.exist?(file)
@@ -36,9 +35,11 @@ module Keydown
 
       presentation = file.gsub('md', 'html')
 
-      create_file presentation, :force => true do
+      output = create_file presentation, :force => true do
         slide_deck.to_html
       end
+      
+      Launchy.open File.join(Dir.pwd, presentation)
     end
   end
 end

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass'
   s.add_dependency 'compass'
   s.add_dependency 'github-markdown'
+  s.add_dependency 'launchy'
 
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
