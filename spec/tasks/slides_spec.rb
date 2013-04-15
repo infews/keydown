@@ -19,7 +19,7 @@ describe Keydown, "`slides`" do
   end
 
   let :tmp_dir do
-    "#{Dir.tmpdir}/keydown_test"
+    "#{File.realdirpath(Dir.tmpdir)}/keydown_test"
   end
 
   let :project_dir do
@@ -62,6 +62,16 @@ describe Keydown, "`slides`" do
 
     before :each do
       system "cp -r spec/fixtures/with_title.md #{project_dir}"
+    end
+
+    it "should open resulting html file in the browser" do
+      Launchy.should_receive(:open).with("#{project_dir}/with_title.html")
+
+      capture_output do
+        Dir.chdir project_dir do
+          @thor.invoke Keydown::Tasks, ["slides", "with_title.md"]
+        end
+      end
     end
 
     describe "should generate an html file that" do

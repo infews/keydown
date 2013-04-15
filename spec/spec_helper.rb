@@ -12,3 +12,9 @@ def capture_output
  ensure
    $stdout = STDOUT
 end
+
+RSpec.configure do |config|
+  config.before(:each) do
+    Launchy.stub(:open)
+  end
+end
