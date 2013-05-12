@@ -34,11 +34,10 @@
 				position:relative;
 				left:0;
 				top:0;
-				opacity:0;
 			}
 			
-			.deck-before, .deck-previous {
-				opacity:0.4;
+			.deck-next, .deck-after {
+				opacity:0;
 			}
 			
 			.deck-current {
