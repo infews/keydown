@@ -18,19 +18,28 @@ that use the API provided by core.
 (function($, deck, document, undefined) {
 	var slides, // Array of all the uh, slides...
 	current, // Array index of the current slide
+	$container, // Keeping this cached
 	
 	events = {
 		/*
 		This event fires whenever the current slide changes, whether by way of
 		next, prev, or go. The callback function is passed two parameters, from
 		and to, equal to the indices of the old slide and the new slide
-		respectively.
+		respectively. If preventDefault is called on the event within this handler
+		the slide change does not occur.
 		
 		$(document).bind('deck.change', function(event, from, to) {
 		   alert('Moving from slide ' + from + ' to ' + to);
 		});
 		*/
 		change: 'deck.change',
+		
+		/*
+		This event fires at the beginning of deck initialization, after the options
+		are set but before the slides array is created.  This event makes a good hook
+		for preprocessing extensions looking to modify the deck.
+		*/
+		beforeInitialize: 'deck.beforeInit',
 		
 		/*
 		This event fires at the end of deck initialization. Extensions should
@@ -62,7 +71,6 @@ that use the API provided by core.
 	updateStates = function() {
 		var oc = options.classes,
 		osc = options.selectors.container,
-		$container = $(osc),
 		old = $container.data('onSlide'),
 		$all = $();
 		
@@ -134,7 +142,6 @@ that use the API provided by core.
 		*/	
 		init: function(elements, opts) {
 			var startTouch,
-			$c,
 			tolerance,
 			esp = function(e) {
 				e.stopPropagation();
@@ -143,11 +150,14 @@ that use the API provided by core.
 			options = $.extend(true, {}, $[deck].defaults, opts);
 			slides = [];
 			current = 0;
-			$c = $[deck]('getContainer');
+			$container = $(options.selectors.container);
 			tolerance = options.touch.swipeTolerance;
 			
+			// Pre init event for preprocessing hooks
+			$d.trigger(events.beforeInitialize);
+			
 			// Hide the deck while states are being applied to kill transitions
-			$c.addClass(options.classes.loading);
+			$container.addClass(options.classes.loading);
 			
 			// Fill slides array depending on parameter type
 			if ($.isArray(elements)) {
@@ -171,10 +181,13 @@ that use the API provided by core.
 					methods.prev();
 					e.preventDefault();
 				}
-			});
+			})
+			/* Stop propagation of key events within editable elements */
+			.undelegate('input, textarea, select, button, meter, progress, [contentEditable]', 'keydown', esp)
+			.delegate('input, textarea, select, button, meter, progress, [contentEditable]', 'keydown', esp);
 			
 			/* Bind touch events for swiping between slides on touch devices */
-			$c.unbind('touchstart.deck').bind('touchstart.deck', function(e) {
+			$container.unbind('touchstart.deck').bind('touchstart.deck', function(e) {
 				if (!startTouch) {
 					startTouch = $.extend({}, e.originalEvent.targetTouches[0]);
 				}
@@ -202,10 +215,7 @@ that use the API provided by core.
 					}
 				});
 			})
-			.scrollLeft(0).scrollTop(0)
-			/* Stop propagation of key events within editable elements of slides */
-			.undelegate('input, textarea, select, button, meter, progress, [contentEditable]', 'keydown', esp)
-			.delegate('input, textarea, select, button, meter, progress, [contentEditable]', 'keydown', esp);
+			.scrollLeft(0).scrollTop(0);
 			
 			/*
 			Kick iframe videos, which dont like to redraw w/ transforms.
@@ -223,28 +233,55 @@ that use the API provided by core.
 				});
 			});
 			
-			updateStates();
+			if (slides.length) {
+				updateStates();
+			}
 			
 			// Show deck again now that slides are in place
-			$c.removeClass(options.classes.loading);
+			$container.removeClass(options.classes.loading);
 			$d.trigger(events.initialize);
 		},
 		
 		/*
 		jQuery.deck('go', index)
 		
-		index: integer
+		index: integer | string
 		
-		Moves to the slide at the specified index. Index is 0-based, so
-		$.deck('go', 0); will move to the first slide. If index is out of bounds
-		or not a number the call is ignored.
+		Moves to the slide at the specified index if index is a number. Index is
+		0-based, so $.deck('go', 0); will move to the first slide. If index is a
+		string this will move to the slide with the specified id. If index is out
+		of bounds or doesn't match a slide id the call is ignored.
 		*/
 		go: function(index) {
-			if (typeof index != 'number' || index < 0 || index >= slides.length) return;
+			var e = $.Event(events.change),
+			ndx;
 			
-			$d.trigger(events.change, [current, index]);
-			current = index;
-			updateStates();
+			/* Number index, easy. */
+			if (typeof index === 'number' && index >= 0 && index < slides.length) {
+				ndx = index;
+			}
+			/* Id string index, search for it and set integer index */
+			else if (typeof index === 'string') {
+				$.each(slides, function(i, $slide) {
+					if ($slide.attr('id') === index) {
+						ndx = i;
+						return false;
+					}
+				});
+			};
+			
+			/* Out of bounds, id doesn't exist, illegal input, eject */
+			if (typeof ndx === 'undefined') return;
+			
+			$d.trigger(e, [current, ndx]);
+			if (e.isDefaultPrevented()) {
+				/* Trigger the event again and undo the damage done by extensions. */
+				$d.trigger(events.change, [ndx, current]);
+			}
+			else {
+				current = ndx;
+				updateStates();
+			}
 		},
 		
 		/*
@@ -297,7 +334,7 @@ that use the API provided by core.
 		container option.
 		*/
 		getContainer: function() {
-			return $(options.selectors.container);
+			return $container;
 		},
 		
 		/*

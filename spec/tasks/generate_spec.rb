@@ -46,7 +46,7 @@ describe Keydown do
     end
 
     it "should copy deck.js's support files" do
-      File.exist?("#{project_dir}/deck.js/support/jquery.1.6.4.min.js").should be_true
+      File.exist?("#{project_dir}/deck.js/support/jquery-1.7.2.min.js").should be_true
       File.exist?("#{project_dir}/deck.js/support/modernizr.custom.js").should be_true
     end
 

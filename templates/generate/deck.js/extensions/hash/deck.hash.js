@@ -53,26 +53,34 @@ slide.
 		Every slide that does not have an id is assigned one at initialization.
 		Assigned ids take the form of hashPrefix + slideIndex, e.g., slide-0,
 		slide-12, etc.
+
+	options.preventFragmentScroll
+		When deep linking to a hash of a nested slide, this scrolls the deck
+		container to the top, undoing the natural browser behavior of scrolling
+		to the document fragment on load.
 	*/
 	$.extend(true, $[deck].defaults, {
 		selectors: {
 			hashLink: '.deck-permalink'
 		},
 		
-		hashPrefix: 'slide-'
+		hashPrefix: 'slide-',
+		preventFragmentScroll: true
 	});
 	
 	
 	$d.bind('deck.init', function() {
 	   var opts = $[deck]('getOptions');
-		$internals = $();
+		$internals = $(),
+		slides = $[deck]('getSlides');
 		
-		$.each($[deck]('getSlides'), function(i, $el) {
+		$.each(slides, function(i, $el) {
 			var hash;
 			
 			/* Hand out ids to the unfortunate slides born without them */
-			if (!$el.attr('id')) {
+			if (!$el.attr('id') || $el.data('deckAssignedId') === $el.attr('id')) {
 				$el.attr('id', opts.hashPrefix + i);
+				$el.data('deckAssignedId', opts.hashPrefix + i);
 			}
 			
 			hash ='#' + $el.attr('id');
@@ -95,11 +103,14 @@ slide.
 		}
 		
 		/* Set up first id container state class */
-		$[deck]('getContainer').addClass(opts.classes.onPrefix + $[deck]('getSlide').attr('id'));
+		if (slides.length) {
+			$[deck]('getContainer').addClass(opts.classes.onPrefix + $[deck]('getSlide').attr('id'));
+		};
 	})
 	/* Update permalink, address bar, and state class on a slide change */
 	.bind('deck.change', function(e, from, to) {
 		var hash = '#' + $[deck]('getSlide', to).attr('id'),
+		hashPath = window.location.href.replace(/#.*/, '') + hash,
 		opts = $[deck]('getOptions'),
 		osp = opts.classes.onPrefix,
 		$c = $[deck]('getContainer');
@@ -107,9 +118,9 @@ slide.
 		$c.removeClass(osp + $[deck]('getSlide', from).attr('id'));
 		$c.addClass(osp + $[deck]('getSlide', to).attr('id'));
 		
-		$(opts.selectors.hashLink).attr('href', hash);
+		$(opts.selectors.hashLink).attr('href', hashPath);
 		if (Modernizr.history) {
-			window.history.replaceState({}, "", hash);
+			window.history.replaceState({}, "", hashPath);
 		}
 	});
 	
@@ -120,6 +131,12 @@ slide.
 		}
 		else {
 			goByHash(window.location.hash);
+		}
+	})
+	/* Prevent scrolling on deep links */
+	.bind('load', function() {
+		if ($[deck]('getOptions').preventFragmentScroll) {
+			$[deck]('getContainer').scrollLeft(0).scrollTop(0);
 		}
 	});
 })(jQuery, 'deck', this);

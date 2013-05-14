@@ -1,5 +1,5 @@
 /*!
-Deck JS - deck.navigation - v1.0
+Deck JS - deck.navigation
 Copyright (c) 2011 Caleb Troughton
 Dual licensed under the MIT license and GPL license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
@@ -10,7 +10,25 @@ https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
 This module adds clickable previous and next links to the deck.
 */
 (function($, deck, undefined) {
-	var $d = $(document);
+	var $d = $(document),
+	
+	/* Updates link hrefs, and disabled states if last/first slide */
+	updateButtons = function(e, from, to) {
+		var opts = $[deck]('getOptions'),
+		last = $[deck]('getSlides').length - 1,
+		prevSlide = $[deck]('getSlide', to - 1),
+		nextSlide = $[deck]('getSlide', to + 1),
+		hrefBase = window.location.href.replace(/#.*/, ''),
+		prevId = prevSlide ? prevSlide.attr('id') : undefined,
+		nextId = nextSlide ? nextSlide.attr('id') : undefined;
+		
+		$(opts.selectors.previousLink)
+			.toggleClass(opts.classes.navDisabled, !to)
+			.attr('href', hrefBase + '#' + (prevId ? prevId : ''));
+		$(opts.selectors.nextLink)
+			.toggleClass(opts.classes.navDisabled, to === last)
+			.attr('href', hrefBase + '#' + (nextId ? nextId : ''));
+	};
 	
 	/*
 	Extends defaults/options.
@@ -41,8 +59,9 @@ This module adds clickable previous and next links to the deck.
 
 	$d.bind('deck.init', function() {
 		var opts = $[deck]('getOptions'),
-		nextSlide = $[deck]('getSlide', 1),
-		nextId = nextSlide ? nextSlide.attr('id') : undefined;
+		slides = $[deck]('getSlides'),
+		$current = $[deck]('getSlide'),
+		ndx;
 		
 		// Setup prev/next link events
 		$(opts.selectors.previousLink)
@@ -59,25 +78,15 @@ This module adds clickable previous and next links to the deck.
 			e.preventDefault();
 		});
 		
-		// Start on first slide, previous link is disabled, set next link href
-		$(opts.selectors.previousLink).addClass(opts.classes.navDisabled);
-		$(opts.selectors.nextLink).attr('href', '#' + (nextId ? nextId : ''));
+		// Find where we started in the deck and set initial states
+		$.each(slides, function(i, $slide) {
+			if ($slide === $current) {
+				ndx = i;
+				return false;
+			}
+		});
+		updateButtons(null, ndx, ndx);
 	})
-	/* Updates link hrefs, and disabled states if last/first slide */
-	.bind('deck.change', function(e, from, to) {
-		var opts = $[deck]('getOptions'),
-		last = $[deck]('getSlides').length - 1,
-		prevSlide = $[deck]('getSlide', to - 1),
-		nextSlide = $[deck]('getSlide', to + 1),
-		prevId = prevSlide ? prevSlide.attr('id') : undefined;
-		nextId = nextSlide ? nextSlide.attr('id') : undefined;
-		
-		$(opts.selectors.previousLink)
-			.toggleClass(opts.classes.navDisabled, !to)
-			.attr('href', '#' + (prevId ? prevId : ''));
-		$(opts.selectors.nextLink)
-			.toggleClass(opts.classes.navDisabled, to === last)
-			.attr('href', '#' + (nextId ? nextId : ''));
-	});
+	.bind('deck.change', updateButtons);
 })(jQuery, 'deck');
 

@@ -94,7 +94,7 @@ describe Keydown, "`slides`" do
         it "should have the deck.js files" do
           scripts = @doc.css('script').collect { |tag| tag['src'] }
           scripts.should include('deck.js/support/modernizr.custom.js')
-          scripts.should include('deck.js/support/jquery.1.6.4.min.js')
+          scripts.should include('deck.js/support/jquery-1.7.2.min.js')
           scripts.should include('deck.js/core/deck.core.js')
         end
 
