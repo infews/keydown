@@ -21,7 +21,8 @@ module Keydown
     def to_html
       require 'tilt'
 
-      css_files = ['css/keydown.css']
+      css_files = ['css/keydown.css', 'css/default.css',
+                   'css/horizontal-default.css', 'css/swiss.css']
       css_files += Dir.glob('css/*.css')
       css_files.uniq!
 
