@@ -105,7 +105,7 @@ body {
 
       <% backgrounds.each do |background| %>
       &.<%= background[:classname] %> {
-          background-image: url(../<%= background[:path] %>);
+          background-image: url(<%= (background[:path][0,2] === '//' ? '' : '../') + background[:path] %>);
       }
       <% end %>
 
