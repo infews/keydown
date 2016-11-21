@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'tilt'
   s.add_dependency 'haml'
   s.add_dependency 'sass'
-  s.add_dependency 'compass'
+  s.add_dependency 'compass', '~> 0.12.7'
   s.add_dependency 'github-markdown'
 
   s.add_development_dependency "rake"
