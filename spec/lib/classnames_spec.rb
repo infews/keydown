@@ -48,11 +48,11 @@ describe Keydown::Classnames do
     end
 
     it "should return true if the class is present" do
-      @classnames.include?('foo').should be_true
+      @classnames.include?('foo').should be_truthy
     end
 
     it "should return false if the class is not present" do
-      @classnames.include?('bar').should be_false
+      @classnames.include?('bar').should be_falsey
     end
   end
 

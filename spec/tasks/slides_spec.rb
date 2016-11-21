@@ -111,10 +111,10 @@ describe Keydown, "`slides`" do
           scripts.should include('deck.js/extensions/scale/deck.scale.js')
           scripts.should include('deck.js/extensions/status/deck.status.js')
         end
-        
+
         it "should have all of the extension top-level css files" do
           stylesheets = @doc.css('link').collect {|tag| tag['href']}
-          
+
           stylesheets.should include('deck.js/extensions/codemirror/deck.codemirror.css')
           stylesheets.should include('deck.js/extensions/goto/deck.goto.css')
           stylesheets.should include('deck.js/extensions/hash/deck.hash.css')
@@ -200,7 +200,7 @@ describe Keydown, "`slides`" do
     it_should_behave_like "generating a presentation file"
 
     it "should add the keydown.css file (which has the backgrounds) to the css directory" do
-      File.exist?("#{tmp_dir}/test/css/keydown.css").should be_true
+      File.exist?("#{tmp_dir}/test/css/keydown.css").should be_truthy
     end
 
     it "should build a CSS file with the custom background images definitions" do
